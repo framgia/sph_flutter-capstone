@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,12 +10,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Text('Flutter Demo Home Page'),
+    final _appRouter = AppRouter();
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'Sample Nav',
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }
