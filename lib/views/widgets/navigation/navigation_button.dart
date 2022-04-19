@@ -16,7 +16,7 @@ class NavigationButton extends StatelessWidget {
       icon: Icon(icon, color: iconColor, size: 40),
       padding: EdgeInsets.zero,
       onPressed: () {},
-      // splashRadius: 1,
+      splashRadius: 1,
     );
   }
 }
