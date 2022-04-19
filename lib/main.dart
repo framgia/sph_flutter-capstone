@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'views/widgets/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: appBarTheme,
         fontFamily: 'Inter',
       ),
-      home: const Text('Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
