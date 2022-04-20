@@ -1,30 +1,50 @@
-// Sample File for Structure Demonstration
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/views/pages/sample_with_appbar.dart';
+import 'package:sun_flutter_capstone/state/session_provider.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
-class Home extends StatelessWidget {
+class Home extends HookConsumerWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(sessionProvider);
     return Template(
       appbarTitle: Container(
         // padding: const EdgeInsets.only(top: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Good morning,',
               style: TextStyle(color: AppColor.gray, fontSize: 14),
             ),
-            Text('User'),
+            Text(user.username),
           ],
         ),
       ),
       isTitleCenter: false,
-      content: Text('This is a sample content'),
+      content: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => {navigateTo(context, '/sample')},
+              child: const Text('Go To Sample Page'),
+            ),
+            Visibility(
+              visible: user.username != 'User',
+              child: ElevatedButton(
+                onPressed: () => logout(ref),
+                child: const Text('Logout'),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

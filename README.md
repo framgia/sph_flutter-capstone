@@ -2,6 +2,9 @@
 
 Sun Asterisk Flutter Capstone
 
+# Note
+run the command `flutter pub get`
+
 ## Project Structure
 ```bash
   ├ assets
