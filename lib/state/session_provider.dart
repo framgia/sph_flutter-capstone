@@ -1,12 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/models/user.dart';
 
 // create a user class to define the state structure
-class User {
-  User({required this.id, required this.username});
-
-  final int id;
-  final String username;
-}
 
 final defaultUser = User(id: 0, username: 'None');
 
