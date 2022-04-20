@@ -6,9 +6,11 @@ class NavigationButton extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
 
-  const NavigationButton(
-      {Key? key, required this.icon, this.iconColor = AppColor.lightGray})
-      : super(key: key);
+  const NavigationButton({
+    Key? key,
+    required this.icon,
+    this.iconColor = AppColor.lightGray,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
