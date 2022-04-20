@@ -59,9 +59,9 @@ class Template extends StatelessWidget {
             child: Expanded(
               flex: 1,
               child: Container(
-                child: content,
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
+                child: content,
               ),
             ),
           ),

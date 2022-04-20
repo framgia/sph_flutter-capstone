@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:auto_route/auto_route.dart';
+// import 'package:auto_route/auto_route.dart'; Uncomment to use in the future
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 
 import 'package:sun_flutter_capstone/consts/global_style.dart';

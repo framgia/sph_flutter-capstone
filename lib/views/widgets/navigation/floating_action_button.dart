@@ -11,12 +11,12 @@ class CenterActionButton extends StatelessWidget {
       width: 75,
       child: FloatingActionButton(
         onPressed: () {},
+        elevation: 0,
+        backgroundColor: AppColor.secondary,
         child: const Icon(
           Icons.add,
           size: 35,
         ),
-        elevation: 0,
-        backgroundColor: AppColor.secondary,
       ),
     );
   }
