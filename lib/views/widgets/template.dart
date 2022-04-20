@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/views/widgets/navigation/floating_action_button.dart';
+import 'package:sun_flutter_capstone/views/widgets/navigation/navigation.dart';
 
 class Template extends StatelessWidget {
   final Widget content;
@@ -65,6 +67,9 @@ class Template extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: const CenterActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const Navigation(),
     );
   }
 }
