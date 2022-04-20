@@ -1,14 +1,16 @@
 ## Related Links:
 - Issue link
-- PR link
 
-# Definition of Done
--
+## Definition of Done
+- [ ] N/A
 
-## Screenshots
-
-## Test View  Points
-- N/A
 
 ## Notes:
 - N/A
+
+
+## Screenshots
+
+
+## Test View  Points
+- [ ] N/A
