@@ -19,7 +19,7 @@ const headerStyle = TextStyle(
   color: AppColor.secondary,
   fontWeight: FontWeight.bold,
   fontSize: 18,
-); 
+);
 
 // TODO: THEME FOR APPBAR
 const appBarTheme = AppBarTheme(
@@ -35,4 +35,3 @@ const appBarTheme = AppBarTheme(
 const textTheme = TextTheme(
   bodyText2: TextStyle(fontSize: 14, color: AppColor.gray),
 );
-

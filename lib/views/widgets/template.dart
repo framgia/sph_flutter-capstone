@@ -10,13 +10,13 @@ class Template extends StatelessWidget {
   final List<Widget> appbarActions;
   //[modifier] [datatype] [varname]
 
-  const Template({
-    Key? key,
-    required this.content,
-    required this.appbarTitle,
-    this.appbarActions = const [],
-    this.isTitleCenter = true
-  }) : super(key: key);
+  const Template(
+      {Key? key,
+      required this.content,
+      required this.appbarTitle,
+      this.appbarActions = const [],
+      this.isTitleCenter = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,8 @@ class Template extends StatelessWidget {
               flex: 1,
               child: Container(
                 alignment: Alignment.topLeft,
-                padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
                 child: content,
               ),
             ),

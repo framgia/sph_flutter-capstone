@@ -1,3 +1,6 @@
+flutter format .
+git add .
+
 flutter analyze
 if [ $? -ne 0 ]; then
   exit 1
