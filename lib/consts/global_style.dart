@@ -18,7 +18,7 @@ const headerStyle = TextStyle(
   fontFamily: 'Inter',
   color: AppColor.secondary,
   fontWeight: FontWeight.bold,
-  fontSize: 20,
+  fontSize: 18,
 ); 
 
 // TODO: THEME FOR APPBAR
