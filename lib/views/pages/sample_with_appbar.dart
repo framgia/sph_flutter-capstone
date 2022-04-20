@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_blue_button.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_rose_button.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/date_field.dart';
 
@@ -27,6 +30,22 @@ class SamplePageWithAppBar extends HookConsumerWidget {
           DateField(
             firstDate: DateTime(DateTime.now().year, 1),
             lastDate: DateTime.now(),
+          ),
+          FilledButton(
+            child: const Text(
+              "Hello filled"),
+            onPressed: () {},
+          ),
+          OutlinedBlueButton(
+            onPressed: () {},
+            child: const Text(
+              'Hello'),
+          ),
+          OutlinedRoseButton(
+            onPressed: () {},
+            child: const Text(
+              'Hello Rose'
+              ),
           ),
         ],
       ),

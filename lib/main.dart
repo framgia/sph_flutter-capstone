@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: appBarTheme,
         fontFamily: 'Inter',
         inputDecorationTheme: inputDecorationTheme,
+        elevatedButtonTheme: elevatedButtonTheme,
+        outlinedButtonTheme: outlinedButtonTheme,
       ),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),

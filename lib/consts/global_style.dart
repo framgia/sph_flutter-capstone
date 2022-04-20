@@ -50,5 +50,29 @@ const inputDecorationTheme = InputDecorationTheme(
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: AppColor.lightGray),
     borderRadius: rounded,
+  )
+);
+
+// TODO: STYLE FOR BUTTON
+OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
+  style: OutlinedButton.styleFrom(
+    primary: AppColor.secondary,
+    minimumSize: const Size.fromHeight(60.0),
+    side: const BorderSide(color: AppColor.secondary, width: 2), 
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(50),
+    ),
+  ),
+);
+
+ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    primary: AppColor.secondary,
+    shadowColor: Colors.transparent,
+    elevation: 0,
+    minimumSize: const Size.fromHeight(60.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(50),
+    ),
   ),
 );
