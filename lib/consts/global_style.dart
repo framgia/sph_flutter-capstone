@@ -35,3 +35,20 @@ const appBarTheme = AppBarTheme(
 const textTheme = TextTheme(
   bodyText2: TextStyle(fontSize: 14, color: AppColor.gray),
 );
+
+// TODO: FOR ROUNDED INPUT FIELD
+const rounded = BorderRadius.all(
+  Radius.circular(8),
+);
+
+// TODO: THEME FOR ALL INPUT FIELDS
+const inputDecorationTheme = InputDecorationTheme(
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: AppColor.secondary),
+    borderRadius: rounded,
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: AppColor.lightGray),
+    borderRadius: rounded,
+  ),
+);
