@@ -26,9 +26,10 @@ import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart
         page: NotificationsPage,
       ),
       AutoRoute(
-          path: 'account_settings',
-          name: 'SettingsRouter',
-          page: AccountSettingsPage)
+        path: 'account_settings',
+        name: 'SettingsRouter',
+        page: AccountSettingsPage,
+      ),
     ],
   ),
 ])

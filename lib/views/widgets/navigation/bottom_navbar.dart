@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
-import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/floating_action_button.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/navigation_button.dart';
 
-// TODO: Refactor
+// TODO: If Possible refactor NavigationButton or BottomAppBar children to make them cleaner
 
 class BottomNavBar extends HookConsumerWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -47,8 +47,8 @@ class BottomNavBar extends HookConsumerWidget {
                   route: Routes.dashboard,
                 ),
                 NavigationButton(
-                  icon: Icons.credit_card_outlined,
-                  activeIcon: Icons.credit_card,
+                  icon: MdiIcons.creditCardMultipleOutline,
+                  activeIcon: MdiIcons.creditCardMultiple,
                   route: Routes.transactions,
                 ),
                 const SizedBox(width: 75),
