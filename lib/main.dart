@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:auto_route/auto_route.dart'; Uncomment to use in the future
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: appBarTheme,
         fontFamily: 'Inter',
+        inputDecorationTheme: inputDecorationTheme,
       ),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),

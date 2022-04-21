@@ -8,7 +8,6 @@ class Template extends StatelessWidget {
   final Widget appbarTitle;
   final bool isTitleCenter;
   final List<Widget> appbarActions;
-  //[modifier] [datatype] [varname]
 
   const Template({
     Key? key,
@@ -56,15 +55,15 @@ class Template extends StatelessWidget {
             ),
           ),
           SafeArea(
-            child: Expanded(
-              flex: 1,
+            //child: Expanded(
+              //flex: 1,
               child: Container(
                 alignment: Alignment.topLeft,
                 padding:
                     const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
                 child: content,
               ),
-            ),
+            //),
           ),
         ],
       ),
