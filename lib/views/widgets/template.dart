@@ -10,13 +10,13 @@ class Template extends StatelessWidget {
   final List<Widget> appbarActions;
   //[modifier] [datatype] [varname]
 
-  const Template(
-      {Key? key,
-      required this.content,
-      required this.appbarTitle,
-      this.appbarActions = const [],
-      this.isTitleCenter = true})
-      : super(key: key);
+  const Template({
+    Key? key,
+    required this.content,
+    required this.appbarTitle,
+    this.appbarActions = const [],
+    this.isTitleCenter = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
