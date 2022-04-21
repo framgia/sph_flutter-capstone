@@ -15,11 +15,11 @@ class DateField extends StatefulWidget {
   State<DateField> createState() => _DateFieldState();
 }
 
-class _DateFieldState extends State<DateField> {  
+class _DateFieldState extends State<DateField> {
   DateTime selectedDate = DateTime.now();
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,15 +44,16 @@ class _DateFieldState extends State<DateField> {
                   initialDate: DateTime.now(),
                   firstDate: widget.firstDate,
                   lastDate: widget.lastDate,
-                  // builder: (context, child) {
-                  //   return Theme(
-                  //     child: child!,
-                  //     data: ThemeData(
-                  //       colorScheme:
-                  //           ColorScheme.light(primary: AppColor.secondary),
-                  //     ),
-                  //   );
-                  // },
+                  builder: (context, child) {
+                    return Theme(
+                      child: child!,
+                      data: ThemeData(
+                        colorScheme: ColorScheme.light(
+                          primary: AppColor.secondary,
+                        ),
+                      ),
+                    );
+                  },
                 );
                 if (newDate != null) {
                   setState(
