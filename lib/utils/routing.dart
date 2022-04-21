@@ -5,6 +5,10 @@ void navigateTo(BuildContext context, String route) {
   context.router.pushNamed(route);
 }
 
+void redirectTo(BuildContext context, String route) {
+  context.router.navigateNamed(route);
+}
+
 void goToHome(BuildContext context) {
   context.router.popUntilRoot();
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
-class Home extends HookConsumerWidget {
-  const Home({Key? key}) : super(key: key);
+class Dashboard extends HookConsumerWidget {
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,8 +30,8 @@ class Home extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () => {navigateTo(context, '/sample')},
-              child: const Text('Go To Sample Page'),
+              onPressed: () => {navigateTo(context, Routes.notifications)},
+              child: const Text('Go To Notifications Page'),
             ),
             Visibility(
               visible: user.username != 'User',
