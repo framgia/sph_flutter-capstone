@@ -18,9 +18,7 @@ class OutlinedButtonText extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        primary: color,
-        side: BorderSide(color: color, width: 2)
-      ),
+          primary: color, side: BorderSide(color: color, width: 2)),
       child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FilledButtonText extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
-  
+
   const FilledButtonText({
     Key? key,
     required this.onPressed,

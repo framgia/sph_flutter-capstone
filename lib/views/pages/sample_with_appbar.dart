@@ -27,9 +27,9 @@ class SamplePageWithAppBar extends HookConsumerWidget {
               text: 'Login As Hello',
               onPressed: () => setSessionUsername(ref, 'Hello'),
             ),
-            FilledButtonText(
-              text: "Filled",
-              onPressed: () {},
+            DateField(
+              firstDate: DateTime(DateTime.now().year, 1),
+              lastDate: DateTime.now(),
             ),
             OutlinedButtonText(
               text: 'Outlined Blue',
@@ -41,7 +41,6 @@ class SamplePageWithAppBar extends HookConsumerWidget {
               onPressed: () {},
             )
           ],
-        )
-      );
+        ));
   }
 }

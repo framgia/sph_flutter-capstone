@@ -43,22 +43,21 @@ const rounded = BorderRadius.all(
 
 // TODO: THEME FOR ALL INPUT FIELDS
 const inputDecorationTheme = InputDecorationTheme(
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: AppColor.secondary),
-    borderRadius: rounded,
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: AppColor.lightGray),
-    borderRadius: rounded,
-  )
-);
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: AppColor.secondary),
+      borderRadius: rounded,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: AppColor.lightGray),
+      borderRadius: rounded,
+    ));
 
 // TODO: STYLE FOR BUTTON
 OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
   style: OutlinedButton.styleFrom(
     primary: AppColor.secondary,
     minimumSize: const Size.fromHeight(60.0),
-    side: const BorderSide(color: AppColor.secondary, width: 2), 
+    side: const BorderSide(color: AppColor.secondary, width: 2),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
