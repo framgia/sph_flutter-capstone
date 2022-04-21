@@ -10,11 +10,17 @@ class WelcomePage extends StatelessWidget {
       child: Column(
         children: [
           ElevatedButton(
-              onPressed: () => {navigateTo(context, '/login')},
-              child: const Text('Login')),
+            onPressed: () => {
+              navigateTo(context, '/login'),
+            },
+            child: const Text('Login'),
+          ),
           ElevatedButton(
-              onPressed: () => {navigateTo(context, '/register')},
-              child: const Text('Register'))
+            onPressed: () => {
+              navigateTo(context, '/register'),
+            },
+            child: const Text('Register'),
+          ),
         ],
       ),
     );
