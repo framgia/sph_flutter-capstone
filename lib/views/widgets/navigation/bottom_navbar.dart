@@ -47,8 +47,8 @@ class BottomNavBar extends HookConsumerWidget {
                   route: Routes.dashboard,
                 ),
                 NavigationButton(
-                  icon: Icons.signal_cellular_0_bar_outlined,
-                  activeIcon: Icons.signal_cellular_4_bar,
+                  icon: Icons.credit_card_outlined,
+                  activeIcon: Icons.credit_card,
                   route: Routes.transactions,
                 ),
                 const SizedBox(width: 75),
@@ -58,8 +58,8 @@ class BottomNavBar extends HookConsumerWidget {
                   route: Routes.notifications,
                 ),
                 NavigationButton(
-                  icon: Icons.person_outline_outlined,
-                  activeIcon: Icons.person,
+                  icon: Icons.settings_outlined,
+                  activeIcon: Icons.settings,
                   route: Routes.settings,
                 ),
               ],
