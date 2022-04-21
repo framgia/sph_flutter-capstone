@@ -3,10 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 class DateField extends StatefulWidget {
+  String? label;
   final DateTime firstDate;
   final DateTime lastDate;
   DateField({
     Key? key,
+    this.label,
     required this.firstDate,
     required this.lastDate,
   }) : super(key: key);
@@ -44,15 +46,22 @@ class _DateFieldState extends State<DateField> {
     }
   }
 
+  addLabel() {
+    if(widget.label != null) {
+      return Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: Text('${widget.label}'),
+        );
+    }
+    return const SizedBox();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text('DATE'),
-        ),
+        addLabel(),
         TextFormField(
           readOnly: true,
           key: UniqueKey(),
