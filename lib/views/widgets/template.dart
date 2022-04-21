@@ -55,15 +55,12 @@ class Template extends StatelessWidget {
             ),
           ),
           SafeArea(
-            //child: Expanded(
-              //flex: 1,
-              child: Container(
-                alignment: Alignment.topLeft,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
-                child: content,
-              ),
-            //),
+            child: Container(
+              child: content,
+              alignment: Alignment.topLeft,
+              padding:
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
+            ),
           ),
         ],
       ),
