@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/views/widgets/navigation/floating_action_button.dart';
 
 class Template extends StatelessWidget {
   final Widget content;
@@ -36,14 +35,6 @@ class Template extends StatelessWidget {
               bottom: Radius.elliptical(160, 20),
             ),
           ),
-<<<<<<< Updated upstream
-          SafeArea(
-            child: Container(
-              child: content,
-              alignment: Alignment.topLeft,
-              padding:
-                  const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
-=======
         ),
         Positioned(
           top: 0.0,
@@ -58,7 +49,6 @@ class Template extends StatelessWidget {
               centerTitle: isTitleCenter,
               backgroundColor: Colors.transparent,
               elevation: 0,
->>>>>>> Stashed changes
             ),
           ),
         ),
