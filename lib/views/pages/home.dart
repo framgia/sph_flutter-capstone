@@ -12,18 +12,15 @@ class Home extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(sessionProvider);
     return Template(
-      appbarTitle: Container(
-        // padding: const EdgeInsets.only(top: 40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Good morning,',
-              style: TextStyle(color: AppColor.gray, fontSize: 14),
-            ),
-            Text(user.username),
-          ],
-        ),
+      appbarTitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Good morning,',
+            style: TextStyle(color: AppColor.gray, fontSize: 14),
+          ),
+          Text(user.username),
+        ],
       ),
       isTitleCenter: false,
       content: Container(

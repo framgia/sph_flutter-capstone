@@ -15,7 +15,7 @@ class Template extends StatelessWidget {
     required this.content,
     required this.appbarTitle,
     this.appbarActions = const [],
-    this.isTitleCenter = true
+    this.isTitleCenter = true,
   }) : super(key: key);
 
   @override
@@ -59,9 +59,10 @@ class Template extends StatelessWidget {
             child: Expanded(
               flex: 1,
               child: Container(
-                child: content,
                 alignment: Alignment.topLeft,
-                padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
+                child: content,
               ),
             ),
           ),

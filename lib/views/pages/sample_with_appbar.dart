@@ -10,7 +10,7 @@ class SamplePageWithAppBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Template(
-        appbarTitle: Text('Sample title here'),
+        appbarTitle: const Text('Sample title here'),
         content: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

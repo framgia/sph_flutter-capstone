@@ -36,4 +36,3 @@ class Navigation extends StatelessWidget {
     );
   }
 }
-
