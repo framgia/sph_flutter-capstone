@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class FilledButton extends StatelessWidget {
+class FilledButtonText extends StatelessWidget {
   final VoidCallback onPressed;
-  final Widget child;
+  final String text;
   
-  const FilledButton({
+  const FilledButtonText({
     Key? key,
     required this.onPressed,
-    required this.child,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: child,
+      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
-class OutlinedRoseButton extends StatelessWidget {
+class OutlinedButtonText extends StatelessWidget {
   final VoidCallback onPressed;
-  final Widget child;
+  final String text;
+  final Color color;
 
-  const OutlinedRoseButton({
+  const OutlinedButtonText({
     Key? key,
     required this.onPressed,
-    required this.child,
+    required this.text,
+    this.color = AppColor.secondary,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      child: child,
       style: OutlinedButton.styleFrom(
-        primary: AppColor.rose,
-        side: const BorderSide(color: AppColor.rose)
+        primary: color,
+        side: BorderSide(color: color, width: 2)
       ),
+      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }

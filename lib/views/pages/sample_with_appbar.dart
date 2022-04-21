@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
-import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button.dart';
-import 'package:sun_flutter_capstone/views/widgets/buttons/outline_blue_button.dart';
-import 'package:sun_flutter_capstone/views/widgets/buttons/outline_rose_button.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/date_field.dart';
 
@@ -14,41 +14,34 @@ class SamplePageWithAppBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Template(
-      appbarTitle: Text('Sample title here'),
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(child: Text('sample content here')),
-          ElevatedButton(
-            onPressed: () => goToHome(context),
-            child: const Text('Home'),
-          ),
-          ElevatedButton(
-            onPressed: () => setSessionUsername(ref, 'Hello'),
-            child: const Text('Login As Hello'),
-          ),
-          DateField(
-            firstDate: DateTime(DateTime.now().year, 1),
-            lastDate: DateTime.now(),
-          ),
-          FilledButton(
-            child: const Text(
-              "Hello filled"),
-            onPressed: () {},
-          ),
-          OutlinedBlueButton(
-            onPressed: () {},
-            child: const Text(
-              'Hello'),
-          ),
-          OutlinedRoseButton(
-            onPressed: () {},
-            child: const Text(
-              'Hello Rose'
-              ),
-          ),
-        ],
-      ),
-    );
+        appbarTitle: const Text('Sample title here'),
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Center(child: Text('sample content here')),
+            FilledButtonText(
+              text: 'Home',
+              onPressed: () => goToHome(context),
+            ),
+            FilledButtonText(
+              text: 'Login As Hello',
+              onPressed: () => setSessionUsername(ref, 'Hello'),
+            ),
+            FilledButtonText(
+              text: "Filled",
+              onPressed: () {},
+            ),
+            OutlinedButtonText(
+              text: 'Outlined Blue',
+              onPressed: () {},
+            ),
+            OutlinedButtonText(
+              text: "Outlined Pink",
+              color: AppColor.pink,
+              onPressed: () {},
+            )
+          ],
+        )
+      );
   }
 }
