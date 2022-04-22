@@ -43,14 +43,23 @@ const rounded = BorderRadius.all(
 
 // TODO: THEME FOR ALL INPUT FIELDS
 const inputDecorationTheme = InputDecorationTheme(
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColor.secondary),
-      borderRadius: rounded,
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColor.lightGray),
-      borderRadius: rounded,
-    ));
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: AppColor.secondary),
+    borderRadius: rounded,
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: AppColor.lightGray),
+    borderRadius: rounded,
+  ),
+  errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.red),
+    borderRadius: rounded,
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: AppColor.red),
+    borderRadius: rounded,
+  ),
+);
 
 // TODO: STYLE FOR BUTTON
 OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
@@ -73,5 +82,5 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-  ),
+  )
 );

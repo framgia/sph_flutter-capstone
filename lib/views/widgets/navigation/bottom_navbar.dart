@@ -13,6 +13,8 @@ class BottomNavBar extends HookConsumerWidget {
   const BottomNavBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
+
     return AutoTabsScaffold(
       routes: const [
         DashboardRouter(),
@@ -20,7 +22,9 @@ class BottomNavBar extends HookConsumerWidget {
         NotificationsRouter(),
         SettingsRouter()
       ],
-      floatingActionButton: const CenterActionButton(),
+      resizeToAvoidBottomInset: false,
+      floatingActionButton:
+          keyboardIsOpened ? SizedBox() : CenterActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBuilder: (_, tabsRouter) {
         return Container(
