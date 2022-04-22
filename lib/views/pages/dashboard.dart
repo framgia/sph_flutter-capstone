@@ -4,6 +4,8 @@ import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
 class Dashboard extends HookConsumerWidget {
@@ -29,9 +31,18 @@ class Dashboard extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            FilledButtonText(
+              text: 'Go To Notifications Page',
               onPressed: () => {navigateTo(context, Routes.notifications)},
-              child: const Text('Go To Notifications Page'),
+            ),
+            OutlinedButtonText(
+              text: 'Outlined Pink',
+              color: AppColor.pink,
+              onPressed: () => {},
+            ),
+            OutlinedButtonText(
+              text: 'Outlined Blue',
+              onPressed: () => {},
             ),
             Visibility(
               visible: user.username != 'User',
