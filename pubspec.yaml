@@ -12,6 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   hooks_riverpod: ^1.0.3
+  sqflite: ^2.0.2+1
+  path: ^1.8.0
+  sqfentity: ^2.2.0+5
+  sqfentity_gen: ^2.2.0+10
+  http: ^0.13.4
   intl: ^0.17.0
   material_design_icons_flutter: ^5.0.6595
 
@@ -19,6 +24,7 @@ dev_dependencies:
   auto_route_generator: ^3.2.3
   build_runner: ^2.1.10
   git_hooks: ^0.1.6
+  build_verify: ^3.0.0
 
   flutter_lints: ^1.0.0
   flutter_test:
