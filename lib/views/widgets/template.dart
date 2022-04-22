@@ -17,49 +17,56 @@ class Template extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
-      children: [
-        Container(
-          height: 250,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColor.light,
-                AppColor.primary,
-              ],
+          children: [
+            Container(
+              height: 250,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColor.light,
+                    AppColor.primary,
+                  ],
+                ),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.elliptical(160, 20),
+                ),
+              ),
             ),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.elliptical(160, 20),
+            Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: AppBar(
+                  toolbarHeight: 80,
+                  title: appbarTitle,
+                  actions: appbarActions,
+                  centerTitle: isTitleCenter,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                ),
+              ),
             ),
-          ),
-        ),
-        Positioned(
-          top: 0.0,
-          left: 0.0,
-          right: 0.0,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: AppBar(
-              toolbarHeight: 80,
-              title: appbarTitle,
-              actions: appbarActions,
-              centerTitle: isTitleCenter,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
+            SafeArea(
+              child: Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.only(top: 60),
+                child: content,
+              ),
             ),
-          ),
+          ],
         ),
-        SafeArea(
-          child: Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 15),
-            child: content,
-          ),
-        ),
-      ],
-    ));
+      ),
+    );
   }
 }
