@@ -74,12 +74,13 @@ OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
 );
 
 ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-  primary: AppColor.secondary,
-  shadowColor: Colors.transparent,
-  elevation: 0,
-  minimumSize: const Size.fromHeight(60.0),
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(50),
+  style: ElevatedButton.styleFrom(
+    primary: AppColor.secondary,
+    shadowColor: Colors.transparent,
+    elevation: 0,
+    minimumSize: const Size.fromHeight(60.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(50),
+    ),
   ),
-));
+);
