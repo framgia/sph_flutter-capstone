@@ -47,11 +47,11 @@ class _DateFieldState extends State<DateField> {
   }
 
   addLabel() {
-    if(widget.label != null) {
+    if (widget.label != null) {
       return Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text('${widget.label}'),
-        );
+        padding: EdgeInsets.only(bottom: 10),
+        child: Text('${widget.label}'),
+      );
     }
     return const SizedBox();
   }
