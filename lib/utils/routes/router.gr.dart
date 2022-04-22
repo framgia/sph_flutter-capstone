@@ -13,7 +13,7 @@
 import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
-import '../../views/pages/account_settings.dart' as _i5;
+import '../../views/pages/account_settings/account_settings.dart' as _i5;
 import '../../views/pages/dashboard.dart' as _i2;
 import '../../views/pages/notifications.dart' as _i4;
 import '../../views/pages/transactions.dart' as _i3;
@@ -43,7 +43,7 @@ class AppRouter extends _i6.RootStackRouter {
     },
     SettingsRouter.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.AccountSettingsPage());
+          routeData: routeData, child: const _i5.AccountSettings());
     }
   };
 

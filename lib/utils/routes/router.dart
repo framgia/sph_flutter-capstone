@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:sun_flutter_capstone/views/pages/account_settings.dart';
+import 'package:sun_flutter_capstone/views/pages/account_settings/account_settings.dart';
 import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
 import 'package:sun_flutter_capstone/views/pages/notifications.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions.dart';
@@ -28,7 +28,7 @@ import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart
       AutoRoute(
         path: 'account_settings',
         name: 'SettingsRouter',
-        page: AccountSettingsPage,
+        page: AccountSettings,
       ),
     ],
   ),
