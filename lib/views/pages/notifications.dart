@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
 class NotificationsPage extends HookConsumerWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -28,45 +31,58 @@ class NotificationsPage extends HookConsumerWidget {
         ),
         child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InputGroup(
-                label: 'NAME',
-                input: InputField(
-                  inputController: nameController,
-                  hintText: 'Starbucks',
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InputGroup(
+                  label: 'NAME',
+                  input: InputField(
+                    inputController: nameController,
+                    hintText: 'Starbucks',
+                  ),
                 ),
-              ),
-              InputGroup(
-                label: 'AMOUNT',
-                input: InputField(
-                  inputController: amountController,
-                  hintText: '0.0',
-                  isNumber: true,
+                InputGroup(
+                  label: 'AMOUNT',
+                  input: InputField(
+                    inputController: amountController,
+                    hintText: '0.0',
+                    isNumber: true,
+                  ),
                 ),
-              ),
-              InputGroup(
-                label: 'DATE',
-                input: DateField(
-                  firstDate: DateTime(DateTime.now().year, 1),
-                  lastDate: DateTime.now(),
+                InputGroup(
+                  label: 'DATE',
+                  input: DateField(
+                    firstDate: DateTime(DateTime.now().year, 1),
+                    lastDate: DateTime.now(),
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: Text('Values: ${nameController.text} ${amountController.text}'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('sample button to check validation'),
-              ),
-            ],
+                FilledButtonText(
+                  text: 'sample button to check validation',
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          content: Text(
+                              'Values: ${nameController.text} ${amountController.text}'),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                OutlinedButtonText(
+                  text: 'Outlined Pink',
+                  color: AppColor.pink,
+                  onPressed: () => {},
+                ),
+                OutlinedButtonText(
+                  text: 'Outlined Blue',
+                  onPressed: () => {},
+                ),
+              ],
+            ),
           ),
         ),
       ),
