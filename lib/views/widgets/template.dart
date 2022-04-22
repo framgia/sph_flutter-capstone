@@ -65,8 +65,8 @@ class Template extends StatelessWidget {
               ),
             ),
           ],
+          ),
         ),
-      ),
-    );
+      );
   }
 }
