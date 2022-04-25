@@ -11,8 +11,6 @@ class TabButtons extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,12 +26,12 @@ class TabButtons extends StatelessWidget {
         child: TabBar(
           controller: tabController,
           indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              25.0,
-            ),
-            color: index==0 ? AppColor.pink : AppColor.darkBlue
-          ),
+              borderRadius: BorderRadius.circular(
+                25.0,
+              ),
+              color: index == 0 ? AppColor.pink : AppColor.darkBlue),
           unselectedLabelColor: Colors.black,
+          labelStyle: TextStyle(fontWeight: FontWeight.w600),
           labelColor: Colors.white,
           tabs: const [
             Tab(
