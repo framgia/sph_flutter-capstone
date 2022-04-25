@@ -7,7 +7,7 @@ import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
-import 'package:sun_flutter_capstone/views/widgets/cards/transaction_summary.dart';
+import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
 
 class Dashboard extends HookConsumerWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -23,10 +23,10 @@ class Dashboard extends HookConsumerWidget {
     if (hour < 12) {
       return 'Good morning,';
     }
-    if (hour < 17) {
+    else if (hour < 17) {
       return 'Good afternoon,';
     }
-    return 'Good evening,';
+    else return 'Good evening,';
   }
 
   @override

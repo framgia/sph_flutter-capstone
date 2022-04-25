@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 
 class TransactionSummary extends StatelessWidget {
   final double totalBalance;
@@ -23,20 +24,14 @@ class TransactionSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 33.0),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-            Radius.circular(20.0) //                 <--- border radius here
-            ),
-        color: AppColor.darkBlue,
-      ),
-      height: 186.0,
+    return ElevatedCard(
       width: 374.0,
-      child: Container(
+      boxColor: AppColor.darkBlue,
+      margin: 33.0,
+      content: Container(
+        height: 156.0,
         padding: const EdgeInsets.symmetric(
-          vertical: 32.12,
-          horizontal: 20,
+          vertical: 17.12,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
