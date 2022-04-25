@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputField extends StatelessWidget {
   final String hintText;
-  final bool isNumber;
   final String errorMessage;
+  final TextInputType inputType;
+  final bool isPassword;
   final TextEditingController inputController;
 
   const InputField({
     Key? key,
-    this.isNumber = false,
     this.hintText = '',
     this.errorMessage = 'This field is required.',
+    this.inputType = TextInputType.text,
+    this.isPassword = false,
     required this.inputController,
   }) : super(key: key);
 
@@ -27,7 +30,8 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
       ),
-      keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+      keyboardType: inputType,
+      obscureText: isPassword,
     );
   }
 }

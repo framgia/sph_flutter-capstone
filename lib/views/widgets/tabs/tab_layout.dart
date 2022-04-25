@@ -41,7 +41,8 @@ class _TabLayoutState extends State<TabLayout>
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 30, horizontal: 28),
-      child: Column(
+      child: Flex(
+        direction: Axis.vertical,
         children: [
           //? FOR TAB BUTTONS
           TabButtons(

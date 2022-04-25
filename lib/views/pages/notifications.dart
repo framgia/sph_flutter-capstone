@@ -20,6 +20,7 @@ class NotificationsPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final TextEditingController nameController = TextEditingController();
     final TextEditingController amountController = TextEditingController();
+    final TextEditingController dateController = TextEditingController();
 
     return Template(
       appbarTitle: Text('Notificatons Page'),
@@ -52,7 +53,7 @@ class NotificationsPage extends HookConsumerWidget {
                   input: InputField(
                     inputController: amountController,
                     hintText: '0.0',
-                    isNumber: true,
+                    inputType: TextInputType.number,
                   ),
                 ),
                 InputGroup(
@@ -60,6 +61,7 @@ class NotificationsPage extends HookConsumerWidget {
                   input: DateField(
                     firstDate: DateTime(DateTime.now().year, 1),
                     lastDate: DateTime.now(),
+                    dateController: dateController,
                   ),
                 ),
                 FilledButtonText(

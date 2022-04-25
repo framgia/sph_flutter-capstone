@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/state/spending_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';

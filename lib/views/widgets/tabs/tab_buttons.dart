@@ -23,29 +23,26 @@ class TabButtons extends StatelessWidget {
           25.0,
         ),
       ),
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: TabBar(
-            controller: tabController,
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                25.0,
-              ),
-              color: index == 0 ? AppColor.pink : AppColor.darkBlue,
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: TabBar(
+          controller: tabController,
+          indicator: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              25.0,
             ),
-            unselectedLabelColor: AppColor.darkBlue,
-            labelColor: Colors.white,
-            labelStyle: TextStyle(fontWeight: FontWeight.w600),
-            tabs: const [
-              Tab(
-                child: Text('Add Expense'),
-              ),
-              Tab(
-                child: Text('Add Income'),
-              ),
-            ],
+            color: index==0 ? AppColor.pink : AppColor.darkBlue
           ),
+          unselectedLabelColor: Colors.black,
+          labelColor: Colors.white,
+          tabs: const [
+            Tab(
+              child: Text('Add Expense'),
+            ),
+            Tab(
+              child: Text('Add Income'),
+            ),
+          ],
         ),
       ),
     );

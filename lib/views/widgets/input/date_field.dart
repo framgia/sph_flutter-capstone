@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 class DateField extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
-  DateField({
-    Key? key,
-    required this.firstDate,
-    required this.lastDate,
-  }) : super(key: key);
+  final TextEditingController dateController;
+
+  DateField(
+      {Key? key,
+      required this.firstDate,
+      required this.lastDate,
+      required this.dateController})
+      : super(key: key);
 
   @override
   State<DateField> createState() => _DateFieldState();
@@ -39,9 +43,17 @@ class _DateFieldState extends State<DateField> {
       setState(
         () {
           selectedDate = newDate;
+          widget.dateController.text =
+              DateFormat('EEE, d MMM yyyy').format(selectedDate);
         },
       );
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.dateController.text = DateFormat('EEE, d MMM yyyy').format(selectedDate);
   }
 
   @override
@@ -53,7 +65,7 @@ class _DateFieldState extends State<DateField> {
           readOnly: true,
           key: UniqueKey(),
           onTap: getDateInput,
-          initialValue: DateFormat('EEE, d MMM yyyy').format(selectedDate),
+          controller: widget.dateController,
           decoration: const InputDecoration(
             suffixIcon: Icon(
               Icons.event,

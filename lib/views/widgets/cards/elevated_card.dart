@@ -6,6 +6,7 @@ class ElevatedCard extends StatelessWidget {
   final double width;
   final double margin;
   final Color boxColor;
+  final EdgeInsetsGeometry padding;
 
   const ElevatedCard({
     Key? key,
@@ -14,6 +15,7 @@ class ElevatedCard extends StatelessWidget {
     this.isBoxShadowExist = true,
     required this.content,
     required this.width,
+    this.padding = const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
   }) : super(key: key);
 
   @override
@@ -37,10 +39,7 @@ class ElevatedCard extends StatelessWidget {
             : [],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 30,
-        ),
+        padding: padding,
         child: content,
       ),
     );
