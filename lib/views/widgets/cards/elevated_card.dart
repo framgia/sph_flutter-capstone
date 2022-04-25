@@ -26,16 +26,21 @@ class ElevatedCard extends StatelessWidget {
             Radius.circular(20.0) //                 <--- border radius here
             ),
         color: boxColor,
-        boxShadow: isBoxShadowExist ? const [
-          BoxShadow(
-            color: Color(0xFFEDEDED),
-            blurRadius: 4,
-            offset: Offset(0, 4), // changes position of shadow
-          ),
-        ] : [],
+        boxShadow: isBoxShadowExist
+            ? const [
+                BoxShadow(
+                  color: Color(0xFFEDEDED),
+                  blurRadius: 4,
+                  offset: Offset(0, 4), // changes position of shadow
+                ),
+              ]
+            : [],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30,),
+        padding: const EdgeInsets.symmetric(
+          vertical: 15,
+          horizontal: 30,
+        ),
         child: content,
       ),
     );

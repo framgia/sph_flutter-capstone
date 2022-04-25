@@ -22,11 +22,10 @@ class Dashboard extends HookConsumerWidget {
     var hour = DateTime.now().hour;
     if (hour < 12) {
       return 'Good morning,';
-    }
-    else if (hour < 17) {
+    } else if (hour < 17) {
       return 'Good afternoon,';
-    }
-    else return 'Good evening,';
+    } else
+      return 'Good evening,';
   }
 
   @override
