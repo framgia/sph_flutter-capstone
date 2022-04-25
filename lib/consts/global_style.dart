@@ -6,7 +6,7 @@ class AppColor {
   static const Color secondary = Color(0xFF324ED9);
   static const Color lightGray = Color(0xFFA7ABB8);
   static const Color gray = Color(0xFF666666);
-  static const Color darkBlue = Color(0xFF3D3541);
+  static const Color darkBlue = Color(0xFF242D58);
   static const Color onyx = Color(0xFF242D58);
   static const Color red = Color(0xFFD93232);
   static const Color pink = Color(0xFFFE91A7);
@@ -82,5 +82,5 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-  )
+  ),
 );

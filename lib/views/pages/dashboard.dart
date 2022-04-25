@@ -7,8 +7,27 @@ import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
+import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
+
 class Dashboard extends HookConsumerWidget {
   const Dashboard({Key? key}) : super(key: key);
+
+  final String firstName = 'Juan Dela';
+  final String lastName = 'Dela Cruz';
+  final String currency = 'fil';
+  final double totalIncome = 50000;
+  final double totalExpenses = 30000;
+
+  String _greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good morning,';
+    } else if (hour < 17) {
+      return 'Good afternoon,';
+    } else
+      return 'Good evening,';
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(sessionProvider);
@@ -16,19 +35,27 @@ class Dashboard extends HookConsumerWidget {
       appbarTitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Good morning,',
+          Text(
+            _greeting(),
             style: TextStyle(color: AppColor.gray, fontSize: 14),
           ),
-          Text(user.username),
+          Text(
+            '$firstName $lastName',
+            style: TextStyle(color: AppColor.secondary, fontSize: 20),
+          ),
         ],
       ),
       isTitleCenter: false,
       content: Container(
         alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TransactionSummary(
+              totalBalance: totalIncome - totalExpenses,
+              totalIncome: totalIncome,
+              totalExpenses: totalExpenses,
+              currency: currency,
+            ),
             FilledButtonText(
               text: 'Go To Notifications Page',
               onPressed: () => {navigateTo(context, Routes.notifications)},

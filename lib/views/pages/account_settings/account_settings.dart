@@ -16,7 +16,6 @@ class AccountSettings extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Template(
         appbarTitle: Text(
           'Account Settings',
@@ -168,7 +167,6 @@ class AccountSettings extends HookConsumerWidget {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
