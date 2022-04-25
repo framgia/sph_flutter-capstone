@@ -86,6 +86,6 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
 );
 
 class ProgressBarTheme {
-  static const Color barColor = Color(0xFFFE91A7);
+  static const Color barColor = AppColor.pink;
   static const Color bgColor = Color(0xFFF0F6F5);
 }

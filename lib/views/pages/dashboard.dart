@@ -69,10 +69,15 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 totalExpenses: widget.totalExpenses,
                 currency: widget.currency,
               ),
-              ProgressBar(
-                progress: spendingAmount,
-                label: "You have spent",
+              Container(
+                margin:
+                    EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
+                child: ProgressBar(
+                  progress: spendingAmount,
+                  label: "You have spent",
+                ),
               ),
+              // * The following row can be removed this is just for testing the progress bar
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -94,14 +99,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     ),
                   )
                 ],
-              ),
-              FilledButtonText(
-                text: 'Go To Notifications Page',
-                onPressed: () => {navigateTo(context, Routes.notifications)},
-              ),
-              ElevatedButton(
-                onPressed: () => {navigateTo(context, '/account_settings')},
-                child: const Text('Go To Settings'),
               ),
             ],
           ),

@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 class ProgressBar extends StatefulHookConsumerWidget {
-  double progress;
   String? label;
+  final double progress;
   final Color barColor;
   final Color bgColor;
   final double barSize;
