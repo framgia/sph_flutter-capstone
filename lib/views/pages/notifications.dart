@@ -4,6 +4,7 @@ import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
+import 'package:sun_flutter_capstone/views/widgets/input/selected_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
@@ -80,6 +81,25 @@ class NotificationsPage extends HookConsumerWidget {
                 OutlinedButtonText(
                   text: 'Outlined Blue',
                   onPressed: () => {},
+                ),
+                SelectInput(
+                  items: const [
+                    'Item 1',
+                    'Item 2',
+                    'Item 3',
+                    'Item 4',
+                    'Item 5',
+                  ],
+                  initialValue: 'Item 1',
+                  valueReceiver: (String value) {
+                    //TODO: use value of select
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: Text('Dropdown value: $value'),
+                      )
+                    );
+                  },
                 ),
               ],
             ),
