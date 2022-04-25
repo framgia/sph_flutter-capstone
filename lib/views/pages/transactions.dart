@@ -4,6 +4,7 @@ import 'package:sun_flutter_capstone/state/spending_provider.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
 class TransactionsPage extends HookConsumerWidget {
+
   const TransactionsPage({Key? key}) : super(key: key);
 
   @override
