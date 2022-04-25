@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sun_flutter_capstone/state/spending_provider.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/views/widgets/tabs/tab_layout.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
 class TransactionsPage extends HookConsumerWidget {
@@ -8,10 +9,22 @@ class TransactionsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final spendingAmount = ref.watch(spendingProvider);
-    return const Template(
+    return Template(
       appbarTitle: Text('Transactions Page'),
-      content: Center(child: Text('sample content')),
+      content: Center(
+        child: TabLayout(
+          firstTab: Container(
+            color: AppColor.pink,
+            alignment: Alignment.center,
+            child: Text('Expense content'),
+          ),
+          secondTab: Container(
+            color: AppColor.light,
+            alignment: Alignment.center,
+            child: Text('Income content'),
+          ),
+        ),
+      ),
     );
   }
 }
