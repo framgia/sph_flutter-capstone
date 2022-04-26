@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions/add_expense.dart';
+import 'package:sun_flutter_capstone/views/pages/transactions/add_income.dart';
 import 'package:sun_flutter_capstone/views/widgets/tabs/tab_layout.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
@@ -14,11 +15,7 @@ class AddTransaction extends StatelessWidget {
       appbarTitle: Text('Add Transaction'),
       content: TabLayout(
         firstTab: AddExpenseForm(),
-        secondTab: Container(
-          color: AppColor.light,
-          alignment: Alignment.center,
-          child: Text('Income content'),
-        ),
+        secondTab: AddIncomeForm(),
       ),
     );
   }
