@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/views/widgets/tabs/tab_layout.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 
 class TransactionsPage extends HookConsumerWidget {
@@ -12,18 +10,7 @@ class TransactionsPage extends HookConsumerWidget {
     return Template(
       appbarTitle: Text('Transactions Page'),
       content: Center(
-        child: TabLayout(
-          firstTab: Container(
-            color: AppColor.pink,
-            alignment: Alignment.center,
-            child: Text('Expense content'),
-          ),
-          secondTab: Container(
-            color: AppColor.light,
-            alignment: Alignment.center,
-            child: Text('Income content'),
-          ),
-        ),
+        child: Text('Income content'),
       ),
     );
   }

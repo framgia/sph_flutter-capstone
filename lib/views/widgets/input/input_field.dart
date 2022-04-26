@@ -1,33 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
 
-class InputField extends StatelessWidget {
+class InputField extends StatefulWidget {
   final String hintText;
-  final bool isNumber;
   final String errorMessage;
+  final TextInputType inputType;
   final TextEditingController inputController;
 
   const InputField({
     Key? key,
-    this.isNumber = false,
     this.hintText = '',
     this.errorMessage = 'This field is required.',
+    this.inputType = TextInputType.text,
     required this.inputController,
   }) : super(key: key);
 
   @override
+  State<InputField> createState() => _InputFieldState();
+}
+
+class _InputFieldState extends State<InputField> {
+  final FocusNode _focusNode = FocusNode();
+  bool isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      onFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focusNode.removeListener(onFocus);
+    _focusNode.dispose();
+  }
+
+  onFocus() {
+    setState(() {
+      isFocused = !isFocused;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: inputController,
+      controller: widget.inputController,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return errorMessage;
+          return widget.errorMessage;
         }
         return null;
       },
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: widget.hintText,
       ),
-      keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+      focusNode: _focusNode,
+      style: TextStyle(
+        color: isFocused ? AppColor.secondary : AppColor.gray,
+      ),
+      keyboardType: widget.inputType,
     );
   }
 }

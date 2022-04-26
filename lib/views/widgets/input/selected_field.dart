@@ -5,12 +5,14 @@ class SelectInput extends StatefulWidget {
   final List<String> items;
   final String initialValue;
   final Function(String) valueReceiver;
+  final String errorMessage;
 
   const SelectInput({
     Key? key,
     required this.items,
     required this.initialValue,
     required this.valueReceiver,
+    this.errorMessage = 'This field is required.',
   }) : super(key: key);
 
   @override
@@ -58,6 +60,12 @@ class _SelectedInputState extends State<SelectInput> {
               ),
             );
           }).toList();
+        },
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return widget.errorMessage;
+          }
+          return null;
         },
         onChanged: (String? newValue) {
           setState(() {
