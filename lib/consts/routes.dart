@@ -3,4 +3,5 @@ class Routes {
   static const String transactions = '/transactions';
   static const String notifications = '/notifications';
   static const String settings = '/account_settings';
+  static const String samplecrud = '/sample_crud';
 }

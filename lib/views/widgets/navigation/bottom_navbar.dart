@@ -20,7 +20,8 @@ class BottomNavBar extends HookConsumerWidget {
         DashboardRouter(),
         TransactionRouter(),
         NotificationsRouter(),
-        SettingsRouter()
+        SettingsRouter(),
+        SampleCrud()
       ],
       resizeToAvoidBottomInset: false,
       floatingActionButton:
