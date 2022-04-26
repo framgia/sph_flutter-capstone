@@ -4,6 +4,7 @@ import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/views/pages/account_settings/currency_picker.dart';
 
 class AccountSettings extends HookConsumerWidget {
   const AccountSettings({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class AccountSettings extends HookConsumerWidget {
   final String firstName = 'Juan Dela';
   final String lastName = 'Dela Cruz';
   final String email = 'juan.delacruz@com.com';
-  final String currency = 'PHP (₱)';
+  final String currency = 'PHP';
   final String spendingLimit = '18,000';
 
   @override
@@ -61,42 +62,7 @@ class AccountSettings extends HookConsumerWidget {
                 ),
                 ElevatedCard(
                   width: 344.0,
-                  content: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Currency',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.lightGray,
-                            ),
-                          ),
-                          Text(
-                            currency,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              height: 1.8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          print('clicked');
-                        },
-                        color: AppColor.lightGray,
-                        iconSize: 15.0,
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                    ],
-                  ),
+                  content: CurrencyPicker(),
                 ),
                 ElevatedCard(
                   width: 344.0,
