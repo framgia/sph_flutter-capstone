@@ -5,4 +5,5 @@ class Routes {
   static const String settings = '/account_settings';
   static const String samplecrud = '/sample_crud';
   static const String addTransaction = '/add_transaction';
+  static const String updateBasicInfo = '/update_basic_info';
 }

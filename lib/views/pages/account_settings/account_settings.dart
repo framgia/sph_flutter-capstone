@@ -5,6 +5,9 @@ import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/currency_picker.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
+import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
 
 class AccountSettings extends HookConsumerWidget {
   const AccountSettings({Key? key}) : super(key: key);
@@ -40,16 +43,7 @@ class AccountSettings extends HookConsumerWidget {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        print('clicked');
-                      },
-                      color: AppColor.lightGray,
-                      iconSize: 15.0,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.all(5.0),
-                    ),
+                    UpdateBasicInfo(),
                   ],
                 ),
                 Text(

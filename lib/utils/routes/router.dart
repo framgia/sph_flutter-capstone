@@ -6,6 +6,7 @@ import 'package:sun_flutter_capstone/views/pages/test/sample_crud.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions/add_transaction.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart';
+import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
 
 @MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: <AutoRoute>[
   AutoRoute(
@@ -41,6 +42,11 @@ import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart
         path: 'add_transaction',
         page: AddTransaction,
         name: 'AddTransactionRouter',
+      ),
+      AutoRoute(
+        path: 'update_basic_info',
+        name: 'UpdateBasicInfoRouter',
+        page: UpdateBasicInfo,
       ),
     ],
   ),
