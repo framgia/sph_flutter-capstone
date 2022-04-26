@@ -42,7 +42,6 @@ class _TabLayoutState extends State<TabLayout>
 
   @override
   Widget build(BuildContext context) {
-    print('CURRENT TAB: ${_tabController.index}');
     return Container(
       margin: EdgeInsets.symmetric(vertical: 30, horizontal: 28),
       child: Flex(

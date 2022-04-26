@@ -76,7 +76,7 @@ class Summary extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        //? transaction summary 
+        // transaction summary 
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
