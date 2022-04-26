@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
 class Login extends StatelessWidget {
   const Login({ Key? key }) : super(key: key);
@@ -87,7 +88,7 @@ class Login extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                       OutlinedButtonText(
                         text: 'Enter Pin',
                         onPressed: () => {},
