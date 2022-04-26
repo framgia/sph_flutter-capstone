@@ -3,9 +3,8 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
-
 class CurrencyPicker extends StatefulWidget {
-  const CurrencyPicker({Key? key}) : super (key: key);
+  const CurrencyPicker({Key? key}) : super(key: key);
 
   @override
   _CurrencyPicker createState() => _CurrencyPicker();

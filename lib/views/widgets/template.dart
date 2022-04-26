@@ -59,7 +59,7 @@ class Template extends StatelessWidget {
             ),
             SafeArea(
               child: Container(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topCenter,
                 margin: const EdgeInsets.only(top: 60),
                 child: content,
               ),
