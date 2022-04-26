@@ -14,8 +14,18 @@ class AddTransaction extends StatelessWidget {
     return Template(
       appbarTitle: Text('Add Transaction'),
       content: TabLayout(
-        firstTab: AddExpenseForm(),
-        secondTab: AddIncomeForm(),
+        tabButtonLabels: const [
+          'Add Expense',
+          'Add Income',
+        ],
+        tabColors: const [
+          AppColor.pink,
+          AppColor.darkBlue
+        ],
+        tabContents: [
+          AddExpenseForm(),
+          AddIncomeForm()
+        ],
       ),
     );
   }

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/views/widgets/tabs/tab_buttons.dart';
 
+// Refactor receiving of tab details if there's time
 class TabLayout extends StatefulWidget {
-  final Widget firstTab;
-  final Widget secondTab;
-
+  final List<String> tabButtonLabels;
+  final List<Color> tabColors;
+  final List<Widget> tabContents;
   const TabLayout({
     Key? key,
-    required this.firstTab,
-    required this.secondTab,
+    required this.tabButtonLabels,
+    required this.tabColors,
+    required this.tabContents,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class _TabLayoutState extends State<TabLayout>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: widget.tabContents.length);
     _tabController.addListener(() {
       setState(() {
         index = _tabController.index;
@@ -47,7 +49,9 @@ class _TabLayoutState extends State<TabLayout>
           //? FOR TAB BUTTONS
           TabButtons(
             tabController: _tabController,
-            index: index,
+            // index: index,
+            tabButtonLabels: widget.tabButtonLabels,
+            tabColor: widget.tabColors[index],
           ),
           //? FOR CONTENT
           Expanded(
@@ -55,7 +59,7 @@ class _TabLayoutState extends State<TabLayout>
               margin: EdgeInsets.only(top: 20),
               child: TabBarView(
                 controller: _tabController,
-                children: [widget.firstTab, widget.secondTab],
+                children: widget.tabContents,
               ),
             ),
           )

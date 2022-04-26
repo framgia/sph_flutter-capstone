@@ -3,13 +3,23 @@ import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 class TabButtons extends StatelessWidget {
   final TabController tabController;
-  final int index;
+  final List<String> tabButtonLabels;
+  final Color tabColor;
 
   const TabButtons({
     Key? key,
     required this.tabController,
-    required this.index,
+    required this.tabButtonLabels,
+    required this.tabColor
   }) : super(key: key);
+
+  displayButtonLabels() {
+    return tabButtonLabels.map(
+      (label) {
+        return Tab(child: Text(label));
+      },
+    ).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +34,17 @@ class TabButtons extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: TabBar(
-          controller: tabController,
-          indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              25.0,
+            controller: tabController,
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                25.0,
+              ),
+              color: tabColor,
             ),
-            color: index == 0 ? AppColor.pink : AppColor.darkBlue,
-          ),
-          unselectedLabelColor: Colors.black,
-          labelStyle: TextStyle(fontWeight: FontWeight.w600),
-          labelColor: Colors.white,
-          tabs: const [
-            Tab(
-              child: Text('Add Expense'),
-            ),
-            Tab(
-              child: Text('Add Income'),
-            ),
-          ],
-        ),
+            unselectedLabelColor: Colors.black,
+            labelStyle: TextStyle(fontWeight: FontWeight.w600),
+            labelColor: Colors.white,
+            tabs: displayButtonLabels()),
       ),
     );
   }
