@@ -25,7 +25,8 @@ class _TabLayoutState extends State<TabLayout>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: widget.tabContents.length);
+    _tabController =
+        TabController(vsync: this, length: widget.tabContents.length);
     _tabController.addListener(() {
       setState(() {
         index = _tabController.index;
@@ -41,6 +42,7 @@ class _TabLayoutState extends State<TabLayout>
 
   @override
   Widget build(BuildContext context) {
+    print('CURRENT TAB: ${_tabController.index}');
     return Container(
       margin: EdgeInsets.symmetric(vertical: 30, horizontal: 28),
       child: Flex(
@@ -49,7 +51,6 @@ class _TabLayoutState extends State<TabLayout>
           //? FOR TAB BUTTONS
           TabButtons(
             tabController: _tabController,
-            // index: index,
             tabButtonLabels: widget.tabButtonLabels,
             tabColor: widget.tabColors[index],
           ),
@@ -62,7 +63,7 @@ class _TabLayoutState extends State<TabLayout>
                 children: widget.tabContents,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
