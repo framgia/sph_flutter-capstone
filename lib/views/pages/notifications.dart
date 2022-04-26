@@ -85,7 +85,9 @@ class NotificationsPage extends HookConsumerWidget {
                 ),
                 OutlinedButtonText(
                   text: 'Outlined Blue',
-                  onPressed: () => {},
+                  onPressed: () => {
+                    // navigateTo(context, Routes.samplecrud)
+                  },
                 ),
                 SelectInput(
                   items: const [

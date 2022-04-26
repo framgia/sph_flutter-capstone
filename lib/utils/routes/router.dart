@@ -3,6 +3,7 @@ import 'package:sun_flutter_capstone/views/pages/account_settings/account_settin
 import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
 import 'package:sun_flutter_capstone/views/pages/notifications.dart';
 import 'package:sun_flutter_capstone/views/pages/test/sample_crud.dart';
+import 'package:sun_flutter_capstone/views/pages/session/login.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions/add_transaction.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart';
@@ -41,6 +42,11 @@ import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart
         path: 'add_transaction',
         page: AddTransaction,
         name: 'AddTransactionRouter',
+      ),
+       AutoRoute(
+        path: 'login',
+        name: 'LoginRouter',
+        page: Login,
       ),
     ],
   ),
