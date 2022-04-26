@@ -58,7 +58,7 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
               InputField(
                 inputController: _amountController,
                 hintText: '0.0',
-                isNumber: true,
+                inputType: TextInputType.number,
               ),
               const SizedBox(
                 height: 20,
