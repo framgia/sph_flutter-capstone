@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/account_settings.dart';
 import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
 import 'package:sun_flutter_capstone/views/pages/notifications.dart';
+import 'package:sun_flutter_capstone/views/pages/test/sample_crud.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart';
 
@@ -29,6 +30,11 @@ import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart
         path: 'account_settings',
         name: 'SettingsRouter',
         page: AccountSettings,
+      ),
+      AutoRoute(
+        path: 'sample_crud',
+        name: 'SampleCrud',
+        page: SampleCrud,
       ),
     ],
   ),
