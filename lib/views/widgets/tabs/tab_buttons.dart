@@ -6,12 +6,12 @@ class TabButtons extends StatelessWidget {
   final List<String> tabButtonLabels;
   final Color tabColor;
 
-  const TabButtons({
-    Key? key,
-    required this.tabController,
-    required this.tabButtonLabels,
-    required this.tabColor
-  }) : super(key: key);
+  const TabButtons(
+      {Key? key,
+      required this.tabController,
+      required this.tabButtonLabels,
+      required this.tabColor})
+      : super(key: key);
 
   displayButtonLabels() {
     return tabButtonLabels.map(

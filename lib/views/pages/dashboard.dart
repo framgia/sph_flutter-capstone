@@ -3,12 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/state/session_provider.dart';
 import 'package:sun_flutter_capstone/state/spending_provider.dart';
-import 'package:sun_flutter_capstone/utils/routing.dart';
-import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
-import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
+import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -20,6 +18,23 @@ class Dashboard extends StatefulHookConsumerWidget {
   final String currency = 'fil';
   final double totalIncome = 50000;
   final double totalExpenses = 30000;
+
+  final List<Map> data = const [
+    {
+      'type': 'income',
+      'description': 'Salary',
+      'amount': 50000.0,
+      'icon': Icons.attach_money_outlined,
+      'date': '2022-04-25T11:00:00.000Z'
+    },
+    {
+      'type': 'expenses',
+      'description': 'Gas bill',
+      'amount': 3000.0,
+      'icon': Icons.drive_eta_outlined,
+      'date': '2022-04-23T11:00:00.000Z'
+    },
+  ];
 
   String _greeting() {
     var hour = DateTime.now().hour;
@@ -56,50 +71,52 @@ class _DashboardState extends ConsumerState<Dashboard> {
         ],
       ),
       isTitleCenter: false,
-      content: Container(
-        alignment: Alignment.center,
+      content: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              TransactionSummary(
-                totalBalance: widget.totalIncome - widget.totalExpenses,
-                totalIncome: widget.totalIncome,
-                totalExpenses: widget.totalExpenses,
-                currency: widget.currency,
-              ),
-              Container(
-                margin:
-                    EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
-                child: ProgressBar(
-                  progress: spendingAmount,
-                  label: "You have spent",
+          alignment: Alignment.center,
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                TransactionSummary(
+                  totalBalance: widget.totalIncome - widget.totalExpenses,
+                  totalIncome: widget.totalIncome,
+                  totalExpenses: widget.totalExpenses,
+                  currency: widget.currency,
                 ),
-              ),
-              // * The following row can be removed this is just for testing the progress bar
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setSpendingAmount(ref, spendingAmount - 0.1);
-                      },
-                      child: const Text('-'),
-                    ),
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
+                  child: ProgressBar(
+                    progress: spendingAmount,
+                    label: "You have spent",
                   ),
-                  const SizedBox(width: 30),
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setSpendingAmount(ref, spendingAmount + 0.1);
-                      },
-                      child: const Text('+'),
+                ),
+                // * The following row can be removed this is just for testing the progress bar
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setSpendingAmount(ref, spendingAmount - 0.1);
+                        },
+                        child: const Text('-'),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ],
+                    const SizedBox(width: 30),
+                    Flexible(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setSpendingAmount(ref, spendingAmount + 0.1);
+                        },
+                        child: const Text('+'),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

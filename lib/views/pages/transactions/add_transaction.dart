@@ -18,14 +18,8 @@ class AddTransaction extends StatelessWidget {
           'Add Expense',
           'Add Income',
         ],
-        tabColors: const [
-          AppColor.pink,
-          AppColor.darkBlue
-        ],
-        tabContents: [
-          AddExpenseForm(),
-          AddIncomeForm()
-        ],
+        tabColors: const [AppColor.pink, AppColor.darkBlue],
+        tabContents: [AddExpenseForm(), AddIncomeForm()],
       ),
     );
   }

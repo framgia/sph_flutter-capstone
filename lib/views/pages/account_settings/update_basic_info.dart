@@ -13,9 +13,9 @@ class UpdateBasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final TextEditingController nameController =
-    TextEditingController(text: 'Juan Dela Cruz');
+        TextEditingController(text: 'Juan Dela Cruz');
     final TextEditingController emailController =
-    TextEditingController(text: 'juan.delacruz@com.com');
+        TextEditingController(text: 'juan.delacruz@com.com');
 
     return IconButton(
       icon: const Icon(Icons.edit),
