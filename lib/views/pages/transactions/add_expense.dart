@@ -24,6 +24,14 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
     'dateController': TextEditingController(),
   };
 
+  //TODO: change dropdown values here
+  List<String> dropdownValues = [
+    '',
+    'Food and Drink',
+    'Bills',
+    'Other',
+  ];
+
   onSubmit() {
     if (expenseFormKey.currentState!.validate()) {
       //TODO: Add implementation for submission of form
@@ -60,27 +68,28 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
               InputGroup(
                 label: 'NAME',
                 input: InputField(
-                  hintText: 'Starbucks',
+                  hintText: 'What are you spending for?',
                   inputController: formInputControllers['nameController']!,
                 ),
               ),
               InputGroup(
                 label: 'AMOUNT',
                 input: InputField(
-                  hintText: '150.00',
+                  hintText: 'How much did you spend?',
                   inputType: TextInputType.number,
                   inputController: formInputControllers['amountController']!,
                 ),
               ),
               InputGroup(
-                  label: 'CATEGORY',
-                  input: SelectInput(
-                    items: const ['Food and Drink', 'Bills', 'Other'], // TODO: Change items here
-                    initialValue: 'Food and Drink',
-                    valueReceiver: (String value) {
-                      formInputControllers['categoryController']!.text = value;
-                    },
-                  )),
+                label: 'CATEGORY',
+                input: SelectInput(
+                  items: dropdownValues,
+                  initialValue: '',
+                  valueReceiver: (String value) {
+                    formInputControllers['categoryController']!.text = value;
+                  },
+                ),
+              ),
               InputGroup(
                 label: 'DATE',
                 input: DateField(

@@ -8,12 +8,12 @@ class DateField extends StatefulWidget {
   final DateTime lastDate;
   final TextEditingController dateController;
 
-  DateField(
-      {Key? key,
-      required this.firstDate,
-      required this.lastDate,
-      required this.dateController})
-      : super(key: key);
+  DateField({
+    Key? key,
+    required this.firstDate,
+    required this.lastDate,
+    required this.dateController,
+  }) : super(key: key);
 
   @override
   State<DateField> createState() => _DateFieldState();
@@ -53,7 +53,8 @@ class _DateFieldState extends State<DateField> {
   @override
   void initState() {
     super.initState();
-    widget.dateController.text = DateFormat('EEE, d MMM yyyy').format(selectedDate);
+    widget.dateController.text =
+        DateFormat('EEE, d MMM yyyy').format(selectedDate);
   }
 
   @override
