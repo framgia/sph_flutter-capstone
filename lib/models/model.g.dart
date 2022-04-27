@@ -33,15 +33,14 @@ class TableAccount extends SqfEntityTableBase {
 
     // declare fields
     fields = [
-      SqfEntityFieldBase('first_name', DbType.text, isNotNull: true),
-      SqfEntityFieldBase('last_name', DbType.text, isNotNull: true),
-      SqfEntityFieldBase('email', DbType.text, isNotNull: true),
+      SqfEntityFieldBase('name', DbType.text),
+      SqfEntityFieldBase('email', DbType.text),
       SqfEntityFieldBase('currency', DbType.text,
           defaultValue: 'PHP', isNotNull: true),
       SqfEntityFieldBase('createdAt', DbType.datetime,
-          isNotNull: true, minValue: DateTime.parse('1900-01-01')),
+          minValue: DateTime.parse('1900-01-01')),
       SqfEntityFieldBase('updatedAt', DbType.datetime,
-          isNotNull: true, minValue: DateTime.parse('1900-01-01')),
+          minValue: DateTime.parse('1900-01-01')),
     ];
     super.init();
   }
@@ -239,8 +238,7 @@ class ExpenseDBModel extends SqfEntityModelProvider {
 class Account extends TableBase {
   Account(
       {this.id,
-      this.first_name,
-      this.last_name,
+      this.name,
       this.email,
       this.currency,
       this.createdAt,
@@ -248,12 +246,12 @@ class Account extends TableBase {
     _setDefaultValues();
     softDeleteActivated = false;
   }
-  Account.withFields(this.first_name, this.last_name, this.email, this.currency,
-      this.createdAt, this.updatedAt) {
+  Account.withFields(
+      this.name, this.email, this.currency, this.createdAt, this.updatedAt) {
     _setDefaultValues();
   }
-  Account.withId(this.id, this.first_name, this.last_name, this.email,
-      this.currency, this.createdAt, this.updatedAt) {
+  Account.withId(this.id, this.name, this.email, this.currency, this.createdAt,
+      this.updatedAt) {
     _setDefaultValues();
   }
   // fromMap v2.0
@@ -262,11 +260,8 @@ class Account extends TableBase {
       _setDefaultValues();
     }
     id = int.tryParse(o['id'].toString());
-    if (o['first_name'] != null) {
-      first_name = o['first_name'].toString();
-    }
-    if (o['last_name'] != null) {
-      last_name = o['last_name'].toString();
+    if (o['name'] != null) {
+      name = o['name'].toString();
     }
     if (o['email'] != null) {
       email = o['email'].toString();
@@ -289,8 +284,7 @@ class Account extends TableBase {
   }
   // FIELDS (Account)
   int? id;
-  String? first_name;
-  String? last_name;
+  String? name;
   String? email;
   String? currency;
   DateTime? createdAt;
@@ -311,11 +305,8 @@ class Account extends TableBase {
       {bool forQuery = false, bool forJson = false, bool forView = false}) {
     final map = <String, dynamic>{};
     map['id'] = id;
-    if (first_name != null || !forView) {
-      map['first_name'] = first_name;
-    }
-    if (last_name != null || !forView) {
-      map['last_name'] = last_name;
+    if (name != null || !forView) {
+      map['name'] = name;
     }
     if (email != null || !forView) {
       map['email'] = email;
@@ -352,11 +343,8 @@ class Account extends TableBase {
       bool forView = false]) async {
     final map = <String, dynamic>{};
     map['id'] = id;
-    if (first_name != null || !forView) {
-      map['first_name'] = first_name;
-    }
-    if (last_name != null || !forView) {
-      map['last_name'] = last_name;
+    if (name != null || !forView) {
+      map['name'] = name;
     }
     if (email != null || !forView) {
       map['email'] = email;
@@ -401,8 +389,7 @@ class Account extends TableBase {
   @override
   List<dynamic> toArgs() {
     return [
-      first_name,
-      last_name,
+      name,
       email,
       currency,
       createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
@@ -414,8 +401,7 @@ class Account extends TableBase {
   List<dynamic> toArgsWithIds() {
     return [
       id,
-      first_name,
-      last_name,
+      name,
       email,
       currency,
       createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
@@ -564,11 +550,10 @@ class Account extends TableBase {
   Future<int?> upsert({bool ignoreBatch = true}) async {
     try {
       final result = await _mnAccount.rawInsert(
-          'INSERT OR REPLACE INTO account (id, first_name, last_name, email, currency, createdAt, updatedAt)  VALUES (?,?,?,?,?,?,?)',
+          'INSERT OR REPLACE INTO account (id, name, email, currency, createdAt, updatedAt)  VALUES (?,?,?,?,?,?)',
           [
             id,
-            first_name,
-            last_name,
+            name,
             email,
             currency,
             createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
@@ -598,7 +583,7 @@ class Account extends TableBase {
   @override
   Future<BoolCommitResult> upsertAll(List<Account> accounts) async {
     final results = await _mnAccount.rawInsertAll(
-        'INSERT OR REPLACE INTO account (id, first_name, last_name, email, currency, createdAt, updatedAt)  VALUES (?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO account (id, name, email, currency, createdAt, updatedAt)  VALUES (?,?,?,?,?,?)',
         accounts);
     return results;
   }
@@ -855,14 +840,9 @@ class AccountFilterBuilder extends ConjunctionBase {
     return _id = _setField(_id, 'id', DbType.integer);
   }
 
-  AccountField? _first_name;
-  AccountField get first_name {
-    return _first_name = _setField(_first_name, 'first_name', DbType.text);
-  }
-
-  AccountField? _last_name;
-  AccountField get last_name {
-    return _last_name = _setField(_last_name, 'last_name', DbType.text);
+  AccountField? _name;
+  AccountField get name {
+    return _name = _setField(_name, 'name', DbType.text);
   }
 
   AccountField? _email;
@@ -1109,16 +1089,9 @@ class AccountFields {
     return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
   }
 
-  static TableField? _fFirst_name;
-  static TableField get first_name {
-    return _fFirst_name = _fFirst_name ??
-        SqlSyntax.setField(_fFirst_name, 'first_name', DbType.text);
-  }
-
-  static TableField? _fLast_name;
-  static TableField get last_name {
-    return _fLast_name = _fLast_name ??
-        SqlSyntax.setField(_fLast_name, 'last_name', DbType.text);
+  static TableField? _fName;
+  static TableField get name {
+    return _fName = _fName ?? SqlSyntax.setField(_fName, 'name', DbType.text);
   }
 
   static TableField? _fEmail;

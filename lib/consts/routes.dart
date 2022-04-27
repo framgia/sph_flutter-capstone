@@ -1,10 +1,8 @@
 class Routes {
-  static const String dashboard = '/dashboard';
-  static const String transactions = '/transactions';
-  static const String notifications = '/notifications';
-  static const String settings = '/account_settings';
-  static const String samplecrud = '/sample_crud';
-  static const String addTransaction = '/add_transaction';
-  static const String updateBasicInfo = '/update_basic_info';
-  static const String spendingLimit = '/spending_limit';
+  static const String dashboard = '/user/dashboard';
+  static const String transactions = '/user/transactions';
+  static const String notifications = '/user/notifications';
+  static const String settings = '/user/account_settings';
+  static const String samplecrud = '/user/sample_crud';
+  static const String addTransaction = '/user/add_transaction';
 }

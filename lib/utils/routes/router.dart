@@ -3,6 +3,7 @@ import 'package:sun_flutter_capstone/views/pages/account_settings/account_settin
 import 'package:sun_flutter_capstone/views/pages/account_settings/spending_limit.dart';
 import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
 import 'package:sun_flutter_capstone/views/pages/notifications.dart';
+import 'package:sun_flutter_capstone/views/pages/session/register.dart';
 import 'package:sun_flutter_capstone/views/pages/test/sample_crud.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions/add_transaction.dart';
@@ -12,6 +13,12 @@ import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_i
 @MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: <AutoRoute>[
   AutoRoute(
     path: '/',
+    page: Register,
+    name: 'RegisterRouter',
+    // initial: true
+  ),
+  AutoRoute(
+    path: '/user',
     page: BottomNavBar,
     children: [
       AutoRoute(
