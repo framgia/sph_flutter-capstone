@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/controllers/user_controller.dart';
+import 'package:sun_flutter_capstone/models/model.dart';
 
 class CurrencyPicker extends StatefulWidget {
   const CurrencyPicker({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class CurrencyPicker extends StatefulWidget {
 
 class _CurrencyPicker extends State<CurrencyPicker> {
   String currencyCode = 'PHP';
+  UserController userController = UserController();
 
   Future<void> _changeCurrency(code) async {
     setState(() {
@@ -65,9 +68,19 @@ class _CurrencyPicker extends State<CurrencyPicker> {
               showCurrencyCode: true,
               favorite: [currencyCode],
               searchHint: 'Set a currency',
-              onSelect: (Currency currency) {
+              onSelect: (Currency currency) async {
                 print('Select currency: ${currency.code}');
                 _changeCurrency(currency.code);
+                //TODO: SAVE TO DB HERE
+                Account account = Account(
+                  first_name: 'Juan',
+                  last_name: 'Dela Cruz',
+                  email: 'juandelacruz@email.com',
+                  currency: currency.code,
+                  createdAt: DateTime.now(),
+                  updatedAt: DateTime.now(),
+                );
+                await userController.upsert(account);
               },
             );
           },
