@@ -4,6 +4,7 @@ import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/views/widgets/tabs/tab_layout.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
+import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
 
 class TransactionsPage extends HookConsumerWidget {
   const TransactionsPage({Key? key}) : super(key: key);
@@ -49,18 +50,21 @@ class Summary extends StatelessWidget {
   final String label;
   final String value;
   final Color labelColor;
-  final List<Map<String, dynamic>> transactionList = [
+
+  final List<Map<String, dynamic>> data = [
     {
-      'name': 'Profit',
-      'amount': 850,
-      'date': DateTime.now(),
-      'type': 'Income',
+      'type': 'income',
+      'description': 'Salary',
+      'amount': 50000.0,
+      'icon': Icons.attach_money_outlined,
+      'date': '2022-04-25T11:00:00.000Z',
     },
     {
-      'name': 'Bills',
-      'amount': 1500,
-      'date': DateTime.now(),
-      'type': 'Expense',
+      'type': 'expenses',
+      'description': 'Gas bill',
+      'amount': 3000.0,
+      'icon': Icons.drive_eta_outlined,
+      'date': '2022-04-23T11:00:00.000Z',
     },
   ];
 
@@ -76,7 +80,7 @@ class Summary extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        // transaction summary 
+        // transaction summary
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -102,7 +106,17 @@ class Summary extends StatelessWidget {
           margin: EdgeInsets.only(
             top: 25,
           ),
-          child: Text('content here'),
+          child: TransactionCard(
+            icon: Icon(
+              data[0]['icon'],
+              color: Colors.black.withOpacity(0.5),
+            ),
+            type: data[0]['type'],
+            currency: 'PHP',
+            amount: data[0]['amount'],
+            description: data[0]['description'],
+            dateTime: DateTime.parse(data[0]['date']),
+          ),
         ),
       ],
     );

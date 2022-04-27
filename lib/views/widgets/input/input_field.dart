@@ -57,8 +57,7 @@ class _InputFieldState extends State<InputField> {
         if (widget.isEmail) {
           final bool isValid = EmailValidator.validate(value!);
           if (!isValid) return 'Invalid email';
-        }
-        else if (value == null || value.isEmpty) {
+        } else if (value == null || value.isEmpty) {
           return widget.errorMessage;
         }
         return null;

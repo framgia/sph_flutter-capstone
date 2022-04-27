@@ -5,8 +5,6 @@ import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/currency_picker.dart';
-import 'package:sun_flutter_capstone/consts/routes.dart';
-import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
 
 class AccountSettings extends HookConsumerWidget {
@@ -40,8 +38,10 @@ class AccountSettings extends HookConsumerWidget {
                     ),
                     Text(
                       '$firstName $lastName',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     UpdateBasicInfo(),
                   ],

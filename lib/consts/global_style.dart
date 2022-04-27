@@ -11,6 +11,7 @@ class AppColor {
   static const Color red = Color(0xFFD93232);
   static const Color pink = Color(0xFFFE91A7);
   static const Color rose = Color(0xFFAD707C);
+  static const Color lightPink = Color(0xFFF9DCDE);
 }
 
 // TODO: STYLE FOR HEADER TEXT
