@@ -56,10 +56,10 @@ class TransactionCard extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(
-                      8.0) //                 <--- border radius here
-                  ),
-              color: type == 'income' ? Color(0xFFDCE3F9) : Color(0xFFF9DCDE),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),
+              color: type == 'income' ? AppColor.light : AppColor.lightPink,
             ),
             child: IconButton(
               icon: icon,
