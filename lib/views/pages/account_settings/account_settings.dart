@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/views/pages/account_settings/spending_limit.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
@@ -84,16 +85,7 @@ class AccountSettings extends HookConsumerWidget {
                         ],
                       ),
                       Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          print('clicked');
-                        },
-                        color: AppColor.lightGray,
-                        iconSize: 15.0,
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.all(0.0),
-                      ),
+                      SpendingLimit(),
                     ],
                   ),
                 ),
