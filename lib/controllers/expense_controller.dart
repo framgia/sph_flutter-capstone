@@ -4,18 +4,15 @@ import 'package:sun_flutter_capstone/models/model.dart';
 
 class ExpenseController {
   Future<List<Expense>> index(DateTime? startDate, DateTime? endDate) async {
-    DateTime paidStart = startDate ?? DateTime.now();
-    DateTime paidEnd = endDate ?? DateTime.now();
-
-    List<Expense> expenses = await Expense()
-        .select()
-        .paid_at
-        .between(DateTime.parse(DateFormat('yyyy-MM-dd').format(paidStart)),
-            DateTime.parse(DateFormat('yyyy-MM-dd').format(paidEnd)))
-        // .where('paid_at BETWEEN \'$paidStart\' AND \'$paidEnd\'') // sample
-        .toList();
-
-    return expenses;
+    if (startDate != null && endDate != null) {
+      return await Expense()
+          .select()
+          .paid_at
+          .between(DateTime.parse(DateFormat('yyyy-MM-dd').format(startDate)),
+              DateTime.parse(DateFormat('yyyy-MM-dd').format(endDate)))
+          .toList();
+    }
+    return await Expense().select().toList();
   }
 
   Future<int?> store(Expense expense) async {
@@ -27,6 +24,14 @@ class ExpenseController {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
+
+    await Transaction(
+      transaction_id: result,
+      transaction_type: 'expense',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ).save();
+
     return result;
   }
 
@@ -37,7 +42,7 @@ class ExpenseController {
       amount: expense.amount,
       paid_at: expense.paid_at,
       categoryId: expense.categoryId,
-      createdAt: DateTime.now(),
+      createdAt: expense.createdAt,
       updatedAt: DateTime.now(),
     ).save();
     return result;
@@ -50,6 +55,7 @@ class ExpenseController {
 
   Future<BoolResult> delete(int id) async {
     BoolResult result = await Expense().select().id.equals(id).delete();
+    await Transaction().select().transaction_id.equals(id).delete();
     return result;
   }
 }

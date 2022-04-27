@@ -6,6 +6,7 @@ class Template extends StatelessWidget {
   final Widget appbarTitle;
   final bool isTitleCenter;
   final List<Widget> appbarActions;
+  final bool automaticallyImplyLeading;
 
   const Template({
     Key? key,
@@ -13,6 +14,7 @@ class Template extends StatelessWidget {
     required this.appbarTitle,
     this.appbarActions = const [],
     this.isTitleCenter = true,
+    this.automaticallyImplyLeading = true,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,7 @@ class Template extends StatelessWidget {
                   centerTitle: isTitleCenter,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
                 ),
               ),
             ),

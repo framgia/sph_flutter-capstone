@@ -7,12 +7,14 @@ class DateField extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
   final TextEditingController dateController;
+  final String errorMessage;
 
   DateField({
     Key? key,
     required this.firstDate,
     required this.lastDate,
     required this.dateController,
+    this.errorMessage = 'This field is required.',
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class _DateFieldState extends State<DateField> {
         () {
           selectedDate = newDate;
           widget.dateController.text =
-              DateFormat('EEE, d MMM yyyy').format(selectedDate);
+              DateFormat('yyyy-MM-dd').format(selectedDate);
         },
       );
     }
@@ -53,8 +55,7 @@ class _DateFieldState extends State<DateField> {
   @override
   void initState() {
     super.initState();
-    widget.dateController.text =
-        DateFormat('EEE, d MMM yyyy').format(selectedDate);
+    widget.dateController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
   }
 
   @override
@@ -67,6 +68,12 @@ class _DateFieldState extends State<DateField> {
           key: UniqueKey(),
           onTap: getDateInput,
           controller: widget.dateController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return widget.errorMessage;
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             suffixIcon: Icon(
               Icons.event,

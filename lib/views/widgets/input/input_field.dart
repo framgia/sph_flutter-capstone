@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'dart:core';
 import 'package:email_validator/email_validator.dart';
