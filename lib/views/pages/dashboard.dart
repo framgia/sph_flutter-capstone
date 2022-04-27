@@ -57,6 +57,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     final spendingAmount = ref.watch(spendingProvider);
 
     return Template(
+      automaticallyImplyLeading: false,
       appbarTitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

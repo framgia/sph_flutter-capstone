@@ -13,8 +13,8 @@
 import 'package:auto_route/auto_route.dart' as _i9;
 import 'package:flutter/material.dart' as _i10;
 
-import '../../views/pages/account_settings/update_basic_info.dart' as _i8;
 import '../../views/pages/account_settings/account_settings.dart' as _i5;
+import '../../views/pages/account_settings/update_basic_info.dart' as _i8;
 import '../../views/pages/dashboard.dart' as _i2;
 import '../../views/pages/notifications.dart' as _i4;
 import '../../views/pages/test/sample_crud.dart' as _i6;
@@ -59,7 +59,7 @@ class AppRouter extends _i9.RootStackRouter {
     UpdateBasicInfoRouter.name: (routeData) {
       return _i9.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i8.UpdateBasicInfo());
-    },
+    }
   };
 
   @override
@@ -147,7 +147,7 @@ class AddTransactionRouter extends _i9.PageRouteInfo<void> {
 /// [_i8.UpdateBasicInfo]
 class UpdateBasicInfoRouter extends _i9.PageRouteInfo<void> {
   const UpdateBasicInfoRouter()
-      : super(UpdateBasicInfoRouter.name, path: 'add_transaction');
+      : super(UpdateBasicInfoRouter.name, path: 'update_basic_info');
 
-  static const String name = 'AddTransactionRouter';
+  static const String name = 'UpdateBasicInfoRouter';
 }
