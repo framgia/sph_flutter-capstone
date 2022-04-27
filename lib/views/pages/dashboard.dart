@@ -37,6 +37,27 @@ class Dashboard extends StatefulHookConsumerWidget {
       'icon': Icons.drive_eta_outlined,
       'date': '2022-04-23T11:00:00.000Z',
     },
+    {
+      'type': 'expenses',
+      'description': 'Gas bill',
+      'amount': 3000.0,
+      'icon': Icons.drive_eta_outlined,
+      'date': '2022-04-23T11:00:00.000Z',
+    },
+    {
+      'type': 'expenses',
+      'description': 'Gas bill',
+      'amount': 3000.0,
+      'icon': Icons.drive_eta_outlined,
+      'date': '2022-04-23T11:00:00.000Z',
+    },
+    {
+      'type': 'expenses',
+      'description': 'Gas bill',
+      'amount': 3000.0,
+      'icon': Icons.drive_eta_outlined,
+      'date': '2022-04-23T11:00:00.000Z',
+    },
   ];
 
   String _greeting() {
@@ -55,6 +76,29 @@ class Dashboard extends StatefulHookConsumerWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
+  get transactions  {
+    var transactionWidgets = <Widget>[];
+    
+    for (var transactionData in widget.data) {
+      transactionWidgets.add(
+        Container(
+          margin: EdgeInsets.only(bottom: 16),
+          child: TransactionCard(
+            icon: Icon(transactionData['icon'],
+                color: Colors.black.withOpacity(0.5)),
+            type: transactionData['type'],
+            currency: 'PHP',
+            amount: transactionData['amount'],
+            description: transactionData['description'],
+            dateTime: DateTime.parse(transactionData['date']),
+          ),
+        )
+      );
+    }
+
+    return transactionWidgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
@@ -122,7 +166,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
               // Recent transactions
               Container(
                 margin:
-                    EdgeInsets.only(top: 20, bottom: 19, left: 10, right: 10),
+                    EdgeInsets.only(top: 20, bottom: 5, left: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -146,56 +190,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          child: TransactionCard(
-                            icon: Icon(widget.data[0]['icon'],
-                                color: Colors.black.withOpacity(0.5)),
-                            type: widget.data[0]['type'],
-                            currency: 'PHP',
-                            amount: widget.data[0]['amount'],
-                            description: widget.data[0]['description'],
-                            dateTime: DateTime.parse(widget.data[0]['date']),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          child: TransactionCard(
-                            icon: Icon(widget.data[1]['icon'],
-                                color: Colors.black.withOpacity(0.5)),
-                            type: widget.data[1]['type'],
-                            currency: 'PHP',
-                            amount: widget.data[1]['amount'],
-                            description: widget.data[1]['description'],
-                            dateTime: DateTime.parse(widget.data[1]['date']),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          child: TransactionCard(
-                            icon: Icon(widget.data[1]['icon'],
-                                color: Colors.black.withOpacity(0.5)),
-                            type: widget.data[1]['type'],
-                            currency: 'PHP',
-                            amount: widget.data[1]['amount'],
-                            description: widget.data[1]['description'],
-                            dateTime: DateTime.parse(widget.data[1]['date']),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          child: TransactionCard(
-                            icon: Icon(widget.data[1]['icon'],
-                                color: Colors.black.withOpacity(0.5)),
-                            type: widget.data[1]['type'],
-                            currency: 'PHP',
-                            amount: widget.data[1]['amount'],
-                            description: widget.data[1]['description'],
-                            dateTime: DateTime.parse(widget.data[1]['date']),
-                          ),
-                        ),
-                      ],
+                      children: transactions
                     ),
                   ),
                 ),
