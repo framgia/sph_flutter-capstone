@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/state/spending_provider.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
+import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
-import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
+import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
+
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -18,20 +22,20 @@ class Dashboard extends StatefulHookConsumerWidget {
   final double totalIncome = 50000;
   final double totalExpenses = 30000;
 
-  final List<Map> data = const [
+  final List<Map<String, dynamic>> data = const [
     {
       'type': 'income',
       'description': 'Salary',
       'amount': 50000.0,
       'icon': Icons.attach_money_outlined,
-      'date': '2022-04-25T11:00:00.000Z'
+      'date': '2022-04-25T11:00:00.000Z',
     },
     {
       'type': 'expenses',
       'description': 'Gas bill',
       'amount': 3000.0,
       'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z'
+      'date': '2022-04-23T11:00:00.000Z',
     },
   ];
 
@@ -41,8 +45,9 @@ class Dashboard extends StatefulHookConsumerWidget {
       return 'Good morning,';
     } else if (hour < 17) {
       return 'Good afternoon,';
-    } else
+    } else {
       return 'Good evening,';
+    }
   }
 
   @override
@@ -71,52 +76,131 @@ class _DashboardState extends ConsumerState<Dashboard> {
         ],
       ),
       isTitleCenter: false,
-      content: SingleChildScrollView(
+      content: Container(
+        alignment: Alignment.center,
         child: Container(
-          alignment: Alignment.center,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              children: [
-                TransactionSummary(
-                  totalBalance: widget.totalIncome - widget.totalExpenses,
-                  totalIncome: widget.totalIncome,
-                  totalExpenses: widget.totalExpenses,
-                  currency: widget.currency,
+          margin: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            children: [
+              TransactionSummary(
+                totalBalance: widget.totalIncome - widget.totalExpenses,
+                totalIncome: widget.totalIncome,
+                totalExpenses: widget.totalExpenses,
+                currency: widget.currency,
+              ),
+              Container(
+                margin:
+                    EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
+                child: ProgressBar(
+                  progress: spendingAmount,
+                  label: "You have spent",
                 ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
-                  child: ProgressBar(
-                    progress: spendingAmount,
-                    label: "You have spent",
-                  ),
-                ),
-                // * The following row can be removed this is just for testing the progress bar
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setSpendingAmount(ref, spendingAmount - 0.1);
-                        },
-                        child: const Text('-'),
-                      ),
+              ),
+              // * The following row can be removed this is just for testing the progress bar
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setSpendingAmount(ref, spendingAmount - 0.1);
+                      },
+                      child: const Text('-'),
                     ),
-                    const SizedBox(width: 30),
-                    Flexible(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setSpendingAmount(ref, spendingAmount + 0.1);
-                        },
-                        child: const Text('+'),
-                      ),
-                    )
+                  ),
+                  const SizedBox(width: 30),
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setSpendingAmount(ref, spendingAmount + 0.1);
+                      },
+                      child: const Text('+'),
+                    ),
+                  )
+                ],
+              ),
+              // Recent transactions
+              Container(
+                margin:
+                    EdgeInsets.only(top: 20, bottom: 19, left: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recent Transactions',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          primary: Colors.black.withOpacity(0.5),
+                          textStyle: TextStyle(fontSize: 14)),
+                      onPressed: () => redirectTo(context, Routes.transactions),
+                      child: Text('See all'),
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          child: TransactionCard(
+                            icon: Icon(widget.data[0]['icon'],
+                                color: Colors.black.withOpacity(0.5)),
+                            type: widget.data[0]['type'],
+                            currency: 'PHP',
+                            amount: widget.data[0]['amount'],
+                            description: widget.data[0]['description'],
+                            dateTime: DateTime.parse(widget.data[0]['date']),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          child: TransactionCard(
+                            icon: Icon(widget.data[1]['icon'],
+                                color: Colors.black.withOpacity(0.5)),
+                            type: widget.data[1]['type'],
+                            currency: 'PHP',
+                            amount: widget.data[1]['amount'],
+                            description: widget.data[1]['description'],
+                            dateTime: DateTime.parse(widget.data[1]['date']),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          child: TransactionCard(
+                            icon: Icon(widget.data[1]['icon'],
+                                color: Colors.black.withOpacity(0.5)),
+                            type: widget.data[1]['type'],
+                            currency: 'PHP',
+                            amount: widget.data[1]['amount'],
+                            description: widget.data[1]['description'],
+                            dateTime: DateTime.parse(widget.data[1]['date']),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          child: TransactionCard(
+                            icon: Icon(widget.data[1]['icon'],
+                                color: Colors.black.withOpacity(0.5)),
+                            type: widget.data[1]['type'],
+                            currency: 'PHP',
+                            amount: widget.data[1]['amount'],
+                            description: widget.data[1]['description'],
+                            dateTime: DateTime.parse(widget.data[1]['date']),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
