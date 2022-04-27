@@ -37,7 +37,7 @@ class Register extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
-                  vertical: 41,
+                  vertical: 40,
                 ),
                 content: Column(
                   children: const [
