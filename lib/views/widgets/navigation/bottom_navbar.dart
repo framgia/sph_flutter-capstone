@@ -23,6 +23,7 @@ class BottomNavBar extends HookConsumerWidget {
         SampleCrud(),
         AddTransactionRouter(),
         UpdateBasicInfoRouter(),
+        SpendingLimitRouter(),
       ],
       resizeToAvoidBottomInset: false,
       floatingActionButton:

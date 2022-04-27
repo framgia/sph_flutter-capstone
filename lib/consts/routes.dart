@@ -6,4 +6,5 @@ class Routes {
   static const String samplecrud = '/sample_crud';
   static const String addTransaction = '/add_transaction';
   static const String updateBasicInfo = '/update_basic_info';
+  static const String spendingLimit = '/spending_limit';
 }
