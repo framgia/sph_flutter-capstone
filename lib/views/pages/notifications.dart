@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
-import 'package:sun_flutter_capstone/state/navigation_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';

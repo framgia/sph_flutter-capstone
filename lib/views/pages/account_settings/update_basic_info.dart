@@ -1,21 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
-import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
-class UpdateBasicInfo extends StatelessWidget {
+class UpdateBasicInfo extends StatefulHookConsumerWidget {
   const UpdateBasicInfo({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _UpdateBasicInfoState();
+}
+
+class _UpdateBasicInfoState extends ConsumerState<UpdateBasicInfo> {
+  @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+    final signedInUser = ref.watch(accountProvider);
+
     final TextEditingController nameController =
-        TextEditingController(text: 'Juan Dela Cruz');
+        TextEditingController(text: signedInUser?.name ?? '');
     final TextEditingController emailController =
-        TextEditingController(text: 'juan.delacruz@com.com');
+        TextEditingController(text: signedInUser?.email ?? '');
+
+    void clearStates() {
+      formKey.currentState?.reset();
+      setState(() {});
+      Navigator.of(context).pop(); // Close the bottom sheet
+    }
+
+    void onSubmit() async {
+      if (formKey.currentState!.validate()) {
+        int? res = await ref.read(accountProvider.notifier).update(
+              Account(
+                name: nameController.text,
+                email: emailController.text,
+                currency: signedInUser?.currency,
+                createdAt: signedInUser?.createdAt ?? DateTime.now(),
+                updatedAt: DateTime.now(),
+              ),
+            );
+
+        clearStates();
+      }
+    }
 
     return IconButton(
       icon: const Icon(Icons.edit),
@@ -62,21 +93,14 @@ class UpdateBasicInfo extends StatelessWidget {
                           input: InputField(
                             inputController: emailController,
                             isEmail: true,
+                            isRequired: false,
                           ),
                         ),
                         SizedBox(height: 15),
                         OutlinedButtonText(
                           text: 'Save',
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  content: Text(
-                                      'Values: ${nameController.text} ${emailController.text}'),
-                                ),
-                              );
-                            }
+                            onSubmit();
                           },
                         ),
                       ],

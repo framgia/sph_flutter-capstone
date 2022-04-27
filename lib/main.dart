@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
-// import 'package:auto_route/auto_route.dart'; Uncomment to use in the future
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
@@ -21,12 +21,14 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookConsumerWidget {
   MyApp({Key? key}) : super(key: key);
   final _appRouter = AppRouter();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(accountProvider.notifier).getAccount();
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
