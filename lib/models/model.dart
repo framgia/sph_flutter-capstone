@@ -13,13 +13,12 @@ const tableAccount = SqfEntityTable(
   useSoftDeleting: false,
   modelName: null,
   fields: [
-    SqfEntityField('first_name', DbType.text, isNotNull: true),
-    SqfEntityField('last_name', DbType.text, isNotNull: true),
-    SqfEntityField('email', DbType.text, isNotNull: true),
+    SqfEntityField('name', DbType.text, isNotNull: false),
+    SqfEntityField('email', DbType.text, isNotNull: false),
     SqfEntityField('currency', DbType.text,
         isNotNull: true, defaultValue: 'PHP'),
-    SqfEntityField('createdAt', DbType.datetime, isNotNull: true),
-    SqfEntityField('updatedAt', DbType.datetime, isNotNull: true),
+    SqfEntityField('createdAt', DbType.datetime, isNotNull: false),
+    SqfEntityField('updatedAt', DbType.datetime, defaultValue: DateTime.now),
   ],
 );
 

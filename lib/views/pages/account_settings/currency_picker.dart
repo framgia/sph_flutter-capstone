@@ -69,17 +69,11 @@ class _CurrencyPicker extends State<CurrencyPicker> {
               favorite: [currencyCode],
               searchHint: 'Set a currency',
               onSelect: (Currency currency) async {
-                print('Select currency: ${currency.code}');
                 _changeCurrency(currency.code);
-                //TODO: SAVE TO DB HERE
                 Account account = Account(
-                  first_name: 'Juan',
-                  last_name: 'Dela Cruz',
-                  email: 'juandelacruz@email.com',
+                  name: 'Juan Dela Cruz',
                   currency: currency.code,
-                  createdAt: DateTime.now(),
-                  updatedAt: DateTime.now(),
-                );
+                );                
                 await userController.upsert(account);
               },
             );
