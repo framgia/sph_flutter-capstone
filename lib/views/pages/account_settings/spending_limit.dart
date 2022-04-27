@@ -67,7 +67,7 @@ class SpendingLimit extends StatelessWidget {
                               id: null,
                               amount: double.parse(amountController.text),
                               start_date: DateTime.now(),
-                              end_date: DateTime.now(),
+                              end_date: DateTime.now().add(Duration(days: 30)),
                               createdAt: DateTime.now(),
                               updatedAt: DateTime.now(),
                             );
