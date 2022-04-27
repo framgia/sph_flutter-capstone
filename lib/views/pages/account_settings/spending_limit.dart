@@ -12,8 +12,7 @@ class SpendingLimit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final TextEditingController amountController = 
-    TextEditingController(text: '0.0');
+    final TextEditingController amountController = TextEditingController();
     String currency = 'PHP';
 
     return IconButton(
@@ -46,12 +45,13 @@ class SpendingLimit extends StatelessWidget {
                   child: SingleChildScrollView(
                     padding: EdgeInsets.only(bottom: 40),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         InputGroup(
                           label: 'Update spending limit this month',
                           input: InputField(
+                            hintText: '$currency 0.0',
+                            inputType: TextInputType.number,
                             inputController: amountController,
                           ),
                         ),
@@ -59,11 +59,12 @@ class SpendingLimit extends StatelessWidget {
                         OutlinedButtonText(
                           text: 'Save',
                           onPressed: () {
+                            Navigator.of(context).pop();
                             showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
-                                content:
-                                    Text('Values: $currency ${amountController.text}'),
+                                content: Text(
+                                    'Values: $currency ${amountController.text}'),
                               ),
                             );
                           },
