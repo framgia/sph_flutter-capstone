@@ -70,19 +70,20 @@ Future<bool> runSamples() async {
   ];
 
   for (var el in incomeSeeder) {
-      final result = await Income(
-      description: el['description'] as String,
-      amount: el['amount'] as double,
-      date: DateTime.now(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now()).save();
+    final result = await Income(
+            description: el['description'] as String,
+            amount: el['amount'] as double,
+            date: DateTime.now(),
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now())
+        .save();
 
-      await Transaction(
-        transaction_id: result,
-        transaction_type: 'income',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ).save();
+    await Transaction(
+      transaction_id: result,
+      transaction_type: 'income',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    ).save();
   }
   for (var el in expenseSeeder) {
     final result = await Expense(
