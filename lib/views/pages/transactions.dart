@@ -13,7 +13,7 @@ class TransactionsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final transactionsAsync = ref.watch(transactionProvider);
+    final transactionState = ref.watch(transactionsNotifierProvider);
 
     renderTransactions(dataList) {
       var transactionWidgets = <Widget>[];
@@ -29,7 +29,7 @@ class TransactionsPage extends ConsumerWidget {
             icon: Icon(icon, color: Colors.black.withOpacity(0.5)),
             type: data['type'],
             currency: 'PHP',
-            amount: data['amount'], // TODO: Integrate currency _trans.amount
+            amount: data['amount'], // TODO: Integrate currency
             description: data['description'],
             dateTime: data['date'],
           ),
@@ -56,23 +56,23 @@ class TransactionsPage extends ConsumerWidget {
           tabContents: [
             TabContent(
               value: '₱ 1,840.00',
-              dataList: transactionsAsync.when(
-                data: (data) => renderTransactions(data),
-                loading: () => <Widget>[],
-                error: (e, st) => <Widget>[],
+              content: transactionState.when(
+                data: (data) => Column(children: renderTransactions(data)),
+                loading: () => const CircularProgressIndicator(),
+                error: (e, st) => Text(e.toString()),
               ),
             ),
             TabContent(
               label: 'Total Income',
               value: '₱ 1,840.00',
               labelColor: AppColor.secondary,
-              dataList: <Widget>[],
+              content: Text('Content'),
             ),
             TabContent(
               label: 'Total Expense',
               value: '₱ 1,840.00',
               labelColor: AppColor.pink,
-              dataList: <Widget>[],
+              content: Text('Content'),
             ),
           ],
         ),
@@ -85,35 +85,36 @@ class TabContent extends StatelessWidget {
   final String label;
   final String value;
   final Color labelColor;
-  final List<Widget> dataList;
+  final Widget content;
 
   const TabContent({
     Key? key,
     required this.value,
-    required this.dataList,
+    required this.content,
     this.label = 'Total',
     this.labelColor = AppColor.darkBlue,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        // transaction TabContent
-        Total(
-          label: label,
-          value: value,
-          labelColor: labelColor,
-        ),
-        //TODO: COMMON CONTENT HERE
-        Container(
-          margin: EdgeInsets.only(
-            top: 25,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // transaction TabContent
+          Total(
+            label: label,
+            value: value,
+            labelColor: labelColor,
           ),
-          child: Column(children: dataList),
-        ),
-      ],
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
+            ),
+            child: content,
+          ),
+        ],
+      ),
     );
   }
 }

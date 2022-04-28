@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
@@ -15,7 +16,6 @@ void main() async {
 
   final bool _isInitialized = await ExpenseDBModel().initializeDB();
   if (_isInitialized) {
-    runSamples();
     _account = await Account().select().toSingle();
   }
 
@@ -33,6 +33,7 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.read(accountProvider.notifier).getAccount();
+    // runSamples(ref);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -53,7 +54,7 @@ class MyApp extends HookConsumerWidget {
 }
 
 // TODO: remove in the future
-Future<bool> runSamples() async {
+Future<bool> runSamples(WidgetRef ref) async {
   const incomeSeeder = [
     {
       'description': 'Salary 1',
@@ -78,13 +79,9 @@ Future<bool> runSamples() async {
             updatedAt: DateTime.now())
         .save();
 
-    await Transaction(
-      transaction_id: result,
-      transaction_type: 'income',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
+    ref.read(transactionsNotifierProvider.notifier).addTransaction('income', result as int);
   }
+
   for (var el in expenseSeeder) {
     final result = await Expense(
       description: el['description'] as String,
@@ -95,12 +92,7 @@ Future<bool> runSamples() async {
       updatedAt: DateTime.now(),
     ).save();
 
-    await Transaction(
-      transaction_id: result,
-      transaction_type: 'expense',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
+    ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
   }
 
   return true;
