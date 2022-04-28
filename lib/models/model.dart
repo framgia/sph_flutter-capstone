@@ -45,12 +45,9 @@ const tableExpense = SqfEntityTable(
     SqfEntityField('description', DbType.text, isNotNull: true),
     SqfEntityField('amount', DbType.real, isNotNull: true, defaultValue: 0),
     SqfEntityField('paid_at', DbType.date, isNotNull: true),
+    SqfEntityField('category_id', DbType.integer),
     SqfEntityField('createdAt', DbType.datetime, isNotNull: true),
     SqfEntityField('updatedAt', DbType.datetime, isNotNull: true),
-    SqfEntityFieldRelationship(
-        parentTable: tableCategory,
-        deleteRule: DeleteRule.CASCADE,
-        defaultValue: '0'),
   ],
 );
 

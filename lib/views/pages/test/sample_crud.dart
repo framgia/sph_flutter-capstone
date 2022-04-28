@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/expense_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
+import 'package:intl/intl.dart';
 
 class SampleCrud extends StatefulHookConsumerWidget {
   const SampleCrud({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
               ElevatedButton(
                 onPressed: () async {
                   Expense expense = Expense();
-                  expense.categoryId = 1;
+                  expense.category_id = 1;
                   expense.description = _descriptionController.text;
                   expense.amount = double.parse(_amountController.text);
                   expense.paid_at = paidAt;
@@ -106,7 +107,8 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
       ),
       body: FutureBuilder(
         initialData: const [],
-        future: expenseHandler.index(DateTime.now(), DateTime.now()),
+        future: expenseHandler.index(
+            DateTime.parse('2020-01-01T11:00:00.000Z'), DateTime.now()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -115,8 +117,11 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext cntxt, int index) {
                 return ListTile(
-                  title: Text(snapshot.data[index].description ?? ""),
-                  subtitle: Text((snapshot.data[index].amount).toString()),
+                  title: Text(snapshot.data[index].description),
+                  subtitle: Text((snapshot.data[index].amount).toString() +
+                      ' ' +
+                      DateFormat('yyyy-MM-dd')
+                          .format(snapshot.data[index].paid_at) + ' category_id: ' + snapshot.data[index].category_id.toString()),
                   trailing: SizedBox(
                     width: 100,
                     child: Row(

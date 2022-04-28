@@ -106,16 +106,20 @@ class Summary extends StatelessWidget {
           margin: EdgeInsets.only(
             top: 25,
           ),
-          child: TransactionCard(
-            icon: Icon(
-              data[0]['icon'],
-              color: Colors.black.withOpacity(0.5),
-            ),
-            type: data[0]['type'],
-            currency: 'PHP',
-            amount: data[0]['amount'],
-            description: data[0]['description'],
-            dateTime: DateTime.parse(data[0]['date']),
+          child: Column(
+            children: [
+              TransactionCard(
+                icon: Icon(
+                  data[1]['icon'],
+                  color: Colors.black.withOpacity(0.5),
+                ),
+                type: data[1]['type'],
+                currency: 'PHP',
+                amount: data[1]['amount'],
+                description: data[1]['description'],
+                dateTime: DateTime.parse(data[1]['date']),
+              ),
+            ],
           ),
         ),
       ],

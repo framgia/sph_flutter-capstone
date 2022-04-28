@@ -61,6 +61,7 @@ class TransactionCard extends StatelessWidget {
               ),
               color: type == 'income' ? AppColor.light : AppColor.lightPink,
             ),
+            width: 50,
             child: IconButton(
               icon: icon,
               onPressed: () {
