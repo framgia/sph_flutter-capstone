@@ -121,7 +121,9 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
                   subtitle: Text((snapshot.data[index].amount).toString() +
                       ' ' +
                       DateFormat('yyyy-MM-dd')
-                          .format(snapshot.data[index].paid_at) + ' category_id: ' + snapshot.data[index].category_id.toString()),
+                          .format(snapshot.data[index].paid_at) +
+                      ' category_id: ' +
+                      snapshot.data[index].category_id.toString()),
                   trailing: SizedBox(
                     width: 100,
                     child: Row(

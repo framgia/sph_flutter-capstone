@@ -38,7 +38,8 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
       final updatedAt = DateTime.now();
 
       Expense expense = Expense();
-      expense.category_id = int.parse(formInputControllers['categoryController']!.text) + 1;
+      expense.category_id =
+          int.parse(formInputControllers['categoryController']!.text) + 1;
       expense.description = formInputControllers['nameController']!.text;
       expense.amount =
           double.parse(formInputControllers['amountController']!.text);
@@ -94,9 +95,9 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
               InputGroup(
                 label: 'CATEGORY',
                 input: SelectInput(
-                  items: CategoryList.values.map((e) =>
-                    e.name.capitalize()
-                  ).toList(),
+                  items: CategoryList.values
+                      .map((e) => e.name.capitalize())
+                      .toList(),
                   initialValue: 'Food',
                   valueReceiver: (String value) {
                     formInputControllers['categoryController']!.text = value;
@@ -121,11 +122,5 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
         ),
       ),
     );
-  }
-}
-
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }

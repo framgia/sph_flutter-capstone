@@ -12,4 +12,3 @@ void redirectTo(BuildContext context, String route) {
 void goToHome(BuildContext context) {
   context.router.popUntilRoot();
 }
-

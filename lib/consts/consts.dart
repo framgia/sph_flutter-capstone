@@ -1,15 +1,4 @@
 import 'package:flutter/material.dart';
-//
-// class ExpensesCategory {
-//   static const List<String> dropdownValues = [
-//     '',
-//     'Food',
-//     'Transportation',
-//     'Apparel',
-//     'Health',
-//     'Social',
-//   ];
-// }
 
 enum CategoryList {
   food,
@@ -17,4 +6,10 @@ enum CategoryList {
   apparel,
   health,
   social,
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
 }

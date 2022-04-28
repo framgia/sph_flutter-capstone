@@ -36,7 +36,7 @@ class _SelectedInputState extends State<SelectInput> {
         value: dropdownValue,
         icon: const Icon(Icons.keyboard_arrow_down),
         items: widget.items.map(
-              (String item) {
+          (String item) {
             return DropdownMenuItem(
               value: item,
               child: Text(
