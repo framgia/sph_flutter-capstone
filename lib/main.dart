@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 
 void main() async {
+  Account? _account;
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
 
-  final bool isInitialized = await ExpenseDBModel().initializeDB();
-  if (isInitialized) runSamples();
+  final bool _isInitialized = await ExpenseDBModel().initializeDB();
+  if (_isInitialized) {
+    runSamples();
+    _account = await Account().select().toSingle();
+  }
 
   runApp(ProviderScope(
-    child: MyApp(),
+    child: MyApp(authenticated: _account != null),
   ));
 }
 
 class MyApp extends HookConsumerWidget {
-  MyApp({Key? key}) : super(key: key);
   final _appRouter = AppRouter();
+  final bool authenticated;
+
+  MyApp({Key? key, required this.authenticated}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +44,9 @@ class MyApp extends HookConsumerWidget {
         elevatedButtonTheme: elevatedButtonTheme,
         outlinedButtonTheme: outlinedButtonTheme,
       ),
-      routerDelegate: _appRouter.delegate(),
+      routerDelegate: _appRouter.delegate(initialRoutes: [
+        if (authenticated) BottomNavBar() else RegisterRouter()
+      ]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
@@ -48,9 +55,6 @@ class MyApp extends HookConsumerWidget {
 Future<bool> runSamples() async {
   // add sample categories
   await addSampleCategories();
-
-  // add sample expenses
-  await addSampleExpenses();
 
   return true;
 }
@@ -70,41 +74,6 @@ Future<void> addSampleCategories() async {
     ).save();
     await Category(
       name: 'Water',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-  }
-  return;
-}
-
-Future<void> addSampleExpenses() async {
-  final expense = await Expense().select().toSingle();
-  final category = await Category().select().toSingle();
-  DateTime datetime =
-      DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
-
-  if (expense == null && category != null) {
-    await Expense(
-      description: 'Lunch',
-      amount: 100,
-      paid_at: datetime,
-      categoryId: category.id,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-    await Expense(
-      description: 'Electricity Bill',
-      amount: 1000,
-      paid_at: datetime,
-      categoryId: category.id,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-    await Expense(
-      description: 'Water bill',
-      amount: 500,
-      paid_at: datetime,
-      categoryId: category.id,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
