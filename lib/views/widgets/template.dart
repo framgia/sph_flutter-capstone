@@ -44,13 +44,13 @@ class Template extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 0.0,
-              left: 0.0,
+              top: 0,
+              left: 0,
               right: 0.0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: AppBar(
-                  toolbarHeight: 80,
+                  toolbarHeight: 60,
                   title: appbarTitle,
                   actions: appbarActions,
                   centerTitle: isTitleCenter,
