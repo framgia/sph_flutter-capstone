@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/spending_limit.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
@@ -19,7 +20,30 @@ class AccountSettings extends StatefulHookConsumerWidget {
 }
 
 class _AccountSettingsState extends ConsumerState<AccountSettings> {
-  final double spendingLimit = 18000.0;
+  final String currency = 'PHP';
+  final String spendingLimit = '18,000';
+  final SpendingLimitController spendingLimitController =
+      SpendingLimitController();
+
+  String currentSpendingLimit = '0.0';
+
+  @override
+  void initState() {
+    super.initState();
+    _totalValues();
+  }
+
+  Future<void> _totalValues() async {
+    var now = DateTime.now();
+    var monthAfter = DateTime.now().add(Duration(days: 5));
+
+    List spendlingLimits = await spendingLimitController.index(now, monthAfter);
+    debugPrint(spendlingLimits[0].amount.toString());
+
+    setState(() {
+      currentSpendingLimit = spendlingLimits[0].amount.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +106,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                             ),
                           ),
                           Text(
-                            amountFormat.amount(spendingLimit, signedInUser?.currency ?? 'PHP'),
+                            amountFormat.amount(currentSpendingLimit, signedInUser?.currency ?? 'PHP'),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -92,7 +116,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                         ],
                       ),
                     Spacer(),
-                    SpendingLimit(),
+                    SpendingLimit(amount: currentSpendingLimit),
                   ],
                 ),
               ),

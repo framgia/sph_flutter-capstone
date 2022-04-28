@@ -2,13 +2,16 @@ import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
 class SpendingLimitController {
-  Future<List<Spending_limit>> index(DateTime? startDate, DateTime? endDate) async {
+  Future<List<Spending_limit>> index(
+      DateTime? startDate, DateTime? endDate) async {
     if (startDate != null && endDate != null) {
       return await Spending_limit()
           .select()
-          .amount
-          .between(DateTime.parse(DateFormat('yyyy-MM-dd').format(startDate)),
-              DateTime.parse(DateFormat('yyyy-MM-dd').format(endDate)))
+          .start_date
+          .lessThanOrEquals(startDate)
+          .and
+          .end_date
+          .greaterThanOrEquals(endDate)
           .toList();
     }
     return await Spending_limit().select().toList();

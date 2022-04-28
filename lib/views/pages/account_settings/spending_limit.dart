@@ -9,7 +9,9 @@ import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
 class SpendingLimit extends StatelessWidget {
-  const SpendingLimit({Key? key}) : super(key: key);
+  final String amount;
+
+  const SpendingLimit({Key? key, this.amount = '0.0'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class SpendingLimit extends StatelessWidget {
                         InputGroup(
                           label: 'Update spending limit this month',
                           input: InputField(
-                            hintText: '$currency 0.0',
+                            hintText: '$currency $amount',
                             inputType: TextInputType.number,
                             inputController: amountController,
                           ),
