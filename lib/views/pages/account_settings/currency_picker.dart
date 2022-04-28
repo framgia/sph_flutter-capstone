@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
-import 'package:flutter/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/controllers/user_controller.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
-class CurrencyPicker extends StatefulWidget {
+class CurrencyPicker extends StatefulHookConsumerWidget {
   const CurrencyPicker({Key? key}) : super(key: key);
 
   @override
-  _CurrencyPicker createState() => _CurrencyPicker();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CurrencyPicker();
 }
 
-class _CurrencyPicker extends State<CurrencyPicker> {
-  String currencyCode = 'PHP';
-  UserController userController = UserController();
-
-  Future<void> _changeCurrency(code) async {
-    setState(() {
-      currencyCode = code;
-    });
-  }
-
+class _CurrencyPicker extends ConsumerState<CurrencyPicker> {
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(accountProvider);
+    final currencyCode = user?.currency ?? 'PHP';
+
     return Row(
       children: [
         Column(
@@ -69,12 +63,15 @@ class _CurrencyPicker extends State<CurrencyPicker> {
               favorite: [currencyCode],
               searchHint: 'Set a currency',
               onSelect: (Currency currency) async {
-                _changeCurrency(currency.code);
-                Account account = Account(
-                  name: 'Juan Dela Cruz',
-                  currency: currency.code,
-                );                
-                await userController.upsert(account);
+                await ref.read(accountProvider.notifier).update(
+                      Account(
+                        name: user?.name,
+                        email: user?.email,
+                        currency: currency.code,
+                        createdAt: user?.createdAt ?? DateTime.now(),
+                        updatedAt: DateTime.now(),
+                      ),
+                    );
               },
             );
           },

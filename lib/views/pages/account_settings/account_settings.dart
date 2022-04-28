@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/spending_limit.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
@@ -8,17 +9,22 @@ import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/currency_picker.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
 
-class AccountSettings extends HookConsumerWidget {
+class AccountSettings extends StatefulHookConsumerWidget {
   const AccountSettings({Key? key}) : super(key: key);
 
-  final String firstName = 'Juan Dela';
-  final String lastName = 'Dela Cruz';
-  final String email = 'juan.delacruz@com.com';
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AccountSettingsState();
+}
+
+class _AccountSettingsState extends ConsumerState<AccountSettings> {
   final String currency = 'PHP';
   final String spendingLimit = '18,000';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final signedInUser = ref.watch(accountProvider);
+
     return Template(
         appbarTitle: Text(
           'Account Settings',
@@ -38,7 +44,7 @@ class AccountSettings extends HookConsumerWidget {
                       color: Colors.transparent,
                     ),
                     Text(
-                      '$firstName $lastName',
+                      '${signedInUser?.name}',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -48,7 +54,7 @@ class AccountSettings extends HookConsumerWidget {
                   ],
                 ),
                 Text(
-                  email,
+                  signedInUser?.email ?? '',
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColor.secondary,

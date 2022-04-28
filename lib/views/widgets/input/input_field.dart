@@ -9,6 +9,7 @@ class InputField extends StatefulWidget {
   final TextInputType inputType;
   final TextEditingController inputController;
   final bool isEmail;
+  final bool isRequired;
 
   const InputField({
     Key? key,
@@ -16,6 +17,7 @@ class InputField extends StatefulWidget {
     this.errorMessage = 'This field is required.',
     this.inputType = TextInputType.text,
     this.isEmail = false,
+    this.isRequired = true,
     required this.inputController,
   }) : super(key: key);
 
@@ -53,11 +55,11 @@ class _InputFieldState extends State<InputField> {
     return TextFormField(
       controller: widget.inputController,
       validator: (value) {
-        if (widget.isEmail) {
-          final bool isValid = EmailValidator.validate(value!);
-          if (!isValid) return 'Invalid email';
-        } else if (value == null || value.isEmpty) {
+        if ((value == null || value.isEmpty) && widget.isRequired == true) {
           return widget.errorMessage;
+        } else if (value!.isNotEmpty && widget.isEmail) {
+          final bool isValid = EmailValidator.validate(value);
+          if (!isValid) return 'Invalid email';
         }
         return null;
       },

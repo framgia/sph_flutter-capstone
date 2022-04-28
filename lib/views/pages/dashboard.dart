@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/state/session_provider.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/state/spending_provider.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
-import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -53,7 +52,7 @@ class Dashboard extends StatefulHookConsumerWidget {
 class _DashboardState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(sessionProvider);
+    final signedInAccount = ref.watch(accountProvider);
     final spendingAmount = ref.watch(spendingProvider);
 
     return Template(
@@ -66,7 +65,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
             style: TextStyle(color: AppColor.gray, fontSize: 14),
           ),
           Text(
-            '${widget.firstName} ${widget.lastName}',
+            signedInAccount?.name ?? '',
             style: TextStyle(color: AppColor.secondary, fontSize: 20),
           ),
         ],

@@ -33,14 +33,14 @@ class TableAccount extends SqfEntityTableBase {
 
     // declare fields
     fields = [
-      SqfEntityFieldBase('name', DbType.text),
+      SqfEntityFieldBase('name', DbType.text, isNotNull: true),
       SqfEntityFieldBase('email', DbType.text),
       SqfEntityFieldBase('currency', DbType.text,
           defaultValue: 'PHP', isNotNull: true),
       SqfEntityFieldBase('createdAt', DbType.datetime,
-          minValue: DateTime.parse('1900-01-01')),
+          isNotNull: true, minValue: DateTime.parse('1900-01-01')),
       SqfEntityFieldBase('updatedAt', DbType.datetime,
-          minValue: DateTime.parse('1900-01-01')),
+          isNotNull: true, minValue: DateTime.parse('1900-01-01')),
     ];
     super.init();
   }

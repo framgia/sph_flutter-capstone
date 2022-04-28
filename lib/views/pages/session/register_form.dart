@@ -1,39 +1,46 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:sun_flutter_capstone/controllers/user_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/filled_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
 
-class RegisterForm extends StatefulWidget {
+class RegisterForm extends StatefulHookConsumerWidget {
   const RegisterForm({Key? key}) : super(key: key);
 
   @override
-  State<RegisterForm> createState() => _RegisterFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
-  final UserController userController = UserController();
+class _RegisterFormState extends ConsumerState<RegisterForm> {
   final registerFormKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-
-  onSubmit() async {
-    if (registerFormKey.currentState!.validate()) {
-      Account account = Account(
-        name: nameController.text,
-        email: '${nameController.text.toLowerCase().replaceAll(' ', '')}@email.com',
-        createdAt: DateTime.now(),
-      );
-      await userController.upsert(account);
-      context.router.replace(BottomNavBar());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final signedInUser = ref.watch(accountProvider);
+    final TextEditingController nameController = TextEditingController();
+
+    onSubmit() async {
+      if (registerFormKey.currentState!.validate()) {
+        ref.read(accountProvider.notifier).update(
+              Account(
+                name: nameController.text,
+                email: signedInUser?.email ?? '',
+                currency: signedInUser?.currency ?? 'PHP',
+                createdAt: signedInUser?.createdAt ?? DateTime.now(),
+                updatedAt: DateTime.now(),
+              ),
+            );
+
+        registerFormKey.currentState?.reset();
+        setState(() {});
+        context.router.replace(BottomNavBar());
+      }
+    }
+
     return Form(
       key: registerFormKey,
       child: Column(
