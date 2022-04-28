@@ -27,7 +27,13 @@ class AccountController extends StateNotifier<Account?> {
       updatedAt: DateTime.now(),
     ).upsert();
 
-    state = (result ?? 0) > 0 ? account : fetchedAccount;
+    if (result == null) {
+      fetchedAccount = await getAccount();
+      state = fetchedAccount;
+      return result;
+    }
+
+    state = (result > 0) ? account : fetchedAccount;
     return result;
   }
 
