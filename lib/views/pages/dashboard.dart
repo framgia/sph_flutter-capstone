@@ -9,6 +9,9 @@ import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
+import 'package:sun_flutter_capstone/controllers/income_controller.dart';
+import 'package:sun_flutter_capstone/controllers/expense_controller.dart';
+import 'package:sun_flutter_capstone/models/model.dart';
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -18,8 +21,6 @@ class Dashboard extends StatefulHookConsumerWidget {
   final String firstName = 'Juan Dela';
   final String lastName = 'Dela Cruz';
   final String currency = 'fil';
-  final double totalIncome = 50000;
-  final double totalExpenses = 30000;
 
   final List<Map<String, dynamic>> data = const [
     {
@@ -124,7 +125,27 @@ class _DashboardState extends ConsumerState<Dashboard> {
     return transactionWidgets;
   }
 
+  final IncomeController incomeHandler = IncomeController();
+  final ExpenseController expenseHandler = ExpenseController();
+  
   @override
+  double totalIncome = 0.0;
+  double totalExpense = 0.0;
+
+  void initState() {
+    super.initState();
+    _totalValues();
+  }
+
+  Future<void> _totalValues() async {
+    double incomes = await incomeHandler.totalIncome();
+    double expenses = await expenseHandler.totalExpence();
+    setState(() {
+      totalIncome = incomes;
+      totalExpense = expenses;
+    });
+  }
+
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
     final spendingAmount = ref.watch(spendingProvider);
@@ -153,9 +174,9 @@ class _DashboardState extends ConsumerState<Dashboard> {
             child: Column(
               children: [
                 TransactionSummary(
-                  totalBalance: widget.totalIncome - widget.totalExpenses,
-                  totalIncome: widget.totalIncome,
-                  totalExpenses: widget.totalExpenses,
+                  totalBalance: totalIncome - totalExpense,
+                  totalIncome: totalIncome,
+                  totalExpenses: totalExpense,
                   currency: widget.currency,
                 ),
                 Container(

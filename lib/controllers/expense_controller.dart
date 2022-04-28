@@ -58,4 +58,13 @@ class ExpenseController {
     await Transaction().select().transaction_id.equals(id).delete();
     return result;
   }
+
+  Future<double> totalExpence() async {
+    double total = 0.0;
+    final expenses = await Expense().select().toList();
+    for (int i = 0; i < expenses.length; i++) {
+      total += expenses[i].amount!.toDouble();
+    }
+    return total;
+  }
 }

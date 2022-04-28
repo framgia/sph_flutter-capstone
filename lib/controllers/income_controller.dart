@@ -56,4 +56,13 @@ class IncomeController {
     await Transaction().select().transaction_id.equals(id).delete();
     return result;
   }
+
+  Future<double> totalIncome() async {
+    double total = 0.0;
+    final incomes = await Income().select().toList();
+    for (int i = 0; i < incomes.length; i++) {
+      total += incomes[i].amount!.toDouble();
+    }
+    return total;
+  }
 }
