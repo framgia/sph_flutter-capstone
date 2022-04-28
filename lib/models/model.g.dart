@@ -94,15 +94,11 @@ class TableExpense extends SqfEntityTableBase {
           defaultValue: 0, isNotNull: true),
       SqfEntityFieldBase('paid_at', DbType.date,
           isNotNull: true, minValue: DateTime.parse('1900-01-01')),
+      SqfEntityFieldBase('category_id', DbType.integer),
       SqfEntityFieldBase('createdAt', DbType.datetime,
           isNotNull: true, minValue: DateTime.parse('1900-01-01')),
       SqfEntityFieldBase('updatedAt', DbType.datetime,
           isNotNull: true, minValue: DateTime.parse('1900-01-01')),
-      SqfEntityFieldRelationshipBase(
-          TableCategory.getInstance, DeleteRule.CASCADE,
-          relationType: RelationType.ONE_TO_MANY,
-          fieldName: 'categoryId',
-          defaultValue: 0),
     ];
     super.init();
   }
@@ -1191,26 +1187,6 @@ class Category extends TableBase {
 
   // end FIELDS (Category)
 
-// COLLECTIONS & VIRTUALS (Category)
-  /// to load children of items to this field, use preload parameter. Ex: toList(preload:true) or toSingle(preload:true) or getById(preload:true)
-  /// You can also specify this object into certain preload fields!. Ex: toList(preload:true, preloadFields:['plExpenses', 'plField2'..]) or so on..
-  List<Expense>? plExpenses;
-
-  /// get Expense(s) filtered by id=categoryId
-  ExpenseFilterBuilder? getExpenses(
-      {List<String>? columnsToSelect, bool? getIsDeleted}) {
-    if (id == null) {
-      return null;
-    }
-    return Expense()
-        .select(columnsToSelect: columnsToSelect, getIsDeleted: getIsDeleted)
-        .categoryId
-        .equals(id)
-        .and;
-  }
-
-// END COLLECTIONS & VIRTUALS (Category)
-
   static const bool _softDeleteActivated = true;
   CategoryManager? __mnCategory;
 
@@ -1289,12 +1265,6 @@ class Category extends TableBase {
     if (isDeleted != null) {
       map['isDeleted'] = forQuery ? (isDeleted! ? 1 : 0) : isDeleted;
     }
-
-// COLLECTIONS (Category)
-    if (!forQuery) {
-      map['Expenses'] = await getExpenses()!.toMapList();
-    }
-// END COLLECTIONS (Category)
 
     return map;
   }
@@ -1375,22 +1345,6 @@ class Category extends TableBase {
     for (final map in data) {
       final obj = Category.fromMap(map as Map<String, dynamic>,
           setDefaultValues: setDefaultValues);
-      // final List<String> _loadedFields = List<String>.from(loadedFields);
-
-      // RELATIONSHIPS PRELOAD CHILD
-      if (preload) {
-        loadedFields = loadedFields ?? [];
-        if (/*!_loadedfields!.contains('category.plExpenses') && */ (preloadFields ==
-                null ||
-            preloadFields.contains('plExpenses'))) {
-          /*_loadedfields!.add('category.plExpenses'); */ obj.plExpenses =
-              obj.plExpenses ??
-                  await obj.getExpenses()!.toList(
-                      preload: preload,
-                      preloadFields: preloadFields,
-                      loadParents: false /*, loadedFields:_loadedFields*/);
-        }
-      } // END RELATIONSHIPS PRELOAD CHILD
 
       objList.add(obj);
     }
@@ -1418,22 +1372,6 @@ class Category extends TableBase {
     final data = await _mnCategory.getById([id]);
     if (data.length != 0) {
       obj = Category.fromMap(data[0] as Map<String, dynamic>);
-
-      // RELATIONSHIPS PRELOAD CHILD
-      if (preload) {
-        loadedFields = loadedFields ?? [];
-        if (/*!_loadedfields!.contains('category.plExpenses') && */ (preloadFields ==
-                null ||
-            preloadFields.contains('plExpenses'))) {
-          /*_loadedfields!.add('category.plExpenses'); */ obj.plExpenses =
-              obj.plExpenses ??
-                  await obj.getExpenses()!.toList(
-                      preload: preload,
-                      preloadFields: preloadFields,
-                      loadParents: false /*, loadedFields:_loadedFields*/);
-        }
-      } // END RELATIONSHIPS PRELOAD CHILD
-
     } else {
       obj = null;
     }
@@ -1551,14 +1489,6 @@ class Category extends TableBase {
   @override
   Future<BoolResult> delete([bool hardDelete = false]) async {
     debugPrint('SQFENTITIY: delete Category invoked (id=$id)');
-    var result = BoolResult(success: false);
-    {
-      result =
-          await Expense().select().categoryId.equals(id).and.delete(hardDelete);
-    }
-    if (!result.success) {
-      return result;
-    }
     if (!_softDeleteActivated || hardDelete || isDeleted!) {
       return _mnCategory
           .delete(QueryParams(whereString: 'id=?', whereArguments: [id]));
@@ -1842,16 +1772,6 @@ class CategoryFilterBuilder extends ConjunctionBase {
   Future<BoolResult> delete([bool hardDelete = false]) async {
     buildParameters();
     var r = BoolResult(success: false);
-    // Delete sub records where in (Expense) according to DeleteRule.CASCADE
-    final idListExpenseBYcategoryId = toListPrimaryKeySQL(false);
-    final resExpenseBYcategoryId = await Expense()
-        .select()
-        .where('categoryId IN (${idListExpenseBYcategoryId['sql']})',
-            parameterValue: idListExpenseBYcategoryId['args'])
-        .delete(hardDelete);
-    if (!resExpenseBYcategoryId.success) {
-      return resExpenseBYcategoryId;
-    }
 
     if (_softDeleteActivated && !hardDelete) {
       r = await _mnCategory!.updateBatch(qparams, {'isDeleted': 1});
@@ -1902,22 +1822,6 @@ class CategoryFilterBuilder extends ConjunctionBase {
     Category? obj;
     if (data.isNotEmpty) {
       obj = Category.fromMap(data[0] as Map<String, dynamic>);
-
-      // RELATIONSHIPS PRELOAD CHILD
-      if (preload) {
-        loadedFields = loadedFields ?? [];
-        if (/*!_loadedfields!.contains('category.plExpenses') && */ (preloadFields ==
-                null ||
-            preloadFields.contains('plExpenses'))) {
-          /*_loadedfields!.add('category.plExpenses'); */ obj.plExpenses =
-              obj.plExpenses ??
-                  await obj.getExpenses()!.toList(
-                      preload: preload,
-                      preloadFields: preloadFields,
-                      loadParents: false /*, loadedFields:_loadedFields*/);
-        }
-      } // END RELATIONSHIPS PRELOAD CHILD
-
     } else {
       obj = null;
     }
@@ -2143,18 +2047,18 @@ class Expense extends TableBase {
       this.description,
       this.amount,
       this.paid_at,
+      this.category_id,
       this.createdAt,
-      this.updatedAt,
-      this.categoryId}) {
+      this.updatedAt}) {
     _setDefaultValues();
     softDeleteActivated = false;
   }
   Expense.withFields(this.description, this.amount, this.paid_at,
-      this.createdAt, this.updatedAt, this.categoryId) {
+      this.category_id, this.createdAt, this.updatedAt) {
     _setDefaultValues();
   }
   Expense.withId(this.id, this.description, this.amount, this.paid_at,
-      this.createdAt, this.updatedAt, this.categoryId) {
+      this.category_id, this.createdAt, this.updatedAt) {
     _setDefaultValues();
   }
   // fromMap v2.0
@@ -2175,6 +2079,9 @@ class Expense extends TableBase {
               int.tryParse(o['paid_at'].toString())!)
           : DateTime.tryParse(o['paid_at'].toString());
     }
+    if (o['category_id'] != null) {
+      category_id = int.tryParse(o['category_id'].toString());
+    }
     if (o['createdAt'] != null) {
       createdAt = int.tryParse(o['createdAt'].toString()) != null
           ? DateTime.fromMillisecondsSinceEpoch(
@@ -2187,38 +2094,17 @@ class Expense extends TableBase {
               int.tryParse(o['updatedAt'].toString())!)
           : DateTime.tryParse(o['updatedAt'].toString());
     }
-    categoryId = int.tryParse(o['categoryId'].toString());
-
-    // RELATIONSHIPS FromMAP
-    plCategory = o['category'] != null
-        ? Category.fromMap(o['category'] as Map<String, dynamic>)
-        : null;
-    // END RELATIONSHIPS FromMAP
   }
   // FIELDS (Expense)
   int? id;
   String? description;
   double? amount;
   DateTime? paid_at;
+  int? category_id;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? categoryId;
 
   // end FIELDS (Expense)
-
-// RELATIONSHIPS (Expense)
-  /// to load parent of items to this field, use preload parameter ex: toList(preload:true) or toSingle(preload:true) or getById(preload:true)
-  /// You can also specify this object into certain preload fields!. Ex: toList(preload:true, preloadFields:['plCategory', 'plField2'..]) or so on..
-  Category? plCategory;
-
-  /// get Category By CategoryId
-  Future<Category?> getCategory(
-      {bool loadParents = false, List<String>? loadedFields}) async {
-    final _obj = await Category().getById(categoryId,
-        loadParents: loadParents, loadedFields: loadedFields);
-    return _obj;
-  }
-  // END RELATIONSHIPS (Expense)
 
   static const bool _softDeleteActivated = false;
   ExpenseManager? __mnExpense;
@@ -2249,6 +2135,9 @@ class Expense extends TableBase {
     } else if (paid_at != null || !forView) {
       map['paid_at'] = null;
     }
+    if (category_id != null || !forView) {
+      map['category_id'] = category_id;
+    }
     if (createdAt != null) {
       map['createdAt'] = forJson
           ? createdAt!.toString()
@@ -2266,15 +2155,6 @@ class Expense extends TableBase {
               : updatedAt;
     } else if (updatedAt != null || !forView) {
       map['updatedAt'] = null;
-    }
-    if (categoryId != null) {
-      map['categoryId'] = forView
-          ? plCategory == null
-              ? categoryId
-              : plCategory!.name
-          : categoryId;
-    } else if (categoryId != null || !forView) {
-      map['categoryId'] = null;
     }
 
     return map;
@@ -2303,6 +2183,9 @@ class Expense extends TableBase {
     } else if (paid_at != null || !forView) {
       map['paid_at'] = null;
     }
+    if (category_id != null || !forView) {
+      map['category_id'] = category_id;
+    }
     if (createdAt != null) {
       map['createdAt'] = forJson
           ? createdAt!.toString()
@@ -2320,15 +2203,6 @@ class Expense extends TableBase {
               : updatedAt;
     } else if (updatedAt != null || !forView) {
       map['updatedAt'] = null;
-    }
-    if (categoryId != null) {
-      map['categoryId'] = forView
-          ? plCategory == null
-              ? categoryId
-              : plCategory!.name
-          : categoryId;
-    } else if (categoryId != null || !forView) {
-      map['categoryId'] = null;
     }
 
     return map;
@@ -2352,9 +2226,9 @@ class Expense extends TableBase {
       description,
       amount,
       paid_at != null ? paid_at!.millisecondsSinceEpoch : null,
+      category_id,
       createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
-      updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null,
-      categoryId
+      updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null
     ];
   }
 
@@ -2365,9 +2239,9 @@ class Expense extends TableBase {
       description,
       amount,
       paid_at != null ? paid_at!.millisecondsSinceEpoch : null,
+      category_id,
       createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
-      updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null,
-      categoryId
+      updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null
     ];
   }
 
@@ -2412,18 +2286,6 @@ class Expense extends TableBase {
     for (final map in data) {
       final obj = Expense.fromMap(map as Map<String, dynamic>,
           setDefaultValues: setDefaultValues);
-      // final List<String> _loadedFields = List<String>.from(loadedFields);
-
-      // RELATIONSHIPS PRELOAD
-      if (preload || loadParents) {
-        loadedFields = loadedFields ?? [];
-        if ((preloadFields == null ||
-            loadParents ||
-            preloadFields.contains('plCategory'))) {
-          obj.plCategory =
-              obj.plCategory ?? await obj.getCategory(loadParents: loadParents);
-        }
-      } // END RELATIONSHIPS PRELOAD
 
       objList.add(obj);
     }
@@ -2451,18 +2313,6 @@ class Expense extends TableBase {
     final data = await _mnExpense.getById([id]);
     if (data.length != 0) {
       obj = Expense.fromMap(data[0] as Map<String, dynamic>);
-
-      // RELATIONSHIPS PRELOAD
-      if (preload || loadParents) {
-        loadedFields = loadedFields ?? [];
-        if ((preloadFields == null ||
-            loadParents ||
-            preloadFields.contains('plCategory'))) {
-          obj.plCategory =
-              obj.plCategory ?? await obj.getCategory(loadParents: loadParents);
-        }
-      } // END RELATIONSHIPS PRELOAD
-
     } else {
       obj = null;
     }
@@ -2536,15 +2386,15 @@ class Expense extends TableBase {
   Future<int?> upsert({bool ignoreBatch = true}) async {
     try {
       final result = await _mnExpense.rawInsert(
-          'INSERT OR REPLACE INTO expense (id, description, amount, paid_at, createdAt, updatedAt, categoryId)  VALUES (?,?,?,?,?,?,?)',
+          'INSERT OR REPLACE INTO expense (id, description, amount, paid_at, category_id, createdAt, updatedAt)  VALUES (?,?,?,?,?,?,?)',
           [
             id,
             description,
             amount,
             paid_at != null ? paid_at!.millisecondsSinceEpoch : null,
+            category_id,
             createdAt != null ? createdAt!.millisecondsSinceEpoch : null,
-            updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null,
-            categoryId
+            updatedAt != null ? updatedAt!.millisecondsSinceEpoch : null
           ],
           ignoreBatch);
       if (result! > 0) {
@@ -2570,7 +2420,7 @@ class Expense extends TableBase {
   @override
   Future<BoolCommitResult> upsertAll(List<Expense> expenses) async {
     final results = await _mnExpense.rawInsertAll(
-        'INSERT OR REPLACE INTO expense (id, description, amount, paid_at, createdAt, updatedAt, categoryId)  VALUES (?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO expense (id, description, amount, paid_at, category_id, createdAt, updatedAt)  VALUES (?,?,?,?,?,?,?)',
         expenses);
     return results;
   }
@@ -2616,7 +2466,6 @@ class Expense extends TableBase {
 
   void _setDefaultValues() {
     amount = amount ?? 0;
-    categoryId = categoryId ?? 0;
   }
 
   @override
@@ -2843,6 +2692,12 @@ class ExpenseFilterBuilder extends ConjunctionBase {
     return _paid_at = _setField(_paid_at, 'paid_at', DbType.date);
   }
 
+  ExpenseField? _category_id;
+  ExpenseField get category_id {
+    return _category_id =
+        _setField(_category_id, 'category_id', DbType.integer);
+  }
+
   ExpenseField? _createdAt;
   ExpenseField get createdAt {
     return _createdAt = _setField(_createdAt, 'createdAt', DbType.datetime);
@@ -2851,11 +2706,6 @@ class ExpenseFilterBuilder extends ConjunctionBase {
   ExpenseField? _updatedAt;
   ExpenseField get updatedAt {
     return _updatedAt = _setField(_updatedAt, 'updatedAt', DbType.datetime);
-  }
-
-  ExpenseField? _categoryId;
-  ExpenseField get categoryId {
-    return _categoryId = _setField(_categoryId, 'categoryId', DbType.integer);
   }
 
   /// Deletes List<Expense> bulk by query
@@ -2907,18 +2757,6 @@ class ExpenseFilterBuilder extends ConjunctionBase {
     Expense? obj;
     if (data.isNotEmpty) {
       obj = Expense.fromMap(data[0] as Map<String, dynamic>);
-
-      // RELATIONSHIPS PRELOAD
-      if (preload || loadParents) {
-        loadedFields = loadedFields ?? [];
-        if ((preloadFields == null ||
-            loadParents ||
-            preloadFields.contains('plCategory'))) {
-          obj.plCategory =
-              obj.plCategory ?? await obj.getCategory(loadParents: loadParents);
-        }
-      } // END RELATIONSHIPS PRELOAD
-
     } else {
       obj = null;
     }
@@ -3112,6 +2950,12 @@ class ExpenseFields {
         _fPaid_at ?? SqlSyntax.setField(_fPaid_at, 'paid_at', DbType.date);
   }
 
+  static TableField? _fCategory_id;
+  static TableField get category_id {
+    return _fCategory_id = _fCategory_id ??
+        SqlSyntax.setField(_fCategory_id, 'category_id', DbType.integer);
+  }
+
   static TableField? _fCreatedAt;
   static TableField get createdAt {
     return _fCreatedAt = _fCreatedAt ??
@@ -3122,12 +2966,6 @@ class ExpenseFields {
   static TableField get updatedAt {
     return _fUpdatedAt = _fUpdatedAt ??
         SqlSyntax.setField(_fUpdatedAt, 'updatedAt', DbType.datetime);
-  }
-
-  static TableField? _fCategoryId;
-  static TableField get categoryId {
-    return _fCategoryId = _fCategoryId ??
-        SqlSyntax.setField(_fCategoryId, 'categoryId', DbType.integer);
   }
 }
 // endregion ExpenseFields

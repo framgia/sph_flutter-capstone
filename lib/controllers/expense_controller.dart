@@ -20,7 +20,7 @@ class ExpenseController {
       description: expense.description,
       amount: expense.amount,
       paid_at: expense.paid_at,
-      categoryId: expense.categoryId,
+      category_id: expense.category_id,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
@@ -41,8 +41,8 @@ class ExpenseController {
       description: expense.description,
       amount: expense.amount,
       paid_at: expense.paid_at,
-      categoryId: expense.categoryId,
-      createdAt: expense.createdAt,
+      category_id: expense.category_id,
+      createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
     return result;

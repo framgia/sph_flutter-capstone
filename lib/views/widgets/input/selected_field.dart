@@ -71,7 +71,7 @@ class _SelectedInputState extends State<SelectInput> {
           setState(() {
             dropdownValue = newValue!;
             onSelect = true;
-            widget.valueReceiver(newValue);
+            widget.valueReceiver(widget.items.indexOf(newValue).toString());
           });
         },
       ),

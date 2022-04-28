@@ -63,19 +63,22 @@ class Dashboard extends StatefulHookConsumerWidget {
       'amount': 3000.0,
       'icon': Icons.drive_eta_outlined,
       'date': '2022-04-23T11:00:00.000Z',
-    },{
+    },
+    {
       'type': 'expenses',
       'description': 'Gas bill',
       'amount': 3000.0,
       'icon': Icons.drive_eta_outlined,
       'date': '2022-04-23T11:00:00.000Z',
-    },{
+    },
+    {
       'type': 'expenses',
       'description': 'Gas bill',
       'amount': 3000.0,
       'icon': Icons.drive_eta_outlined,
       'date': '2022-04-23T11:00:00.000Z',
-    },{
+    },
+    {
       'type': 'expenses',
       'description': 'Gas bill',
       'amount': 3000.0,
@@ -195,14 +198,15 @@ class _DashboardState extends ConsumerState<Dashboard> {
                     children: [
                       Text(
                         'Recent Transactions',
-                        style:
-                            TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
                             primary: Colors.black.withOpacity(0.5),
                             textStyle: TextStyle(fontSize: 14)),
-                        onPressed: () => redirectTo(context, Routes.transactions),
+                        onPressed: () =>
+                            redirectTo(context, Routes.transactions),
                         child: Text('See all'),
                       ),
                     ],
