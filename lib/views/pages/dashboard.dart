@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';

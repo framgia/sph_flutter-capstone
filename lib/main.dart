@@ -52,31 +52,55 @@ class MyApp extends HookConsumerWidget {
   }
 }
 
+// TODO: remove in the future
 Future<bool> runSamples() async {
-  // add sample categories
-  await addSampleCategories();
+  const incomeSeeder = [
+    {
+      'description': 'Salary 1',
+      'amount': 50000.0,
+    },
+    {
+      'description': 'Salary 2',
+      'amount': 50000.0,
+    }
+  ];
+  const expenseSeeder = [
+    {'description': 'expense 1', 'amount': 50000.0, 'category_id': 1},
+    {'description': 'expense 2', 'amount': 50000.0, 'category_id': 2}
+  ];
 
-  return true;
-}
+  for (var el in incomeSeeder) {
+      final result = await Income(
+      description: el['description'] as String,
+      amount: el['amount'] as double,
+      date: DateTime.now(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now()).save();
 
-Future<void> addSampleCategories() async {
-  final category = await Category().select().toSingle();
-  if (category == null) {
-    await Category(
-      name: 'Food',
+      await Transaction(
+        transaction_id: result,
+        transaction_type: 'income',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ).save();
+  }
+  for (var el in expenseSeeder) {
+    final result = await Expense(
+      description: el['description'] as String,
+      amount: el['amount'] as double,
+      paid_at: DateTime.now(),
+      category_id: el['category_id'] as int,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
-    await Category(
-      name: 'Electricity',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-    await Category(
-      name: 'Water',
+
+    await Transaction(
+      transaction_id: result,
+      transaction_type: 'expense',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).save();
   }
-  return;
+
+  return true;
 }

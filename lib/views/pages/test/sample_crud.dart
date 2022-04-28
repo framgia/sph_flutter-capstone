@@ -126,7 +126,7 @@ class _SampleCrudState extends ConsumerState<SampleCrud> {
                       snapshot.data[index].category_id.toString()),
                   trailing: SizedBox(
                     width: 100,
-                    child: Row(
+                    child: Column(
                       children: [
                         IconButton(
                           icon: const Icon(Icons.edit),
