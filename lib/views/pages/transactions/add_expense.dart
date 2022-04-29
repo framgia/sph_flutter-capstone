@@ -36,6 +36,7 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
   }
 
   void onSubmit(Expense? snapshot) async {
+    print(formInputControllers['dateController']!.text);
     if (expenseFormKey.currentState!.validate()) {
       final createdAt = DateTime.now();
       final updatedAt = DateTime.now();

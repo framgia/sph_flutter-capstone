@@ -35,21 +35,19 @@ class TransactionCard extends ConsumerWidget {
     DateTime yesterday = now.subtract(Duration(days: 1));
     String roughTimeString = DateFormat('jm').format(dateTime);
 
-    if (!localDateTime.difference(justNow).isNegative) {
-      return 'Just now';
-    } else if (localDateTime.day == now.day &&
+    if (localDateTime.day == now.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {
-      return roughTimeString;
+      return 'Today';
     } else if (localDateTime.day == yesterday.day &&
         localDateTime.month == yesterday.month &&
         localDateTime.year == yesterday.year) {
-      return 'Yesterday, ' + roughTimeString;
-    } else if (now.difference(localDateTime).inDays < 4) {
+      return 'Yesterday';
+    } else if (now.difference(localDateTime).inDays < 6) {
       String weekday = DateFormat('EEEE').format(localDateTime);
-      return '$weekday, $roughTimeString';
+      return '$weekday';
     }
-    return '${DateFormat('yMd').format(dateTime)}, $roughTimeString';
+    return '${DateFormat('MMM dd, yyyy').format(dateTime)}';
   }
 
   @override
