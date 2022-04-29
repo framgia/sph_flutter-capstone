@@ -10,13 +10,18 @@ class TransactionController {
     return await Transaction().select().orderByDesc("createdAt").toList();
   }
 
-  Future<List<Map>> transactionList() async {
-    final data = await Transaction().select().orderByDesc("createdAt").toList();
+  Future<List<Map>> transactionList(int? limit) async {
+    var data = [];
+    if (limit != null && limit > 0) {
+      data = await Transaction().select().orderByDesc("createdAt").top(limit).toList();
+    } else {
+      data = await Transaction().select().orderByDesc("createdAt").toList();
+    }
     var transactions = <Map>[];
 
     await Future.forEach(data, <Transaction>(transaction) async {
       if (transaction.transaction_type == 'income') {
-        IncomeController()
+        await IncomeController()
             .show(transaction.transaction_id as int)
             .then(<Income>(value) {
           final transform = {
@@ -28,7 +33,7 @@ class TransactionController {
           transactions.add(transform);
         });
       } else {
-        ExpenseController()
+        await ExpenseController()
             .show(transaction.transaction_id as int)
             .then(<Income>(value) {
           final transform = {
@@ -77,7 +82,7 @@ class TransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
   AsyncValue<List<Map>>? previousState;
 
   Future<void> retrieveTransactions() async {
-    final transactions = await TransactionController().transactionList();
+    final transactions = await TransactionController().transactionList(null);
     state = AsyncValue.data(transactions);
   }
 
