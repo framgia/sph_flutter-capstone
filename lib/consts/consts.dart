@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:intl/intl.dart';
 
 enum CategoryList {
   food,
@@ -29,5 +30,12 @@ IconData getIcons(CategoryList cat) {
 extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
+class AmountFormat {
+  String amount(double amount, String currency) {
+    var format = NumberFormat.simpleCurrency(name: currency).format(amount);
+    return format;
   }
 }

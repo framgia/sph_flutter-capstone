@@ -8,6 +8,7 @@ import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/currency_picker.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
+import 'package:sun_flutter_capstone/consts/consts.dart';
 
 class AccountSettings extends StatefulHookConsumerWidget {
   const AccountSettings({Key? key}) : super(key: key);
@@ -18,12 +19,12 @@ class AccountSettings extends StatefulHookConsumerWidget {
 }
 
 class _AccountSettingsState extends ConsumerState<AccountSettings> {
-  final String currency = 'PHP';
-  final String spendingLimit = '18,000';
+  final double spendingLimit = 18000.0;
 
   @override
   Widget build(BuildContext context) {
     final signedInUser = ref.watch(accountProvider);
+    final amountFormat = AmountFormat();
 
     return Template(
       appbarTitle: Text(
@@ -66,30 +67,30 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                 content: CurrencyPicker(),
               ),
               ElevatedCard(
-                width: 344.0,
-                content: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'This month\'s spending limit',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.lightGray,
+                  width: 344.0,
+                  content: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'This month\'s spending limit',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.lightGray,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '$currency $spendingLimit',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            height: 1.8,
+                          Text(
+                            amountFormat.amount(spendingLimit, signedInUser?.currency ?? 'PHP'),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              height: 1.8,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                     Spacer(),
                     SpendingLimit(),
                   ],

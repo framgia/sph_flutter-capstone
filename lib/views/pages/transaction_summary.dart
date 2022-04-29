@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
+import 'package:sun_flutter_capstone/consts/consts.dart';
 
 class TransactionSummary extends StatelessWidget {
   final double totalBalance;
@@ -17,13 +18,10 @@ class TransactionSummary extends StatelessWidget {
     required this.currency,
   }) : super(key: key);
 
-  String _amount(double amount) {
-    var format = NumberFormat.simpleCurrency(locale: currency).format(amount);
-    return format;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final amountFormat = AmountFormat();
+
     return ElevatedCard(
       width: 374.0,
       boxColor: AppColor.darkBlue,
@@ -37,7 +35,7 @@ class TransactionSummary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _amount(totalBalance),
+              amountFormat.amount(totalBalance,currency),
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
@@ -82,7 +80,7 @@ class TransactionSummary extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      _amount(totalIncome),
+                      amountFormat.amount(totalIncome,currency),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -128,7 +126,7 @@ class TransactionSummary extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      _amount(totalExpenses),
+                      amountFormat.amount(totalExpenses,currency),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

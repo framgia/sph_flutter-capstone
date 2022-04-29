@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:intl/intl.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/consts/consts.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends ConsumerWidget {
   final Icon icon;
   final String type;
   final String currency;
@@ -50,7 +53,10 @@ class TransactionCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signedInUser = ref.watch(accountProvider);
+    final amountFormat = AmountFormat();
+
     return Container(
       child: Row(
         children: <Widget>[
@@ -93,7 +99,7 @@ class TransactionCard extends StatelessWidget {
           Spacer(),
           Container(
             child: Text(
-              (type == 'income' ? '+ ' : '- ') + _amount(amount),
+              (type == 'income' ? '+ ' : '- ') + amountFormat.amount(amount, signedInUser?.currency ?? currency),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

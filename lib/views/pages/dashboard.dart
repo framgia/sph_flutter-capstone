@@ -183,7 +183,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   totalBalance: totalIncome - totalExpense,
                   totalIncome: totalIncome,
                   totalExpenses: totalExpense,
-                  currency: widget.currency,
+                  currency: signedInAccount?.currency ?? 'PHP',
                 ),
                 Container(
                   margin:
