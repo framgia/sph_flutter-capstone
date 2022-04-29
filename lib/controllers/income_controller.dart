@@ -59,4 +59,3 @@ class IncomeController {
     return total;
   }
 }
-

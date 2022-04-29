@@ -2,16 +2,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
 class SpendingLimitController {
-  Future<Spending_limit?> getCurrentSpendingLimit(
-    DateTime dateNow) async {
+  Future<Spending_limit?> getCurrentSpendingLimit(DateTime dateNow) async {
     return await Spending_limit()
-      .select()
-      .start_date
-      .lessThanOrEquals(dateNow)
-      .and
-      .end_date
-      .greaterThanOrEquals(dateNow)
-      .toSingle();
+        .select()
+        .start_date
+        .lessThanOrEquals(dateNow)
+        .and
+        .end_date
+        .greaterThanOrEquals(dateNow)
+        .toSingle();
   }
 
   Future<int?> upsert(double limitAmount) async {
@@ -19,7 +18,7 @@ class SpendingLimitController {
     DateTime firstDayOfMonth = DateTime(now.year, now.month, 1);
     DateTime lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
     Spending_limit? spendingLimit = await getCurrentSpendingLimit(now);
-    
+
     final result = await Spending_limit(
       id: spendingLimit?.id,
       amount: limitAmount,

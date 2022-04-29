@@ -31,10 +31,9 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
     final expensesState = ref.watch(expenseTransactionsProvider);
     final incomesState = ref.watch(incomeTransactionsProvider);
 
-    renderTransactions(dataList) {
+    renderTransactions(dataList, section) {
       var transactionWidgets = <Widget>[];
       double _totalIncome = 0;
-      double _totalExpense = 0;
 
       for (var data in dataList) {
         final IconData icon = data['type'] == 'income'
@@ -52,18 +51,32 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
             dateTime: data['date'],
           ),
         ));
-        if (data['type'] == 'income') {
+
+        if (section == 'all') {
+          if (data['type'] == 'income') {
+            _totalIncome += data['amount'];
+          } else {
+            _totalIncome -= data['amount'];
+          }
+          print(_totalIncome);
+        } else {
           _totalIncome += data['amount'];
-        } else if (data['type'] == 'expense') {
-          _totalExpense += data['amount'];
-        } 
+        }
       }
 
-      setState(() {
-        totalIncome = _totalIncome;
-        totalExpense = _totalExpense;
-        totalBalance = _totalIncome - _totalExpense;
-      });
+      if (section == 'income') {
+        setState(() {
+          totalIncome = _totalIncome;
+        });
+      } else if (section == 'expense') {
+        setState(() {
+          totalExpense = _totalIncome;
+        });
+      } else if (section == 'all') {
+        setState(() {
+          totalBalance = _totalIncome;
+        });
+      }
 
       return transactionWidgets;
     }
@@ -88,7 +101,7 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
               value: totalBalance,
               content: transactionState.when(
                 data: (data) =>
-                    Column(children: renderTransactions(data)),
+                    Column(children: renderTransactions(data, 'all')),
                 error: (e, st) => Text(e.toString()),
                 loading: () => const CircularProgressIndicator(),
               ),
@@ -99,7 +112,7 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
               labelColor: AppColor.secondary,
               content: incomesState.when(
                 data: (data) =>
-                    Column(children: renderTransactions(data)),
+                    Column(children: renderTransactions(data, 'income')),
                 error: (e, st) => Text(e.toString()),
                 loading: () => const CircularProgressIndicator(),
               ),
@@ -110,7 +123,7 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
               labelColor: AppColor.pink,
               content: expensesState.when(
                 data: (data) =>
-                    Column(children: renderTransactions(data)),
+                    Column(children: renderTransactions(data, 'expense')),
                 error: (e, st) => Text(e.toString()),
                 loading: () => const CircularProgressIndicator(),
               ),

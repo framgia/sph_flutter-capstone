@@ -44,23 +44,27 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
       Expense expense = Expense();
       // TODO: Below line gives int errors, put static category id for now
       //  (int.parse(formInputControllers['categoryController']!.text)) + 1;
-      expense.category_id = (int.parse(formInputControllers['categoryController']!.text)) + 1;
+      expense.category_id =
+          (int.parse(formInputControllers['categoryController']!.text)) + 1;
       expense.description = formInputControllers['nameController']!.text;
-      expense.amount = double.parse(formInputControllers['amountController']!.text);
-      expense.paid_at = DateTime.parse(formInputControllers['dateController']!.text);
+      expense.amount =
+          double.parse(formInputControllers['amountController']!.text);
+      expense.paid_at =
+          DateTime.parse(formInputControllers['dateController']!.text);
       expense.updatedAt = updatedAt;
 
       // Save new record
       if (snapshot?.id == null) {
         expense.createdAt = createdAt;
         final result = await expenseHandler.store(expense);
-        ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
+        ref
+            .read(transactionsNotifierProvider.notifier)
+            .addTransaction('expense', result as int);
         ref.read(expenseTransactionsProvider.notifier).retrieveTransactions();
       } else {
         final expenseId = snapshot?.id;
         if (expenseId != null) {
           await expenseHandler.update(expenseId, expense);
-
         }
         setState(() {});
       }

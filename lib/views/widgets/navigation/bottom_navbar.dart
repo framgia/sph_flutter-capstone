@@ -62,7 +62,7 @@ class BottomNavBar extends HookConsumerWidget {
                 NavigationButton(
                   icon: Icons.notifications_none_outlined,
                   activeIcon: Icons.notifications_active,
-      // onPressed callback is null, by default the flutter wiil read it disable.
+                  // onPressed callback is null, by default the flutter wiil read it disable.
                   route: null,
                 ),
                 NavigationButton(
