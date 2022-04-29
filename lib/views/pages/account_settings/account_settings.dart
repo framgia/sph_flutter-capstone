@@ -21,7 +21,6 @@ class AccountSettings extends StatefulHookConsumerWidget {
 
 class _AccountSettingsState extends ConsumerState<AccountSettings> {
   final String currency = 'PHP';
-  final String spendingLimit = '18,000';
   final SpendingLimitController spendingLimitController =
       SpendingLimitController();
 
@@ -30,18 +29,14 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
   @override
   void initState() {
     super.initState();
-    _totalValues();
+    _getSpendingLimit();
   }
 
-  Future<void> _totalValues() async {
+  Future<void> _getSpendingLimit() async {
     var now = DateTime.now();
-    var monthAfter = DateTime.now().add(Duration(days: 5));
-
-    List spendlingLimits = await spendingLimitController.index(now, monthAfter);
-    debugPrint(spendlingLimits[0].amount.toString());
-
+    final spendingLimit = await spendingLimitController.getCurrentSpendingLimit(now);
     setState(() {
-      currentSpendingLimit = spendlingLimits[0].amount.toString();
+      currentSpendingLimit = spendingLimit != null ? spendingLimit.amount.toString() : '0.0';
     });
   }
 

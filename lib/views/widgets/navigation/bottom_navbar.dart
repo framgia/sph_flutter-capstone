@@ -15,7 +15,7 @@ class BottomNavBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return AutoTabsScaffold(
-      routes: const [
+      routes: [
         DashboardRouter(),
         TransactionRouter(),
         NotificationsRouter(),

@@ -1,26 +1,25 @@
-import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
 class SpendingLimitController {
-  Future<List<Spending_limit>> index(
-      DateTime? startDate, DateTime? endDate) async {
-    if (startDate != null && endDate != null) {
-      return await Spending_limit()
-          .select()
-          .start_date
-          .lessThanOrEquals(startDate)
-          .and
-          .end_date
-          .greaterThanOrEquals(endDate)
-          .toList();
-    }
-    return await Spending_limit().select().toList();
+  Future<Spending_limit?> getCurrentSpendingLimit(
+    DateTime dateNow) async {
+    return await Spending_limit()
+      .select()
+      .start_date
+      .lessThanOrEquals(dateNow)
+      .and
+      .end_date
+      .greaterThanOrEquals(dateNow)
+      .toSingle();
   }
 
-  Future<int?> upsert(Spending_limit spending_limit) async {
+  Future<int?> upsert(double limitAmount) async {
+    var now = DateTime.now();
+    Spending_limit? spendingLimit = await getCurrentSpendingLimit(now);
+    
     final result = await Spending_limit(
-      id: spending_limit.id,
-      amount: spending_limit.amount,
+      id: spendingLimit?.id,
+      amount: limitAmount,
       start_date: DateTime.now(),
       end_date: DateTime.now().add(Duration(days: 30)),
       createdAt: DateTime.now(),

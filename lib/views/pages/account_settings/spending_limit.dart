@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
-import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
-import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
 class SpendingLimit extends StatelessWidget {
@@ -65,16 +62,8 @@ class SpendingLimit extends StatelessWidget {
                           text: 'Save',
                           onPressed: () async {
                             Navigator.of(context).pop();
-                            Spending_limit spending_limit = Spending_limit(
-                              id: null,
-                              amount: double.parse(amountController.text),
-                              start_date: DateTime.now(),
-                              end_date: DateTime.now().add(Duration(days: 30)),
-                              createdAt: DateTime.now(),
-                              updatedAt: DateTime.now(),
-                            );
                             await spendingLimitController
-                                .upsert(spending_limit);
+                                .upsert(double.parse(amountController.text));
                             showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
