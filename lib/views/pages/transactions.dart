@@ -7,6 +7,8 @@ import 'package:sun_flutter_capstone/views/widgets/rounded_background.dart';
 import 'package:sun_flutter_capstone/views/widgets/tabs/tab_layout.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
+import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/consts/consts.dart';
 
 class TransactionsPage extends ConsumerWidget {
   const TransactionsPage({Key? key}) : super(key: key);
@@ -55,7 +57,7 @@ class TransactionsPage extends ConsumerWidget {
           ],
           tabContents: [
             TabContent(
-              value: '₱ 1,840.00',
+              value: 1840.0,
               content: transactionState.when(
                 data: (data) => Column(children: renderTransactions(data)),
                 loading: () => const CircularProgressIndicator(),
@@ -64,13 +66,13 @@ class TransactionsPage extends ConsumerWidget {
             ),
             TabContent(
               label: 'Total Income',
-              value: '₱ 1,840.00',
+              value: 2840.0,
               labelColor: AppColor.secondary,
               content: Text('Content'),
             ),
             TabContent(
               label: 'Total Expense',
-              value: '₱ 1,840.00',
+              value: 3840.0,
               labelColor: AppColor.pink,
               content: Text('Content'),
             ),
@@ -81,9 +83,9 @@ class TransactionsPage extends ConsumerWidget {
   }
 }
 
-class TabContent extends StatelessWidget {
+class Summary extends ConsumerWidget {
   final String label;
-  final String value;
+  final double value;
   final Color labelColor;
   final Widget content;
 
@@ -119,9 +121,9 @@ class TabContent extends StatelessWidget {
   }
 }
 
-class Total extends StatelessWidget {
+class Total extends ConsumerWidget {
   final String label;
-  final String value;
+  final double value;
   final Color labelColor;
 
   const Total({
@@ -132,12 +134,15 @@ class Total extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signedInUser = ref.watch(accountProvider);
+    final amountFormat = AmountFormat();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          value,
+          amountFormat.amount(value, signedInUser?.currency ?? 'PHP'),
           style: TextStyle(
             color: AppColor.darkBlue,
             fontWeight: FontWeight.bold,
