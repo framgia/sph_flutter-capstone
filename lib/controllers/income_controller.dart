@@ -24,13 +24,6 @@ class IncomeController {
       updatedAt: DateTime.now(),
     ).save();
 
-    await Transaction(
-      transaction_id: result,
-      transaction_type: 'income',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-
     return result;
   }
 

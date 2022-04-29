@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/controllers/income_controller.dart';
+import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
@@ -8,14 +10,14 @@ import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
 
-class AddIncomeForm extends StatefulWidget {
+class AddIncomeForm extends ConsumerStatefulWidget {
   const AddIncomeForm({Key? key}) : super(key: key);
 
   @override
-  State<AddIncomeForm> createState() => _AddIncomeFormState();
+  _AddIncomeFormState createState() => _AddIncomeFormState();
 }
 
-class _AddIncomeFormState extends State<AddIncomeForm> {
+class _AddIncomeFormState extends ConsumerState<AddIncomeForm> {
   final incomeFormKey = GlobalKey<FormState>();
   final IncomeController incomeHandler = IncomeController();
   List<Income> incomes = []; // TODO: Remove: For testing purposes only
@@ -29,15 +31,6 @@ class _AddIncomeFormState extends State<AddIncomeForm> {
   @override
   void initState() {
     super.initState();
-    getIncomes(); // TODO: Remove: For testing purposes only
-  }
-
-  // TODO: Remove: For testing purposes only
-  Future<void> getIncomes() async {
-    List<Income> updatedIncomes = await incomeHandler.index(null, null);
-    setState(() {
-      incomes = updatedIncomes;
-    });
   }
 
   void clearStates() {
@@ -60,9 +53,9 @@ class _AddIncomeFormState extends State<AddIncomeForm> {
               DateTime.now().toString());
       income.createdAt = DateTime.now();
       income.updatedAt = DateTime.now();
-      await incomeHandler.store(income);
+      final result = await incomeHandler.store(income);
+      ref.read(transactionsNotifierProvider.notifier).addTransaction('income', result as int);
       clearStates();
-      getIncomes(); // TODO: Remove: For testing purposes only
     }
   }
 
@@ -77,8 +70,6 @@ class _AddIncomeFormState extends State<AddIncomeForm> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                  'Total Income: ${incomes.length}'), // TODO: Remove: For testing purposes only
               InputGroup(
                 label: 'NAME',
                 input: InputField(

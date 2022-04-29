@@ -25,13 +25,6 @@ class ExpenseController {
       updatedAt: DateTime.now(),
     ).save();
 
-    await Transaction(
-      transaction_id: result,
-      transaction_type: 'expense',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ).save();
-
     return result;
   }
 

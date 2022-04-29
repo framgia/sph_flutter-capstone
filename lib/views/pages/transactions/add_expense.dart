@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
+import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
@@ -10,14 +12,14 @@ import 'package:sun_flutter_capstone/views/widgets/input/selected_field.dart';
 import 'package:sun_flutter_capstone/controllers/expense_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
-class AddExpenseForm extends StatefulWidget {
-  AddExpenseForm({Key? key}) : super(key: key);
+class AddExpenseForm extends ConsumerStatefulWidget {
+  const AddExpenseForm({Key? key}) : super(key: key);
 
   @override
-  State<AddExpenseForm> createState() => _AddExpenseFormState();
+  _AddExpenseFormState createState() => _AddExpenseFormState();
 }
 
-class _AddExpenseFormState extends State<AddExpenseForm> {
+class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
   final expenseFormKey = GlobalKey<FormState>();
   ExpenseController expenseHandler = ExpenseController();
 
@@ -28,34 +30,35 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
     'dateController': TextEditingController(),
   };
 
+  @override
   void initState() {
     super.initState();
   }
 
-  onSubmit(Expense? snapshot) async {
+  void onSubmit(Expense? snapshot) async {
     if (expenseFormKey.currentState!.validate()) {
       final createdAt = DateTime.now();
       final updatedAt = DateTime.now();
 
       Expense expense = Expense();
-      expense.category_id =
-          int.parse(formInputControllers['categoryController']!.text) + 1;
+      // TODO: Below line gives int errors, put static category id for now
+      //  (int.parse(formInputControllers['categoryController']!.text)) + 1;
+      expense.category_id = 1;
       expense.description = formInputControllers['nameController']!.text;
-      expense.amount =
-          double.parse(formInputControllers['amountController']!.text);
-      expense.paid_at =
-          DateTime.parse(formInputControllers['dateController']!.text);
+      expense.amount = double.parse(formInputControllers['amountController']!.text);
+      expense.paid_at = DateTime.parse(formInputControllers['dateController']!.text);
       expense.updatedAt = updatedAt;
 
       // Save new record
       if (snapshot?.id == null) {
         expense.createdAt = createdAt;
-        await expenseHandler.store(expense);
-        setState(() {});
+        final result = await expenseHandler.store(expense);
+        ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
       } else {
         final expenseId = snapshot?.id;
         if (expenseId != null) {
           await expenseHandler.update(expenseId, expense);
+
         }
         setState(() {});
       }

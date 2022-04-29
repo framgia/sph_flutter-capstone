@@ -26,105 +26,79 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
     final signedInUser = ref.watch(accountProvider);
 
     return Template(
-        appbarTitle: Text(
-          'Account Settings',
-          style: TextStyle(fontSize: 18, color: AppColor.secondary),
-        ),
-        content: RoundedBackground(
-          content: Container(
-            padding: const EdgeInsets.symmetric(vertical: 39, horizontal: 15),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {},
-                      color: Colors.transparent,
-                    ),
-                    Text(
-                      '${signedInUser?.name}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    UpdateBasicInfo(),
-                  ],
-                ),
-                Text(
-                  signedInUser?.email ?? '',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColor.secondary,
-                    fontWeight: FontWeight.w500,
+      appbarTitle: Text(
+        'Account Settings',
+        style: TextStyle(fontSize: 18, color: AppColor.secondary),
+      ),
+      content: RoundedBackground(
+        content: Container(
+          padding: const EdgeInsets.symmetric(vertical: 39, horizontal: 15),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {},
+                    color: Colors.transparent,
                   ),
-                ),
-                ElevatedCard(
-                  width: 344.0,
-                  content: CurrencyPicker(),
-                ),
-                ElevatedCard(
-                  width: 344.0,
-                  content: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'This month\'s spending limit',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.lightGray,
-                            ),
-                          ),
-                          Text(
-                            '$currency $spendingLimit',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              height: 1.8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      SpendingLimit(),
-                    ],
+                  Text(
+                    '${signedInUser?.name}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
+                  UpdateBasicInfo(),
+                ],
+              ),
+              Text(
+                signedInUser?.email ?? '',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppColor.secondary,
+                  fontWeight: FontWeight.w500,
                 ),
-                ElevatedCard(
-                  width: 344.0,
-                  content: Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Logout',
+              ),
+              ElevatedCard(
+                width: 344.0,
+                content: CurrencyPicker(),
+              ),
+              ElevatedCard(
+                width: 344.0,
+                content: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'This month\'s spending limit',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.lightGray,
+                          ),
+                        ),
+                        Text(
+                          '$currency $spendingLimit',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
+                            height: 1.8,
                           ),
                         ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.power_settings_new_outlined),
-                        onPressed: () {
-                          print('clicked');
-                        },
-                        iconSize: 20.0,
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    Spacer(),
+                    SpendingLimit(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

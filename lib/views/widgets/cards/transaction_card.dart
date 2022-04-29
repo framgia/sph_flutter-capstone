@@ -64,43 +64,41 @@ class TransactionCard extends StatelessWidget {
             width: 50,
             child: IconButton(
               icon: icon,
-              onPressed: () {
-                print('clicked');
-              },
+              onPressed: () {},
             ),
           ),
           SizedBox(width: 9),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-                SizedBox(height: 6),
-                Text(
-                  _date(dateTime),
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.lightGray),
+              ),
+              SizedBox(height: 6),
+              Text(
+                _date(dateTime),
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.lightGray,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Spacer(),
           Container(
             child: Text(
               (type == 'income' ? '+ ' : '- ') + _amount(amount),
               style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: type == 'income' ? AppColor.secondary : AppColor.pink),
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: type == 'income' ? AppColor.secondary : AppColor.pink,
+              ),
             ),
           )
         ],
