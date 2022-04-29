@@ -54,6 +54,7 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
         expense.createdAt = createdAt;
         final result = await expenseHandler.store(expense);
         ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
+        ref.read(expenseTransactionsProvider.notifier).retrieveTransactions();
       } else {
         final expenseId = snapshot?.id;
         if (expenseId != null) {

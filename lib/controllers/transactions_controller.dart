@@ -10,13 +10,23 @@ class TransactionController {
     return await Transaction().select().orderByDesc("createdAt").toList();
   }
 
-  Future<List<Map>> transactionList(int? limit) async {
+  Future<List<Map>> transactionList({ int? limit, String filter = 'all' }) async {
+    var query = Transaction().select().orderByDesc("createdAt");
     var data = [];
-    if (limit != null && limit > 0) {
-      data = await Transaction().select().orderByDesc("createdAt").top(limit).toList();
-    } else {
-      data = await Transaction().select().orderByDesc("createdAt").toList();
+
+    if (filter != 'all') {
+      query = Transaction().select().transaction_type.equals(filter).orderByDesc("createdAt");
     }
+
+    if (limit != null && limit > 0) {
+      query = query.top(limit);
+    } else {
+      query = Transaction().select().orderByDesc("createdAt");
+    }
+
+    data = await query.toList();
+
+
     var transactions = <Map>[];
 
     await Future.forEach(data, <Transaction>(transaction) async {
@@ -64,10 +74,22 @@ class TransactionController {
   }
 }
 
+// Providers
 final transactionsNotifierProvider =
     StateNotifierProvider<TransactionsNotifier, AsyncValue<List<Map>>>((ref) {
   return TransactionsNotifier(ref.read);
 });
+
+final expenseTransactionsProvider =
+StateNotifierProvider<ExpenseTransactionsNotifier, AsyncValue<List<Map>>>((ref) {
+  return ExpenseTransactionsNotifier(ref.read);
+});
+
+final incomeTransactionsProvider =
+StateNotifierProvider<IncomeTransactionsNotifier, AsyncValue<List<Map>>>((ref) {
+  return IncomeTransactionsNotifier(ref.read);
+});
+
 
 // For notifier methods
 class TransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
@@ -82,12 +104,46 @@ class TransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
   AsyncValue<List<Map>>? previousState;
 
   Future<void> retrieveTransactions() async {
-    final transactions = await TransactionController().transactionList(null);
+    final transactions = await TransactionController().transactionList();
     state = AsyncValue.data(transactions);
   }
 
   Future<void> addTransaction(String type, int id) async {
     await TransactionController().store(id, type);
     retrieveTransactions();
+  }
+}
+
+class ExpenseTransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
+  ExpenseTransactionsNotifier(
+      this.read, [
+        AsyncValue<List<Map>>? transactions,
+      ]) : super(transactions ?? const AsyncValue.loading()) {
+    retrieveTransactions();
+  }
+
+  final Reader read;
+  AsyncValue<List<Map>>? previousState;
+
+  Future<void> retrieveTransactions() async {
+    final transactions = await TransactionController().transactionList(filter: 'expense');
+    state = AsyncValue.data(transactions);
+  }
+}
+
+class IncomeTransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
+  IncomeTransactionsNotifier(
+      this.read, [
+        AsyncValue<List<Map>>? transactions,
+      ]) : super(transactions ?? const AsyncValue.loading()) {
+    retrieveTransactions();
+  }
+
+  final Reader read;
+  AsyncValue<List<Map>>? previousState;
+
+  Future<void> retrieveTransactions() async {
+    final transactions = await TransactionController().transactionList(filter: 'income');
+    state = AsyncValue.data(transactions);
   }
 }
