@@ -5,8 +5,8 @@ import 'package:sun_flutter_capstone/consts/consts.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
+import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
-import 'package:sun_flutter_capstone/state/spending_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
@@ -23,72 +23,6 @@ class Dashboard extends StatefulHookConsumerWidget {
   final String firstName = 'Juan Dela';
   final String lastName = 'Dela Cruz';
   final String currency = 'fil';
-
-  final List<Map<String, dynamic>> data = const [
-    {
-      'type': 'income',
-      'description': 'Salary',
-      'amount': 50000.0,
-      'icon': Icons.attach_money_outlined,
-      'date': '2022-04-25T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-    {
-      'type': 'expenses',
-      'description': 'Gas bill',
-      'amount': 3000.0,
-      'icon': Icons.drive_eta_outlined,
-      'date': '2022-04-23T11:00:00.000Z',
-    },
-  ];
 
   String _greeting() {
     var hour = DateTime.now().hour;
@@ -154,7 +88,16 @@ class _DashboardState extends ConsumerState<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
-    final spendingAmount = ref.watch(spendingProvider);
+    final spendingLimit = ref.watch(spendingLimitProvider);
+
+    double getLimit() {
+      double total = totalExpense / spendingLimit;
+
+      if (spendingLimit == 0) return 0;
+      if (total > 1) return 1;
+
+      return total;
+    }
 
     return Template(
       automaticallyImplyLeading: false,
@@ -186,35 +129,17 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   currency: signedInAccount?.currency ?? 'PHP',
                 ),
                 Container(
-                  margin:
-                      EdgeInsets.only(top: 35, left: 20, right: 20, bottom: 10),
-                  child: ProgressBar(
-                    progress: spendingAmount,
-                    label: "You have spent",
-                  ),
-                ),
-                // * The following row can be removed this is just for testing the progress bar
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setSpendingAmount(ref, spendingAmount - 0.1);
-                        },
-                        child: const Text('-'),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Flexible(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setSpendingAmount(ref, spendingAmount + 0.1);
-                        },
-                        child: const Text('+'),
-                      ),
-                    )
-                  ],
+                  margin: EdgeInsets.only(
+                      top: (spendingLimit == 0) ? 0 : 35,
+                      left: 20,
+                      right: 20,
+                      bottom: (spendingLimit == 0) ? 0 : 10),
+                  child: (spendingLimit == 0)
+                      ? Text('')
+                      : ProgressBar(
+                          progress: getLimit(),
+                          label: "You have spent",
+                        ),
                 ),
                 // Recent transactions
                 Container(
