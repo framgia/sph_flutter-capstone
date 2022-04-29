@@ -62,9 +62,11 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
 
   List<Text> getPercentValues(double progress) {
     double fillValue = progress * 100;
+    String remainingPercetage =
+        (fillValue == 0) ? '100.0 %' : doubleToPercent(100 - fillValue);
     return [
-      styleText(doubleToPercent(fillValue), true),
-      styleText(doubleToPercent(100 - fillValue), false),
+      styleText(doubleToPercent(fillValue), false),
+      styleText(remainingPercetage, false),
     ];
   }
 

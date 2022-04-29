@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
@@ -33,6 +34,7 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.read(accountProvider.notifier).getAccount();
+    ref.read(spendingLimitProvider.notifier).getSpendingLimit();
     // runSamples(ref);
 
     return MaterialApp.router(
