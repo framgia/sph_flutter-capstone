@@ -31,15 +31,6 @@ class _AddIncomeFormState extends ConsumerState<AddIncomeForm> {
   @override
   void initState() {
     super.initState();
-    getIncomes(); // TODO: Remove: For testing purposes only
-  }
-
-  // TODO: Remove: For testing purposes only
-  Future<void> getIncomes() async {
-    List<Income> updatedIncomes = await incomeHandler.index(null, null);
-    setState(() {
-      incomes = updatedIncomes;
-    });
   }
 
   void clearStates() {
@@ -65,7 +56,6 @@ class _AddIncomeFormState extends ConsumerState<AddIncomeForm> {
       final result = await incomeHandler.store(income);
       ref.read(transactionsNotifierProvider.notifier).addTransaction('income', result as int);
       clearStates();
-      getIncomes(); // TODO: Remove: For testing purposes only
     }
   }
 
@@ -80,8 +70,6 @@ class _AddIncomeFormState extends ConsumerState<AddIncomeForm> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                  'Total Income: ${incomes.length}'), // TODO: Remove: For testing purposes only
               InputGroup(
                 label: 'NAME',
                 input: InputField(
