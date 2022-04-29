@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/consts/consts.dart';
 
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
+import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:sun_flutter_capstone/state/spending_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
@@ -12,7 +14,6 @@ import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
 import 'package:sun_flutter_capstone/controllers/income_controller.dart';
 import 'package:sun_flutter_capstone/controllers/expense_controller.dart';
-import 'package:sun_flutter_capstone/models/model.dart';
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -105,20 +106,23 @@ class Dashboard extends StatefulHookConsumerWidget {
 }
 
 class _DashboardState extends ConsumerState<Dashboard> {
-  get transactions {
+  List<Widget> fetchTransactions(transData) {
     var transactionWidgets = <Widget>[];
 
-    for (var transactionData in widget.data) {
+    for (var transactionData in transData) {
+      final IconData icon = transactionData['type'] == 'income'
+          ? Icons.attach_money_outlined
+          : getIcons(CategoryList.values[transactionData['category_id']]);
+
       transactionWidgets.add(Container(
         margin: EdgeInsets.only(bottom: 16),
         child: TransactionCard(
-          icon: Icon(transactionData['icon'],
-              color: Colors.black.withOpacity(0.5)),
+          icon: Icon(icon, color: Colors.black.withOpacity(0.5)),
           type: transactionData['type'],
           currency: 'PHP',
           amount: transactionData['amount'],
           description: transactionData['description'],
-          dateTime: DateTime.parse(transactionData['date']),
+          dateTime: transactionData['date'],
         ),
       ));
     }
@@ -128,11 +132,11 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   final IncomeController incomeHandler = IncomeController();
   final ExpenseController expenseHandler = ExpenseController();
-  
-  @override
+
   double totalIncome = 0.0;
   double totalExpense = 0.0;
 
+  @override
   void initState() {
     super.initState();
     _totalValues();
@@ -147,6 +151,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
     final spendingAmount = ref.watch(spendingProvider);
@@ -236,7 +241,18 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(children: transactions),
+                  child: FutureBuilder(
+                    initialData: const [],
+                    future: TransactionController().transactionList(10),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        return Column(
+                            children: fetchTransactions(snapshot.data ?? []));
+                      }
+                    },
+                  ),
                 )
               ],
             ),
