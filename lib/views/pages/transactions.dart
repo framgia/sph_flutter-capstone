@@ -58,7 +58,6 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
           } else {
             _totalIncome -= data['amount'];
           }
-          print(_totalIncome);
         } else {
           _totalIncome += data['amount'];
         }

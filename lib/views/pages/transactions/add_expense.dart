@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
@@ -36,7 +38,6 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
   }
 
   void onSubmit(Expense? snapshot) async {
-    print(formInputControllers['dateController']!.text);
     if (expenseFormKey.currentState!.validate()) {
       final createdAt = DateTime.now();
       final updatedAt = DateTime.now();
