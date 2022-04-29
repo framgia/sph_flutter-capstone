@@ -15,14 +15,16 @@ class SpendingLimitController {
   }
 
   Future<int?> upsert(double limitAmount) async {
-    var now = DateTime.now();
+    DateTime now = DateTime.now();
+    DateTime firstDayOfMonth = DateTime(now.year, now.month, 1);
+    DateTime lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
     Spending_limit? spendingLimit = await getCurrentSpendingLimit(now);
     
     final result = await Spending_limit(
       id: spendingLimit?.id,
       amount: limitAmount,
-      start_date: DateTime.now(),
-      end_date: DateTime.now().add(Duration(days: 30)),
+      start_date: firstDayOfMonth,
+      end_date: lastDayOfMonth,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     ).upsert();
@@ -31,15 +33,15 @@ class SpendingLimitController {
 }
 
 final spendingLimitProvider =
-    StateNotifierProvider<SpendingLimitNotifier, double?>(
+    StateNotifierProvider<SpendingLimitNotifier, double>(
         (_) => SpendingLimitNotifier(0.0));
 
-class SpendingLimitNotifier extends StateNotifier<double?> {
-  SpendingLimitNotifier(double? state) : super(state);
+class SpendingLimitNotifier extends StateNotifier<double> {
+  SpendingLimitNotifier(double state) : super(state);
 
   Future<void> getSpendingLimit() async {
     Spending_limit? spendingLimit =
         await SpendingLimitController().getCurrentSpendingLimit(DateTime.now());
-    state = spendingLimit?.amount;
+    state = (spendingLimit != null ? spendingLimit.amount : 0.0)!;
   }
 }
