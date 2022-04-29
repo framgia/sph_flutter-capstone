@@ -21,9 +21,6 @@ class TransactionsPage extends StatefulHookConsumerWidget {
 }
 
 class _TransactionState extends ConsumerState<TransactionsPage> {
-  final IncomeController incomeHandler = IncomeController();
-  final ExpenseController expenseHandler = ExpenseController();
-
   double totalIncome = 0;
   double totalExpense = 0;
   double totalBalance = 0;
@@ -38,7 +35,6 @@ class _TransactionState extends ConsumerState<TransactionsPage> {
       var transactionWidgets = <Widget>[];
       double _totalIncome = 0;
       double _totalExpense = 0;
-      double _totalBalance = 0;
 
       for (var data in dataList) {
         final IconData icon = data['type'] == 'income'
