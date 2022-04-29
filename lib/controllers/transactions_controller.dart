@@ -10,18 +10,16 @@ class TransactionController {
     return await Transaction().select().orderByDesc("createdAt").toList();
   }
 
-  Future<List<Map>> transactionList({ int? limit, String filter = 'all' }) async {
+  Future<List<Map>> transactionList(int? limit, String? filter) async {
     var query = Transaction().select().orderByDesc("createdAt");
     var data = [];
 
     if (filter != 'all') {
-      query = Transaction().select().transaction_type.equals(filter).orderByDesc("createdAt");
+      query = query.transaction_type.equals(filter);
     }
 
     if (limit != null && limit > 0) {
       query = query.top(limit);
-    } else {
-      query = Transaction().select().orderByDesc("createdAt");
     }
 
     data = await query.toList();
@@ -104,7 +102,7 @@ class TransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
   AsyncValue<List<Map>>? previousState;
 
   Future<void> retrieveTransactions() async {
-    final transactions = await TransactionController().transactionList();
+    final transactions = await TransactionController().transactionList(null, 'all');
     state = AsyncValue.data(transactions);
   }
 
@@ -126,7 +124,7 @@ class ExpenseTransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
   AsyncValue<List<Map>>? previousState;
 
   Future<void> retrieveTransactions() async {
-    final transactions = await TransactionController().transactionList(filter: 'expense');
+    final transactions = await TransactionController().transactionList(null, 'expense');
     state = AsyncValue.data(transactions);
   }
 }
@@ -143,7 +141,7 @@ class IncomeTransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
   AsyncValue<List<Map>>? previousState;
 
   Future<void> retrieveTransactions() async {
-    final transactions = await TransactionController().transactionList(filter: 'income');
+    final transactions = await TransactionController().transactionList(null, 'income');
     state = AsyncValue.data(transactions);
   }
 }
