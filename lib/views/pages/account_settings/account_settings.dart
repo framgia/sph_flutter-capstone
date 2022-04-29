@@ -24,26 +24,12 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
   final SpendingLimitController spendingLimitController =
       SpendingLimitController();
 
-  String currentSpendingLimit = '0.0';
-
-  @override
-  void initState() {
-    super.initState();
-    _getSpendingLimit();
-  }
-
-  Future<void> _getSpendingLimit() async {
-    var now = DateTime.now();
-    final spendingLimit = await spendingLimitController.getCurrentSpendingLimit(now);
-    setState(() {
-      currentSpendingLimit = spendingLimit != null ? spendingLimit.amount.toString() : '0.0';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final signedInUser = ref.watch(accountProvider);
     final amountFormat = AmountFormat();
+    final spendingLimitState = ref.watch(spendingLimitProvider);
+    ref.read(spendingLimitProvider.notifier).getSpendingLimit();
 
     return Template(
       appbarTitle: Text(
@@ -101,7 +87,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                             ),
                           ),
                           Text(
-                            amountFormat.amount(currentSpendingLimit, signedInUser?.currency ?? 'PHP'),
+                            amountFormat.amount(spendingLimitState, signedInUser?.currency ?? 'PHP'),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -111,7 +97,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                         ],
                       ),
                     Spacer(),
-                    SpendingLimit(amount: currentSpendingLimit),
+                    SpendingLimit(amount: spendingLimitState.toString()),
                   ],
                 ),
               ),

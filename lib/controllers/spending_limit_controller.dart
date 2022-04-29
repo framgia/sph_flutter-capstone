@@ -1,3 +1,4 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/models/model.dart';
 
 class SpendingLimitController {
@@ -26,5 +27,19 @@ class SpendingLimitController {
       updatedAt: DateTime.now(),
     ).upsert();
     return result;
+  }
+}
+
+final spendingLimitProvider =
+    StateNotifierProvider<SpendingLimitNotifier, double?>(
+        (_) => SpendingLimitNotifier(0.0));
+
+class SpendingLimitNotifier extends StateNotifier<double?> {
+  SpendingLimitNotifier(double? state) : super(state);
+
+  Future<void> getSpendingLimit() async {
+    Spending_limit? spendingLimit =
+        await SpendingLimitController().getCurrentSpendingLimit(DateTime.now());
+    state = spendingLimit?.amount;
   }
 }
