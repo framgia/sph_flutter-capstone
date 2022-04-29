@@ -243,13 +243,14 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: FutureBuilder(
                     initialData: const [],
-                    future: TransactionController().transactionList(10),
+                    future: TransactionController().transactionList(limit: 10),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         return Column(
-                            children: fetchTransactions(snapshot.data ?? []));
+                          children: fetchTransactions(snapshot.data ?? []),
+                        );
                       }
                     },
                   ),

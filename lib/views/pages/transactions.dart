@@ -16,6 +16,8 @@ class TransactionsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transactionState = ref.watch(transactionsNotifierProvider);
+    final expensesState = ref.watch(expenseTransactionsProvider);
+    final incomesState = ref.watch(incomeTransactionsProvider);
 
     renderTransactions(dataList) {
       var transactionWidgets = <Widget>[];
@@ -60,21 +62,29 @@ class TransactionsPage extends ConsumerWidget {
               value: 1840.0,
               content: transactionState.when(
                 data: (data) => Column(children: renderTransactions(data)),
-                loading: () => const CircularProgressIndicator(),
                 error: (e, st) => Text(e.toString()),
+                loading: () => const CircularProgressIndicator(),
               ),
             ),
             TabContent(
               label: 'Total Income',
-              value: 2840.0,
+              value: 1840.0,
               labelColor: AppColor.secondary,
-              content: Text('Content'),
+              content: incomesState.when(
+                data: (data) => Column(children: renderTransactions(data)),
+                error: (e, st) => Text(e.toString()),
+                loading: () => const CircularProgressIndicator(),
+              ),
             ),
             TabContent(
               label: 'Total Expense',
               value: 3840.0,
               labelColor: AppColor.pink,
-              content: Text('Content'),
+              content: expensesState.when(
+                data: (data) => Column(children: renderTransactions(data)),
+                error: (e, st) => Text(e.toString()),
+                loading: () => const CircularProgressIndicator(),
+              ),
             ),
           ],
         ),
