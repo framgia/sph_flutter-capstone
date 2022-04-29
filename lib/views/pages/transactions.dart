@@ -23,7 +23,7 @@ class TransactionsPage extends ConsumerWidget {
       for (var data in dataList) {
         final IconData icon = data['type'] == 'income'
             ? Icons.attach_money_outlined
-            : getIcons(CategoryList.values[data['category_id']]);
+            : getIcons(CategoryList.values[data['category_id'] - 1]);
 
         transactionWidgets.add(Container(
           margin: EdgeInsets.only(bottom: 16),
