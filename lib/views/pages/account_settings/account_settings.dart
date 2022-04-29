@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/controllers/account_controller.dart';
+import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/spending_limit.dart';
 import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
@@ -19,12 +20,16 @@ class AccountSettings extends StatefulHookConsumerWidget {
 }
 
 class _AccountSettingsState extends ConsumerState<AccountSettings> {
-  final double spendingLimit = 18000.0;
+  final String currency = 'PHP';
+  final SpendingLimitController spendingLimitController =
+      SpendingLimitController();
 
   @override
   Widget build(BuildContext context) {
     final signedInUser = ref.watch(accountProvider);
     final amountFormat = AmountFormat();
+    final spendingLimitState = ref.watch(spendingLimitProvider);
+    ref.read(spendingLimitProvider.notifier).getSpendingLimit();
 
     return Template(
       appbarTitle: Text(
@@ -82,7 +87,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                             ),
                           ),
                           Text(
-                            amountFormat.amount(spendingLimit, signedInUser?.currency ?? 'PHP'),
+                            amountFormat.amount(spendingLimitState, signedInUser?.currency ?? 'PHP'),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -92,7 +97,7 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                         ],
                       ),
                     Spacer(),
-                    SpendingLimit(),
+                    SpendingLimit(amount: spendingLimitState.toString()),
                   ],
                 ),
               ),

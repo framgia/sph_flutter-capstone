@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sun_flutter_capstone/consts/global_style.dart';
+import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_field.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/input_group.dart';
-import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 
-class SpendingLimit extends StatelessWidget {
-  const SpendingLimit({Key? key}) : super(key: key);
+class SpendingLimit extends ConsumerStatefulWidget {
+  final String amount;
+
+  const SpendingLimit({Key? key, this.amount = '0.0'}) : super(key: key);
+
+  @override
+  _SpendingLimitState createState() => _SpendingLimitState();
+}
+
+class _SpendingLimitState extends ConsumerState<SpendingLimit> {
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final TextEditingController amountController = TextEditingController();
     String currency = 'PHP';
+    SpendingLimitController spendingLimitController = SpendingLimitController();
 
     return IconButton(
       icon: const Icon(Icons.edit),
@@ -50,7 +59,7 @@ class SpendingLimit extends StatelessWidget {
                         InputGroup(
                           label: 'Update spending limit this month',
                           input: InputField(
-                            hintText: '$currency 0.0',
+                            hintText: '$currency ${widget.amount}',
                             inputType: TextInputType.number,
                             inputController: amountController,
                           ),
@@ -58,15 +67,11 @@ class SpendingLimit extends StatelessWidget {
                         SizedBox(height: 15),
                         OutlinedButtonText(
                           text: 'Save',
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                content: Text(
-                                    'Values: $currency ${amountController.text}'),
-                              ),
-                            );
+                            await spendingLimitController
+                                .upsert(double.parse(amountController.text));
+                            ref.read(spendingLimitProvider.notifier).getSpendingLimit();
                           },
                         ),
                       ],

@@ -67,8 +67,11 @@ class AppRouter extends _i11.RootStackRouter {
           routeData: routeData, child: const _i9.UpdateBasicInfo());
     },
     SpendingLimitRouter.name: (routeData) {
+      final args = routeData.argsAs<SpendingLimitRouterArgs>(
+          orElse: () => const SpendingLimitRouterArgs());
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i10.SpendingLimit());
+          routeData: routeData,
+          child: _i10.SpendingLimit(key: args.key, amount: args.amount));
     }
   };
 
@@ -175,9 +178,24 @@ class UpdateBasicInfoRouter extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.SpendingLimit]
-class SpendingLimitRouter extends _i11.PageRouteInfo<void> {
-  const SpendingLimitRouter()
-      : super(SpendingLimitRouter.name, path: 'spending_limit');
+class SpendingLimitRouter extends _i11.PageRouteInfo<SpendingLimitRouterArgs> {
+  SpendingLimitRouter({_i12.Key? key, String amount = '0.0'})
+      : super(SpendingLimitRouter.name,
+            path: 'spending_limit',
+            args: SpendingLimitRouterArgs(key: key, amount: amount));
 
   static const String name = 'SpendingLimitRouter';
+}
+
+class SpendingLimitRouterArgs {
+  const SpendingLimitRouterArgs({this.key, this.amount = '0.0'});
+
+  final _i12.Key? key;
+
+  final String amount;
+
+  @override
+  String toString() {
+    return 'SpendingLimitRouterArgs{key: $key, amount: $amount}';
+  }
 }
