@@ -97,7 +97,9 @@ class TransactionCard extends ConsumerWidget {
           Spacer(),
           Container(
             child: Text(
-              (type == 'income' ? '+ ' : '- ') + amountFormat.amount(amount, signedInUser?.currency ?? currency),
+              (type == 'income' ? '+ ' : '- ') +
+                  amountFormat.amount(
+                      amount, signedInUser?.currency ?? currency),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

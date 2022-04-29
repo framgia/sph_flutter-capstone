@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/widgets/buttons/outline_button_text.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/views/widgets/input/date_field.dart';
@@ -36,7 +38,6 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
   }
 
   void onSubmit(Expense? snapshot) async {
-    print(formInputControllers['dateController']!.text);
     if (expenseFormKey.currentState!.validate()) {
       final createdAt = DateTime.now();
       final updatedAt = DateTime.now();
@@ -44,23 +45,27 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
       Expense expense = Expense();
       // TODO: Below line gives int errors, put static category id for now
       //  (int.parse(formInputControllers['categoryController']!.text)) + 1;
-      expense.category_id = (int.parse(formInputControllers['categoryController']!.text)) + 1;
+      expense.category_id =
+          (int.parse(formInputControllers['categoryController']!.text)) + 1;
       expense.description = formInputControllers['nameController']!.text;
-      expense.amount = double.parse(formInputControllers['amountController']!.text);
-      expense.paid_at = DateTime.parse(formInputControllers['dateController']!.text);
+      expense.amount =
+          double.parse(formInputControllers['amountController']!.text);
+      expense.paid_at =
+          DateTime.parse(formInputControllers['dateController']!.text);
       expense.updatedAt = updatedAt;
 
       // Save new record
       if (snapshot?.id == null) {
         expense.createdAt = createdAt;
         final result = await expenseHandler.store(expense);
-        ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
+        ref
+            .read(transactionsNotifierProvider.notifier)
+            .addTransaction('expense', result as int);
         ref.read(expenseTransactionsProvider.notifier).retrieveTransactions();
       } else {
         final expenseId = snapshot?.id;
         if (expenseId != null) {
           await expenseHandler.update(expenseId, expense);
-
         }
         setState(() {});
       }

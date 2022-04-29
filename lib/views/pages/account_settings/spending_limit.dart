@@ -16,7 +16,6 @@ class SpendingLimit extends ConsumerStatefulWidget {
 }
 
 class _SpendingLimitState extends ConsumerState<SpendingLimit> {
-
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
@@ -71,7 +70,9 @@ class _SpendingLimitState extends ConsumerState<SpendingLimit> {
                             Navigator.of(context).pop();
                             await spendingLimitController
                                 .upsert(double.parse(amountController.text));
-                            ref.read(spendingLimitProvider.notifier).getSpendingLimit();
+                            ref
+                                .read(spendingLimitProvider.notifier)
+                                .getSpendingLimit();
                           },
                         ),
                       ],

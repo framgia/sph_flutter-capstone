@@ -35,7 +35,7 @@ class TransactionSummary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              amountFormat.amount(totalBalance,currency),
+              amountFormat.amount(totalBalance, currency),
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
@@ -80,7 +80,7 @@ class TransactionSummary extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      amountFormat.amount(totalIncome,currency),
+                      amountFormat.amount(totalIncome, currency),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -126,7 +126,7 @@ class TransactionSummary extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      amountFormat.amount(totalExpenses,currency),
+                      amountFormat.amount(totalExpenses, currency),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

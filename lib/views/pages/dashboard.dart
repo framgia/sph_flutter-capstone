@@ -46,7 +46,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     for (var transactionData in transData) {
       final IconData icon = transactionData['type'] == 'income'
           ? Icons.attach_money_outlined
-          : getIcons(CategoryList.values[transactionData['category_id']]);
+          : getIcons(CategoryList.values[transactionData['category_id'] - 1]);
 
       transactionWidgets.add(Container(
         margin: EdgeInsets.only(bottom: 16),
@@ -168,7 +168,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: FutureBuilder(
                     initialData: const [],
-                    future: TransactionController().transactionList(limit: 10),
+                    future: TransactionController().transactionList(10, 'all'),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());

@@ -81,7 +81,9 @@ Future<bool> runSamples(WidgetRef ref) async {
             updatedAt: DateTime.now())
         .save();
 
-    ref.read(transactionsNotifierProvider.notifier).addTransaction('income', result as int);
+    ref
+        .read(transactionsNotifierProvider.notifier)
+        .addTransaction('income', result as int);
   }
 
   for (var el in expenseSeeder) {
@@ -94,7 +96,9 @@ Future<bool> runSamples(WidgetRef ref) async {
       updatedAt: DateTime.now(),
     ).save();
 
-    ref.read(transactionsNotifierProvider.notifier).addTransaction('expense', result as int);
+    ref
+        .read(transactionsNotifierProvider.notifier)
+        .addTransaction('expense', result as int);
   }
 
   return true;

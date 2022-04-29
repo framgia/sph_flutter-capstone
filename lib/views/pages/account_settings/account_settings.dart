@@ -72,30 +72,31 @@ class _AccountSettingsState extends ConsumerState<AccountSettings> {
                 content: CurrencyPicker(),
               ),
               ElevatedCard(
-                  width: 344.0,
-                  content: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'This month\'s spending limit',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.lightGray,
-                            ),
+                width: 344.0,
+                content: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'This month\'s spending limit',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.lightGray,
                           ),
-                          Text(
-                            amountFormat.amount(spendingLimitState, signedInUser?.currency ?? 'PHP'),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              height: 1.8,
-                            ),
+                        ),
+                        Text(
+                          amountFormat.amount(spendingLimitState,
+                              signedInUser?.currency ?? 'PHP'),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            height: 1.8,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                     Spacer(),
                     SpendingLimit(amount: spendingLimitState.toString()),
                   ],

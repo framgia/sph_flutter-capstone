@@ -54,7 +54,9 @@ class _AddIncomeFormState extends ConsumerState<AddIncomeForm> {
       income.createdAt = DateTime.now();
       income.updatedAt = DateTime.now();
       final result = await incomeHandler.store(income);
-      ref.read(transactionsNotifierProvider.notifier).addTransaction('income', result as int);
+      ref
+          .read(transactionsNotifierProvider.notifier)
+          .addTransaction('income', result as int);
       ref.read(incomeTransactionsProvider.notifier).retrieveTransactions();
       clearStates();
     }
