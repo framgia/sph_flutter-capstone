@@ -147,3 +147,4 @@ class IncomeTransactionsNotifier extends StateNotifier<AsyncValue<List<Map>>> {
     state = AsyncValue.data(transactions);
   }
 }
+
