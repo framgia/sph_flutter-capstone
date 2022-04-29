@@ -83,7 +83,7 @@ class TransactionsPage extends ConsumerWidget {
   }
 }
 
-class Summary extends ConsumerWidget {
+class TabContent extends StatelessWidget {
   final String label;
   final double value;
   final Color labelColor;
