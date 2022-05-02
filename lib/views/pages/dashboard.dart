@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
 
 import 'package:sun_flutter_capstone/consts/global_style.dart';
@@ -7,6 +8,7 @@ import 'package:sun_flutter_capstone/controllers/account_controller.dart';
 import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/controllers/spending_limit_controller.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
+import 'package:sun_flutter_capstone/state/navigation_provider.dart';
 import 'package:sun_flutter_capstone/utils/routing.dart';
 import 'package:sun_flutter_capstone/views/pages/transaction_summary.dart';
 import 'package:sun_flutter_capstone/views/widgets/progress_bar.dart';
@@ -14,6 +16,7 @@ import 'package:sun_flutter_capstone/views/widgets/template.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/transaction_card.dart';
 import 'package:sun_flutter_capstone/controllers/income_controller.dart';
 import 'package:sun_flutter_capstone/controllers/expense_controller.dart';
+import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 
 class Dashboard extends StatefulHookConsumerWidget {
   const Dashboard({
@@ -157,8 +160,10 @@ class _DashboardState extends ConsumerState<Dashboard> {
                         style: TextButton.styleFrom(
                             primary: Colors.black.withOpacity(0.5),
                             textStyle: TextStyle(fontSize: 14)),
-                        onPressed: () =>
-                            redirectTo(context, Routes.transactions),
+                        onPressed: () {
+                          redirectTo(context, Routes.transactions);
+                          setCurrentPage(ref, Routes.transactions);
+                        },
                         child: Text('See all'),
                       ),
                     ],
