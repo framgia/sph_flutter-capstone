@@ -123,9 +123,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
             child: Column(
               children: [
                 TransactionSummary(
-                  totalBalance: totalIncome - totalExpense,
-                  totalIncome: totalIncome,
-                  totalExpenses: totalExpense,
                   currency: signedInAccount?.currency ?? 'PHP',
                 ),
                 Container(
