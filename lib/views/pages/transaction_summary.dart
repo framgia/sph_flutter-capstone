@@ -1,26 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
+import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TransactionSummary extends StatelessWidget {
-  final double totalBalance;
-  final double totalIncome;
-  final double totalExpenses;
+class TransactionSummary extends StatefulHookConsumerWidget {
   final String currency;
 
   const TransactionSummary({
     Key? key,
-    required this.totalBalance,
-    required this.totalIncome,
-    required this.totalExpenses,
     required this.currency,
   }) : super(key: key);
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _TransactionSummary();
+}
+
+class _TransactionSummary extends ConsumerState<TransactionSummary> {
+
+  @override
   Widget build(BuildContext context) {
     final amountFormat = AmountFormat();
+    final transactionState = ref.watch(transactionsNotifierProvider);
+    final expensesState = ref.watch(expenseTransactionsProvider);
+    final incomesState = ref.watch(incomeTransactionsProvider);
+
+    getData(data, section){
+      double _totalExpense = 0;
+      double _totalIncome = 0;
+
+      for (var transation in data) {
+        if (transation['type'] == 'expense') {
+          _totalExpense += transation['amount'];
+        } else {
+          _totalIncome += transation['amount'];
+        }
+      }
+
+      if (section == 'expense') {
+        return amountFormat.amount(_totalExpense, widget.currency);
+      } else if (section == 'income') {
+        return amountFormat.amount(_totalIncome, widget.currency);
+      } else {
+        return amountFormat.amount(
+            _totalIncome - _totalExpense, widget.currency);
+      }
+    }
+
+    renderTransactions(data, section) {
+      var transactionWidgets = <Widget>[];
+
+      if(section == 'all') {
+        transactionWidgets.add(
+          Text(
+            getData(data, section),
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
+        );
+      }
+      else {
+        transactionWidgets.add(
+          Text(
+            getData(data, section),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              height: 1.8,
+              color: Colors.white,
+            ),
+          ),
+        );
+      }
+
+      return transactionWidgets;
+    }
 
     return ElevatedCard(
       width: 374.0,
@@ -34,13 +93,11 @@ class TransactionSummary extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              amountFormat.amount(totalBalance, currency),
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
+            transactionState.when(
+              data: (data) =>
+                  Column(children: renderTransactions(data, 'all')),
+              error: (e, st) => Text(e.toString()),
+              loading: () => const CircularProgressIndicator(),
             ),
             Spacer(),
             Row(
@@ -79,14 +136,11 @@ class TransactionSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Text(
-                      amountFormat.amount(totalIncome, currency),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        height: 1.8,
-                        color: Colors.white,
-                      ),
+                    incomesState.when(
+                      data: (data) =>
+                          Column(children: renderTransactions(data, 'income')),
+                      error: (e, st) => Text(e.toString()),
+                      loading: () => const CircularProgressIndicator(),
                     ),
                   ],
                 ),
@@ -125,14 +179,11 @@ class TransactionSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Text(
-                      amountFormat.amount(totalExpenses, currency),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        height: 1.8,
-                        color: Colors.white,
-                      ),
+                    expensesState.when(
+                      data: (data) =>
+                          Column(children: renderTransactions(data, 'expense')),
+                      error: (e, st) => Text(e.toString()),
+                      loading: () => const CircularProgressIndicator(),
                     ),
                   ],
                 ),

@@ -67,10 +67,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
     return transactionWidgets;
   }
 
-  final IncomeController incomeHandler = IncomeController();
   final ExpenseController expenseHandler = ExpenseController();
 
-  double totalIncome = 0.0;
   double totalExpense = 0.0;
 
   @override
@@ -80,10 +78,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
   }
 
   Future<void> _totalValues() async {
-    double incomes = await incomeHandler.totalIncome();
     double expenses = await expenseHandler.totalExpence();
     setState(() {
-      totalIncome = incomes;
       totalExpense = expenses;
     });
   }
@@ -92,9 +88,18 @@ class _DashboardState extends ConsumerState<Dashboard> {
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
     final spendingLimit = ref.watch(spendingLimitProvider);
+    final expensesState = ref.watch(expenseTransactionsProvider);
 
-    double getLimit() {
-      double total = totalExpense / spendingLimit;
+    double getLimit(data) {
+      double _totalExpense = 0;
+
+      for (var transation in data) {
+        if (transation['type'] == 'expense') {
+          _totalExpense += transation['amount'];
+        }
+      }
+
+      double total = _totalExpense / spendingLimit;
 
       if (spendingLimit == 0) return 0;
       if (total > 1) return 1;
@@ -126,9 +131,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
             child: Column(
               children: [
                 TransactionSummary(
-                  totalBalance: totalIncome - totalExpense,
-                  totalIncome: totalIncome,
-                  totalExpenses: totalExpense,
                   currency: signedInAccount?.currency ?? 'PHP',
                 ),
                 Container(
@@ -139,9 +141,13 @@ class _DashboardState extends ConsumerState<Dashboard> {
                       bottom: (spendingLimit == 0) ? 0 : 10),
                   child: (spendingLimit == 0)
                       ? Text('')
-                      : ProgressBar(
-                          progress: getLimit(),
-                          label: "You have spent",
+                      : expensesState.when(
+                          data: (data) => ProgressBar(
+                            progress: getLimit(data),
+                            label: "You have spent",
+                          ),
+                          error: (e, st) => Text(e.toString()),
+                          loading: () => const CircularProgressIndicator(),
                         ),
                 ),
                 // Recent transactions
