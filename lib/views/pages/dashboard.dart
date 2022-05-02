@@ -84,6 +84,30 @@ class _DashboardState extends ConsumerState<Dashboard> {
     });
   }
 
+  renderTransactions(dataList, signedInAccount) {
+    var transactionWidgets = <Widget>[];
+
+    for (var data in dataList) {
+      final IconData icon = data['type'] == 'income'
+          ? Icons.attach_money_outlined
+          : getIcons(CategoryList.values[data['category_id'] - 1]);
+
+      transactionWidgets.add(Container(
+        margin: EdgeInsets.only(bottom: 16),
+        child: TransactionCard(
+          icon: Icon(icon, color: Colors.black.withOpacity(0.5)),
+          type: data['type'],
+          currency: signedInAccount?.currency ?? 'PHP',
+          amount: data['amount'],
+          description: data['description'],
+          dateTime: data['date'],
+        ),
+      ));
+
+      return transactionWidgets;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final signedInAccount = ref.watch(accountProvider);
@@ -106,31 +130,6 @@ class _DashboardState extends ConsumerState<Dashboard> {
       if (total > 1) return 1;
 
       return total;
-    }
-
-    renderTransactions(dataList) {
-      var transactionWidgets = <Widget>[];
-
-      for (var data in dataList) {
-        final IconData icon = data['type'] == 'income'
-            ? Icons.attach_money_outlined
-            : getIcons(CategoryList.values[data['category_id'] - 1]);
-
-        transactionWidgets.add(Container(
-          margin: EdgeInsets.only(bottom: 16),
-          child: TransactionCard(
-            icon: Icon(icon, color: Colors.black.withOpacity(0.5)),
-            type: data['type'],
-            currency: 'PHP',
-            amount: data['amount'],
-            // TODO: Integrate currency
-            description: data['description'],
-            dateTime: data['date'],
-          ),
-        ));
-
-        return transactionWidgets;
-      }
     }
 
     return Template(
@@ -205,7 +204,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: transactionState.when(
                     data: (data) =>
-                        Column(children: renderTransactions(data)),
+                        Column(children: renderTransactions(data, signedInAccount)),
                     error: (e, st) => Text(e.toString()),
                     loading: () => const CircularProgressIndicator(),
                   ),
