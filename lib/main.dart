@@ -48,7 +48,7 @@ class MyApp extends HookConsumerWidget {
         outlinedButtonTheme: outlinedButtonTheme,
       ),
       routerDelegate: _appRouter.delegate(initialRoutes: [
-        if (authenticated) BottomNavBar() else RegisterRouter()
+        SplashScreenRouter(authenticated: authenticated)
       ]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
