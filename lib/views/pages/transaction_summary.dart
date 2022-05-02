@@ -5,6 +5,7 @@ import 'package:sun_flutter_capstone/consts/consts.dart';
 import 'package:sun_flutter_capstone/controllers/transactions_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// TODO: Update to stateless
 class TransactionSummary extends StatefulHookConsumerWidget {
   final String currency;
 
