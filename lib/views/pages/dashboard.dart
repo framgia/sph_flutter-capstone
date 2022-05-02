@@ -89,6 +89,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
     final signedInAccount = ref.watch(accountProvider);
     final spendingLimit = ref.watch(spendingLimitProvider);
     final expensesState = ref.watch(expenseTransactionsProvider);
+    final transactionState = ref.watch(transactionsNotifierProvider);
 
     double getLimit(data) {
       double _totalExpense = 0;
@@ -105,6 +106,31 @@ class _DashboardState extends ConsumerState<Dashboard> {
       if (total > 1) return 1;
 
       return total;
+    }
+
+    renderTransactions(dataList) {
+      var transactionWidgets = <Widget>[];
+
+      for (var data in dataList) {
+        final IconData icon = data['type'] == 'income'
+            ? Icons.attach_money_outlined
+            : getIcons(CategoryList.values[data['category_id'] - 1]);
+
+        transactionWidgets.add(Container(
+          margin: EdgeInsets.only(bottom: 16),
+          child: TransactionCard(
+            icon: Icon(icon, color: Colors.black.withOpacity(0.5)),
+            type: data['type'],
+            currency: 'PHP',
+            amount: data['amount'],
+            // TODO: Integrate currency
+            description: data['description'],
+            dateTime: data['date'],
+          ),
+        ));
+
+        return transactionWidgets;
+      }
     }
 
     return Template(
@@ -177,18 +203,11 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: FutureBuilder(
-                    initialData: const [],
-                    future: TransactionController().transactionList(10, 'all'),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else {
-                        return Column(
-                          children: fetchTransactions(snapshot.data ?? []),
-                        );
-                      }
-                    },
+                  child: transactionState.when(
+                    data: (data) =>
+                        Column(children: renderTransactions(data)),
+                    error: (e, st) => Text(e.toString()),
+                    loading: () => const CircularProgressIndicator(),
                   ),
                 )
               ],
