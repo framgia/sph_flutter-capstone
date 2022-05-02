@@ -19,7 +19,7 @@ import '../../views/pages/account_settings/update_basic_info.dart' as _i10;
 import '../../views/pages/dashboard.dart' as _i5;
 import '../../views/pages/notifications.dart' as _i7;
 import '../../views/pages/session/register.dart' as _i2;
-import '../../views/pages/splash_screen.dart' as _i1;
+import '../../views/pages/session/splash_screen.dart' as _i1;
 import '../../views/pages/test/sample_crud.dart' as _i9;
 import '../../views/pages/transactions.dart' as _i6;
 import '../../views/pages/transactions/add_transaction.dart' as _i4;

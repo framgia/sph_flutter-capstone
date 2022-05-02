@@ -20,7 +20,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Timer(
       Duration(seconds: 3),
-      () => context.router.replace(widget.authenticated ? BottomNavBar() : RegisterRouter())
+      () => context.router.replace(
+        widget.authenticated ? BottomNavBar() : RegisterRouter(),
+      ),
     );
   }
 
@@ -52,9 +54,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const Text(
                   'the only',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.gray),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.gray,
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -80,9 +83,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const Text(
                   'you will ever need',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.gray),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.gray,
+                  ),
                 ),
               ],
             ),

@@ -9,7 +9,7 @@ import 'package:sun_flutter_capstone/views/pages/transactions.dart';
 import 'package:sun_flutter_capstone/views/pages/transactions/add_transaction.dart';
 import 'package:sun_flutter_capstone/views/widgets/navigation/bottom_navbar.dart';
 import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_info.dart';
-import 'package:sun_flutter_capstone/views/pages/splash_screen.dart';
+import 'package:sun_flutter_capstone/views/pages/session/splash_screen.dart';
 
 @MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: <AutoRoute>[
   AutoRoute(
