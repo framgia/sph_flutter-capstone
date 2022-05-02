@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:sun_flutter_capstone/views/widgets/cards/elevated_card.dart';
 import 'package:sun_flutter_capstone/consts/consts.dart';
@@ -31,16 +30,23 @@ class _TransactionSummary extends ConsumerState<TransactionSummary> {
     getData(data, section){
       double _totalExpense = 0;
       double _totalIncome = 0;
-      for (var dt in data) {
-        if (dt['type'] == 'expense') {
-          _totalExpense += dt['amount'];
+
+      for (var transation in data) {
+        if (transation['type'] == 'expense') {
+          _totalExpense += transation['amount'];
         } else {
-          _totalIncome += dt['amount'];
+          _totalIncome += transation['amount'];
         }
       }
-      if (section == 'expense') return amountFormat.amount(_totalExpense, widget.currency);
-      else if (section == 'income') return amountFormat.amount(_totalIncome, widget.currency);
-      else return amountFormat.amount(_totalIncome - _totalExpense, widget.currency);
+
+      if (section == 'expense') {
+        return amountFormat.amount(_totalExpense, widget.currency);
+      } else if (section == 'income') {
+        return amountFormat.amount(_totalIncome, widget.currency);
+      } else {
+        return amountFormat.amount(
+            _totalIncome - _totalExpense, widget.currency);
+      }
     }
 
     renderTransactions(data, section) {

@@ -55,7 +55,6 @@ class IncomeController {
     final incomes = await Income().select().toList();
     for (int i = 0; i < incomes.length; i++) {
       total += incomes[i].amount!.toDouble();
-      print(incomes.length);
     }
     return total;
   }
