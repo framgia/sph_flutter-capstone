@@ -32,9 +32,13 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
     'dateController': TextEditingController(),
   };
 
+  List<String> categoryList =
+      CategoryList.values.map((e) => e.name.capitalize()).toList();
+
   @override
   void initState() {
     super.initState();
+    formInputControllers['categoryController']?.text = categoryList[0];
   }
 
   void onSubmit(Expense? snapshot) async {
@@ -43,10 +47,8 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
       final updatedAt = DateTime.now();
 
       Expense expense = Expense();
-      // TODO: Below line gives int errors, put static category id for now
-      //  (int.parse(formInputControllers['categoryController']!.text)) + 1;
-      expense.category_id =
-          (int.parse(formInputControllers['categoryController']!.text)) + 1;
+      expense.category_id = 
+          categoryList.indexOf(formInputControllers['categoryController']!.text) + 1;
       expense.description = formInputControllers['nameController']!.text;
       expense.amount =
           double.parse(formInputControllers['amountController']!.text);
