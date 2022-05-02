@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
-import 'package:sun_flutter_capstone/views/pages/dashboard.dart';
+import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
 import 'package:sun_flutter_capstone/views/pages/session/extra_logo.dart';
-import 'package:sun_flutter_capstone/views/pages/session/register.dart';
 
 class SplashScreen extends StatefulHookConsumerWidget {
   final bool authenticated;
@@ -12,7 +12,6 @@ class SplashScreen extends StatefulHookConsumerWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
-  // _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
@@ -21,10 +20,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Timer(
       Duration(seconds: 3),
-      () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => widget.authenticated ? Dashboard() : Register()),
-      ),
+      () => context.router.replace(widget.authenticated ? BottomNavBar() : RegisterRouter())
     );
   }
 
