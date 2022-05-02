@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sun_flutter_capstone/consts/global_style.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:sun_flutter_capstone/consts/routes.dart';
 import 'package:sun_flutter_capstone/utils/routes/router.gr.dart';
+import 'package:sun_flutter_capstone/utils/routing.dart';
 
 class CenterActionButton extends HookConsumerWidget {
   const CenterActionButton({Key? key}) : super(key: key);
@@ -14,13 +16,7 @@ class CenterActionButton extends HookConsumerWidget {
       width: 75,
       child: FloatingActionButton(
         onPressed: () {
-          context.pushRoute(
-            BottomNavBar(
-              children: const [
-                AddTransactionRouter(),
-              ],
-            ),
-          );
+          context.router.pushNamed(Routes.addTransaction);
         },
         elevation: 0,
         backgroundColor: AppColor.secondary,

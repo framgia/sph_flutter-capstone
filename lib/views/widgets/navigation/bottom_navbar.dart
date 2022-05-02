@@ -21,7 +21,6 @@ class BottomNavBar extends HookConsumerWidget {
         NotificationsRouter(),
         SettingsRouter(),
         SampleCrud(),
-        AddTransactionRouter(),
         UpdateBasicInfoRouter(),
         SpendingLimitRouter(),
       ],

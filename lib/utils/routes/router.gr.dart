@@ -13,15 +13,15 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
 
-import '../../views/pages/account_settings/account_settings.dart' as _i6;
+import '../../views/pages/account_settings/account_settings.dart' as _i7;
 import '../../views/pages/account_settings/spending_limit.dart' as _i10;
 import '../../views/pages/account_settings/update_basic_info.dart' as _i9;
-import '../../views/pages/dashboard.dart' as _i3;
-import '../../views/pages/notifications.dart' as _i5;
+import '../../views/pages/dashboard.dart' as _i4;
+import '../../views/pages/notifications.dart' as _i6;
 import '../../views/pages/session/register.dart' as _i1;
-import '../../views/pages/test/sample_crud.dart' as _i7;
-import '../../views/pages/transactions.dart' as _i4;
-import '../../views/pages/transactions/add_transaction.dart' as _i8;
+import '../../views/pages/test/sample_crud.dart' as _i8;
+import '../../views/pages/transactions.dart' as _i5;
+import '../../views/pages/transactions/add_transaction.dart' as _i3;
 import '../../views/widgets/navigation/bottom_navbar.dart' as _i2;
 
 class AppRouter extends _i11.RootStackRouter {
@@ -38,29 +38,29 @@ class AppRouter extends _i11.RootStackRouter {
       return _i11.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.BottomNavBar());
     },
+    AddTransactionRouter.name: (routeData) {
+      return _i11.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i3.AddTransaction());
+    },
     DashboardRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.Dashboard());
+          routeData: routeData, child: const _i4.Dashboard());
     },
     TransactionRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.TransactionsPage());
+          routeData: routeData, child: const _i5.TransactionsPage());
     },
     NotificationsRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.NotificationsPage());
+          routeData: routeData, child: const _i6.NotificationsPage());
     },
     SettingsRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.AccountSettings());
+          routeData: routeData, child: const _i7.AccountSettings());
     },
     SampleCrud.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.SampleCrud());
-    },
-    AddTransactionRouter.name: (routeData) {
-      return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.AddTransaction());
+          routeData: routeData, child: const _i8.SampleCrud());
     },
     UpdateBasicInfoRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
@@ -89,13 +89,12 @@ class AppRouter extends _i11.RootStackRouter {
               path: 'account_settings', parent: BottomNavBar.name),
           _i11.RouteConfig(SampleCrud.name,
               path: 'sample_crud', parent: BottomNavBar.name),
-          _i11.RouteConfig(AddTransactionRouter.name,
-              path: 'add_transaction', parent: BottomNavBar.name),
           _i11.RouteConfig(UpdateBasicInfoRouter.name,
               path: 'update_basic_info', parent: BottomNavBar.name),
           _i11.RouteConfig(SpendingLimitRouter.name,
               path: 'spending_limit', parent: BottomNavBar.name)
-        ])
+        ]),
+        _i11.RouteConfig(AddTransactionRouter.name, path: '/transaction/add')
       ];
 }
 
@@ -117,7 +116,16 @@ class BottomNavBar extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.Dashboard]
+/// [_i3.AddTransaction]
+class AddTransactionRouter extends _i11.PageRouteInfo<void> {
+  const AddTransactionRouter()
+      : super(AddTransactionRouter.name, path: '/transaction/add');
+
+  static const String name = 'AddTransactionRouter';
+}
+
+/// generated route for
+/// [_i4.Dashboard]
 class DashboardRouter extends _i11.PageRouteInfo<void> {
   const DashboardRouter() : super(DashboardRouter.name, path: 'dashboard');
 
@@ -125,7 +133,7 @@ class DashboardRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.TransactionsPage]
+/// [_i5.TransactionsPage]
 class TransactionRouter extends _i11.PageRouteInfo<void> {
   const TransactionRouter()
       : super(TransactionRouter.name, path: 'transactions');
@@ -134,7 +142,7 @@ class TransactionRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.NotificationsPage]
+/// [_i6.NotificationsPage]
 class NotificationsRouter extends _i11.PageRouteInfo<void> {
   const NotificationsRouter()
       : super(NotificationsRouter.name, path: 'notifications');
@@ -143,7 +151,7 @@ class NotificationsRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.AccountSettings]
+/// [_i7.AccountSettings]
 class SettingsRouter extends _i11.PageRouteInfo<void> {
   const SettingsRouter() : super(SettingsRouter.name, path: 'account_settings');
 
@@ -151,20 +159,11 @@ class SettingsRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.SampleCrud]
+/// [_i8.SampleCrud]
 class SampleCrud extends _i11.PageRouteInfo<void> {
   const SampleCrud() : super(SampleCrud.name, path: 'sample_crud');
 
   static const String name = 'SampleCrud';
-}
-
-/// generated route for
-/// [_i8.AddTransaction]
-class AddTransactionRouter extends _i11.PageRouteInfo<void> {
-  const AddTransactionRouter()
-      : super(AddTransactionRouter.name, path: 'add_transaction');
-
-  static const String name = 'AddTransactionRouter';
 }
 
 /// generated route for
