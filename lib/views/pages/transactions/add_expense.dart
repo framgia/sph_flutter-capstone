@@ -35,6 +35,7 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
   @override
   void initState() {
     super.initState();
+    formInputControllers['categoryController']!.text = "0";
   }
 
   void onSubmit(Expense? snapshot) async {
@@ -43,10 +44,8 @@ class _AddExpenseFormState extends ConsumerState<AddExpenseForm> {
       final updatedAt = DateTime.now();
 
       Expense expense = Expense();
-      // TODO: Below line gives int errors, put static category id for now
-      //  (int.parse(formInputControllers['categoryController']!.text)) + 1;
       expense.category_id =
-          (int.parse(formInputControllers['categoryController']!.text)) + 1;
+          int.parse(formInputControllers['categoryController']!.text) + 1;
       expense.description = formInputControllers['nameController']!.text;
       expense.amount =
           double.parse(formInputControllers['amountController']!.text);
