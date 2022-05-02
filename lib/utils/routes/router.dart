@@ -47,11 +47,6 @@ import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_i
         page: SampleCrud,
       ),
       AutoRoute(
-        path: 'add_transaction',
-        page: AddTransaction,
-        name: 'AddTransactionRouter',
-      ),
-      AutoRoute(
         path: 'update_basic_info',
         name: 'UpdateBasicInfoRouter',
         page: UpdateBasicInfo,
@@ -62,6 +57,11 @@ import 'package:sun_flutter_capstone/views/pages/account_settings/update_basic_i
         page: SpendingLimit,
       ),
     ],
+  ),
+  AutoRoute(
+    path: '/transaction/add',
+    page: AddTransaction,
+    name: 'AddTransactionRouter',
   ),
 ])
 class $AppRouter {}
