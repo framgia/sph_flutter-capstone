@@ -103,9 +103,8 @@ class _DashboardState extends ConsumerState<Dashboard> {
           dateTime: data['date'],
         ),
       ));
-
-      return transactionWidgets;
     }
+    return transactionWidgets;
   }
 
   @override
